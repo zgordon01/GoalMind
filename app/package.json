@@ -1,19 +1,26 @@
 {
-  "name": "smartgoals",
-  "version": "1.0.0",
-  "description": "This example shows how to add ***Login/SignUp*** to your application using the `Lock` widget.",
-  "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/zgordon01/SmartGoals.git"
-  },
-  "author": "Capstone Team",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/zgordon01/SmartGoals/issues"
-  },
-  "homepage": "https://github.com/zgordon01/SmartGoals#readme"
+    "name": "smartgoals",
+    "version": "1.0.0",
+    "description": "This example shows how to add ***Login/SignUp*** to your application using the `Lock` widget.",
+    "main": "app.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/zgordon01/SmartGoals.git"
+    },
+    "author": "Capstone Team",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/zgordon01/SmartGoals/issues"
+    },
+    "homepage": "https://github.com/zgordon01/SmartGoals#readme",
+    "dependencies": {
+        "angular-lock": "1.0.5",
+        "angular-jwt": "0.1.8",
+        "angular": "1.6.1",
+        "bootstrap": "3.0",
+        "angular-ui-router": "0.3.2"
+    }
 }
