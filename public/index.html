@@ -1,0 +1,46 @@
+<html>
+
+<head>
+    <title>Smart Goals</title>
+    <!-- Viewport settings for iphones-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <!-- Styles -->
+    <link href="components/css/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <link href="components/css/main.css" rel="stylesheet" />
+</head>
+
+<body>
+
+    <div ng-app="app">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" ui-sref="home">Smart Goals</a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li ng-if="!isAuthenticated"><a ng-click="authService.login()" class="makePointer">Log In</a></li>
+                        <li ng-if="isAuthenticated"><a ui-sref="home" ng-click="authService.logout()">Log Out</a></li>
+                        <li><a ui-sref="home">Home</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div ui-view></div>
+    </div>
+
+    <script type="text/javascript" src="components/js/auth0-variables.js"></script>
+    <script type="text/javascript" src="components/js/angular.min.js"></script>
+    <script type="text/javascript" src="https://cdn.auth0.com/js/lock/10.8/lock.min.js"></script>
+    <script type="text/javascript" src="components/js/angular-lock.min.js"></script>
+    <script type="text/javascript" src="components/js/angular-jwt.min.js"></script>
+    <script type="text/javascript" src="components/js/angular-ui-router.min.js"></script>
+    <script type="text/javascript" src="components/js/app.js"></script>
+    <script type="text/javascript" src="components/js/app.run.js"></script>
+    <script type="text/javascript" src="components/home/home.controller.js"></script>
+    <script type="text/javascript" src="components/auth/auth.service.js"></script>
+    <script type="text/javascript" src="components/js/goalService.js"></script>
+
+</body>
+
+</html>
