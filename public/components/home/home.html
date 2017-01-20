@@ -1,4 +1,4 @@
-<div class="jumbotron">
+<div class="jumbotron" ng-if="!isAuthenticated">
     <h2 class="text-center"><img src="https://cdn.auth0.com/styleguide/1.0.0/img/badge.svg"></h2>
     <h2 class="text-center">Home</h2>
     <div class="text-center" ng-if="!isAuthenticated">
@@ -7,7 +7,21 @@
             <button class="btn btn-primary" ng-click="vm.authService.login()">Log In</button>
         </div>
     </div>
-    <div class="text-center" ng-if="isAuthenticated">
-        <p>Thank you for logging in!</p>
-    </div>
+
+</div>
+<div ng-if="isAuthenticated">
+    <p><h1>SmartGoals Home</h1>
+
+    <table border='1'>
+      <tr>
+        <td>Title</td>
+        <td>Description</td>
+        <td>Points</td>
+      </tr>
+      <tr ng-repeat="tg in listGoals">
+        <td>{{ tg.title }}</td>
+        <td>{{ tg.description }}</td>
+        <td>{{ tg.points }}</td>
+      </tr>
+    </table></p>
 </div>

@@ -12,7 +12,7 @@
 
         $stateProvider
             .state('home', {
-                url: '/home',
+                url: '/',
                 controller: 'HomeController',
                 templateUrl: 'components/home/home.html',
                 controllerAs: 'vm'
@@ -23,7 +23,7 @@
             domain: 'zgordon01.auth0.com'
         });
 
-        $urlRouterProvider.otherwise('/home');
+        $urlRouterProvider.otherwise('/');
     }
 
 })();

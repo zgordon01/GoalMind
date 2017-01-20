@@ -14,6 +14,7 @@
     vm.authService = authService;
     goals.myTest("hello!");
 
+    
   }
 
 }());
