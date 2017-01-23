@@ -1,10 +1,10 @@
 SmartGoals API - Work In Progress
 
-localhost/api/goal
+localhost/smartgoals/goal
 Action: GET request
 Returns all SmartGoal objects in the database.  This will be either disabled or locked down to an admin-only level for final app - we don’t want users seeing other user’s goals.  It is currently active for test purposes
 
-localhost/api/goal
+localhost/smartgoals/goal
 Action: POST request
 Creates a new SmartGoal object.
 Parameters required:
@@ -17,7 +17,7 @@ goal_type - String (“OPEN”, “SINGLE”, “REPEAT”)
 due_date - Date (Required if goal_type is SINGLE)
 repeat - String (“DAILY”, “WEEKLY”, “MONTHLY”) (Required if goal_type is REPEAT)
 
-localhost/api/goal/update
+localhost/smartgoals/goal/update
 Action: POST request
 Updates an existing SmartGoal object.
 Parameters required:
@@ -32,15 +32,22 @@ goal_type - String (“OPEN”, “SINGLE”, “REPEAT”)
 due_date - Date (Required if goal_type is SINGLE)
 repeat - String (“DAILY”, “WEEKLY”, “MONTHLY”) (Required if goal_type is REPEAT)
 
-localhost/api/byuser
+localhost/smartgoals/byuser
 Action: POST request
 Returns all SmartGoal objects in the database with user_id matching the given user_id.
 Parameters required:
 user_id - Number
 
-localhost/api/complete
+localhost/smartgoals/complete
 Action: POST request
 Sets a specific SmartGoal object as complete.
 Parameters Required:
 user_id: Number
-user_token: String  
+user_token: String
+
+localhost/users
+Action: POST
+Creates a user if one with user_id does not exists. Returns the user object matching by user_id.
+Parameters Required:
+user_id: Number
+user_token: String

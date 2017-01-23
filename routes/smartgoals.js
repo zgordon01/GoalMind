@@ -6,7 +6,7 @@ var mongoose = require('mongoose');
 var SmartGoal = require('../models/smartgoal.js');
 
 
-router.route('/goal')
+router.route('/')
 
 	.get(function(req, res) {
 		res.setHeader('Content-Type', 'application/json');
@@ -18,7 +18,7 @@ router.route('/goal')
 		});
 });
 
-router.route('/goal/byuser')
+router.route('/byuser')
 	.post(function(req, res) {
 		res.setHeader('Content-Type', 'application/json');
 		var query = {};
@@ -32,7 +32,7 @@ router.route('/goal/byuser')
 		});
 	});
 
-router.route('/goal/complete')
+router.route('/complete')
 	.post(function(req, res) {
 		res.setHeader('Content-Type', 'application/json');
 		goal = SmartGoal.findById(req.body.goal_id, function(err, goal) {
@@ -90,7 +90,7 @@ res.setHeader('Content-Type', 'application/json');
 
 });
 
-router.route('/goal/update')
+router.route('/update')
 	.post(function(req, res) {
 		res.setHeader('Content-Type', 'application/json');
 		goal = SmartGoal.findById(req.body.goal_id, function(err, goal) {
