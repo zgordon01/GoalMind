@@ -9,6 +9,7 @@ var SmartGoal = require('../models/smartgoal.js');
 router.route('/goal')
 
 	.get(function(req, res) {
+		res.setHeader('Content-Type', 'application/json');
 		SmartGoal.find(function(err, goals) {
 			if (err)
 				res.send(err);
@@ -19,6 +20,7 @@ router.route('/goal')
 
 router.route('/goal/byuser')
 	.post(function(req, res) {
+		res.setHeader('Content-Type', 'application/json');
 		var query = {};
 		query.user_id = req.body.user_id;
 		SmartGoal.find(query, function (err, goals) {
@@ -32,6 +34,7 @@ router.route('/goal/byuser')
 
 router.route('/goal/complete')
 	.post(function(req, res) {
+		res.setHeader('Content-Type', 'application/json');
 		goal = SmartGoal.findById(req.body.goal_id, function(err, goal) {
 			if (err)
 			{
@@ -62,7 +65,7 @@ router.route('/goal/complete')
 router.route('/goal')
 
 	.post(function(req, res) {
-
+res.setHeader('Content-Type', 'application/json');
 
 		var goal = new SmartGoal();
 
@@ -89,6 +92,7 @@ router.route('/goal')
 
 router.route('/goal/update')
 	.post(function(req, res) {
+		res.setHeader('Content-Type', 'application/json');
 		goal = SmartGoal.findById(req.body.goal_id, function(err, goal) {
 			if (err)
 			{
