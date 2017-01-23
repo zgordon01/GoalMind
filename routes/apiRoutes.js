@@ -72,10 +72,7 @@ router.route('/goal')
 		goal.user_token = req.body.user_token;
     goal.difficulty = req.body.difficulty;
 		goal.goal_type = req.body.goal_type;
-		if (req.body.due_date)
-		{
-			goal.due_date = req.body.due_date;
-		}
+		goal.due_date = req.body.due_date;
 		goal.repeat = req.body.repeat;
 		goal.complete = false;
 
@@ -89,4 +86,32 @@ router.route('/goal')
 			});
 
 });
+
+router.route('/goal/update')
+	.post(function(req, res) {
+		goal = SmartGoal.findById(req.body.goal_id, function(err, goal) {
+			if (err)
+			{
+				res.send(err);
+			}
+			goal.title = req.body.title;
+	    goal.description = req.body.description;
+	    goal.user_id = req.body.user_id;
+			goal.user_token = req.body.user_token;
+	    goal.difficulty = req.body.difficulty;
+			goal.goal_type = req.body.goal_type;
+			goal.due_date = req.body.due_date;
+			goal.repeat = req.body.repeat;
+
+			goal.save(function(err) {
+				if (err)
+				{
+					res.send(err.message);
+				}
+				else {
+					res.json({message: "Goal successfully updated."});
+				}
+			});
+		});
+	});
 module.exports = router;
