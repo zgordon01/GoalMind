@@ -28,32 +28,29 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //middleware to ensure user_token and user_id match for ALL PATHS BUT /users
 app.use(function(req, res, next) {
-    //console.log("MIDDLEWARE EXECUTING!!");
+    /*request.method==="POST" ? (passedData.user_id = req.body.user_id, passedData.user_token = req.body.user_token) :
+    (passedData.user_id = req.params.user_id, passedData.user_token = req.params.user_token);POSSIBLY WILL NEED LATER IF GET IS USED*/
+    res.setHeader('Content-Type', 'application/json');
     if (req.body.user_id && req.body.user_token) {
         if (req.path !== '/users/' && req.path !== '/users') {
             verifyUser(req, res, function(isValid) {
-                //console.log("IN CALLBACK");
-                if (isValid) {
-                    //console.log("credentials are valid!!");
-                    next(); //let express pass control to the next middleware function
-                } else {
-                    //console.log("credentials are not valid!!");
+                if (isValid) {//VALID CREDENTIALS
+                    next();//let express pass control to the next middleware function
+                } else {//INVALID CREDENTIALS
                     res.json({
                         success: false,
                         message: "Incorrect credentials"
                     });
-                    res.send();
                 }
             });
         } else { //this must be the /users route
-            next(); //let express pass control to the next middleware function
+            next();//let express pass control to the next middleware function
         }
     } else {
         res.json({
             success: false,
             message: "Must send user_id and user_token"
         });
-        res.send();
     }
 });
 
@@ -76,13 +73,11 @@ function verifyUser(request, response, callback) {
         user_id: request.body.user_id
     }, 'user_token', function(err, user) {
         if (err) { //handle this better
-            return handleError(err);
-        }
-        //console.log("received values are: " + user + " and: " + request.body.user_token);
-        if (user && (user.user_token === request.body.user_token)) {
-            callback(true); //calling callback function GOOD CREDENTIALS
+            res.json({success:false, message: "MongoDB failure"});
+        }else if (user && (user.user_token === request.body.user_token)) {
+            callback(true);//GOOD CREDENTIALS
         } else {
-            callback(false); //calling callback function BAD CREDENTIALS
+            callback(false);//BAD CREDENTIALS
         }
     });
 }

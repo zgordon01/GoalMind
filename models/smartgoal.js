@@ -21,21 +21,6 @@ var SmartGoalSchema = new Schema({
 
 
 SmartGoalSchema.pre('save', function(next){
-  //In this pre save middleware we would also check for a valid user_id & token
-  if (!this.user_token)
-  {
-    return next(new Error("ERROR: Must provide a user_token"));
-  }
-  if (!this.user_id)
-  {
-    return next(new Error("ERROR: Must provide a user_id"));
-  }
-  /*
-    function to check the validity of user_token
-    if user_token is not valid, return next(new Error("invalid token"))
-
-
-  */
   if (this.goal_type == "SINGLE" && !this.due_date)
   {
     return next(new Error("ERROR: Must set due_date when goal_type is SINGLE"));
@@ -47,6 +32,5 @@ SmartGoalSchema.pre('save', function(next){
   next();
 
 });
-
 
 module.exports = mongoose.model('SmartGoal', SmartGoalSchema);
