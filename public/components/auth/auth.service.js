@@ -34,6 +34,7 @@
                     }
                     localStorage.setItem('profile', JSON.stringify(profile));
                     deferredProfile.resolve(profile);
+                    console.log("logged in");
                 });
                 authManager.authenticate();
             });
