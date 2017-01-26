@@ -9,7 +9,7 @@ var rep = 'DAILY WEEKLY MONTHLY'.split(' '); //can change these
 var SmartGoalSchema = new Schema({
   title: {type: String, required: true},
   description: String, //Do we want description to be required?
-  user_id: {type: Number, required: true}, //Number or string?
+  user_id: {type: String, required: true}, //Number or string?
   //user_token: {type: String, required: true}  <-- By removing from schema, token should not be stored in object
   difficulty: {type: String, enum: diff, required: true},
   goal_type: {type: String, enum: types, required: true},
