@@ -4,18 +4,10 @@
     <title>Smart Goals</title>
     <!-- Viewport settings for iphones-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <script
-    src="https://code.jquery.com/jquery-3.1.1.min.js"
-    integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-    crossorigin="anonymous"></script>
-
 
     <!-- Styles -->
-    <link href="components/css/bootstrap/bootstrap.min.css" rel="stylesheet" />
-    <link href="components/css/main.css" rel="stylesheet" />
-
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="./components/css/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <link href="./components/css/main.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -35,31 +27,33 @@
                 </div>
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                  <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Home <span class="sr-only">(current)</span></a></li>
-                    <li ng-if="isAuthenticated"><a ui-sref="new">New Goal</a></li>
-                    <li ng-if="!isAuthenticated"><a ng-click="authService.login()" class="makePointer">Log In</a></li>
-                    <li ng-if="isAuthenticated"><a ui-sref="home" ng-click="authService.logout()">Log Out</a></li>
+                    <ul class="nav navbar-nav">
+                        <li><a href="#">Home <span class="sr-only">(current)</span></a></li>
+                        <li ng-if="isAuthenticated"><a ui-sref="new">New Goal</a></li>
+                        <li ng-if="!isAuthenticated"><a ng-click="authService.login()" class="makePointer">Log In</a></li>
+                        <li ng-if="isAuthenticated"><a ui-sref="home" ng-click="authService.logout()">Log Out</a></li>
 
-                  </ul>
+                    </ul>
 
-                </div><!-- /.navbar-collapse -->
+                </div>
+                <!-- /.navbar-collapse -->
             </div>
         </nav>
         <div ui-view></div>
     </div>
-
-    <script type="text/javascript" src="components/js/auth0-variables.js"></script>
-    <script type="text/javascript" src="components/js/angular.min.js"></script>
+    <script type="text/javascript" src="./components/bootstrap/bootstrap.min.js"></script>
+    <script type="text/javascript" src="./components/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="./components/js/auth0-variables.js"></script>
+    <script type="text/javascript" src="./components/js/angular.min.js"></script>
     <script type="text/javascript" src="https://cdn.auth0.com/js/lock/10.8/lock.min.js"></script>
-    <script type="text/javascript" src="components/js/angular-lock.min.js"></script>
-    <script type="text/javascript" src="components/js/angular-jwt.min.js"></script>
-    <script type="text/javascript" src="components/js/angular-ui-router.min.js"></script>
-    <script type="text/javascript" src="components/js/app.js"></script>
-    <script type="text/javascript" src="components/js/app.run.js"></script>
-    <script type="text/javascript" src="components/home/home.controller.js"></script>
-    <script type="text/javascript" src="components/auth/auth.service.js"></script>
-    <script type="text/javascript" src="components/js/goalService.js"></script>
+    <script type="text/javascript" src="./components/js/angular-lock.min.js"></script>
+    <script type="text/javascript" src="./components/js/angular-jwt.min.js"></script>
+    <script type="text/javascript" src="./components/js/angular-ui-router.min.js"></script>
+    <script type="text/javascript" src="./components/js/angularApp.js"></script>
+    <script type="text/javascript" src="./components/js/angularApp.run.js"></script>
+    <script type="text/javascript" src="./components/home/home.controller.js"></script>
+    <script type="text/javascript" src="./components/auth/auth.service.js"></script>
+    <script type="text/javascript" src="./components/js/goalService.js"></script>
 
 </body>
 

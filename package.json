@@ -1,34 +1,35 @@
 {
-    "name": "smartgoals",
-    "version": "1.0.0",
-    "description": "AU Capstone 2017",
-    "main": "app.js",
-    "scripts": {
-        "start": "node ./bin/www"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/zgordon01/SmartGoals.git"
-    },
-    "author": "Capstone Team",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/zgordon01/SmartGoals/issues"
-    },
-    "homepage": "https://github.com/zgordon01/SmartGoals#readme",
-    "dependencies": {
-        "angular-lock": "1.0.5",
-        "angular-jwt": "0.1.8",
-        "angular": "1.6.1",
-        "bootstrap": "3",
-        "angular-ui-router": "0.3.2",
-        "body-parser": "~1.15.2",
-        "cookie-parser": "~1.4.3",
-        "debug": "~2.2.0",
-        "ejs": "~2.5.2",
-        "express": "~4.14.0",
-        "mongoose": "^4.7.7",
-        "morgan": "~1.7.0",
-        "serve-favicon": "~2.3.0"
-    }
+  "name": "smartgoals",
+  "version": "1.0.0",
+  "description": "AU Capstone 2017",
+  "main": "app.js",
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zgordon01/SmartGoals.git"
+  },
+  "author": "Capstone Team",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zgordon01/SmartGoals/issues"
+  },
+  "homepage": "https://github.com/zgordon01/SmartGoals#readme",
+  "dependencies": {
+    "angular": "1.6.1",
+    "angular-jwt": "0.1.8",
+    "angular-lock": "1.0.5",
+    "angular-ui-router": "0.3.2",
+    "body-parser": "~1.15.2",
+    "bootstrap": "3",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.2.0",
+    "ejs": "~2.5.2",
+    "express": "~4.14.0",
+    "jquery": "^3.1.1",
+    "mongoose": "^4.7.7",
+    "morgan": "~1.7.0",
+    "serve-favicon": "~2.3.0"
+  }
 }
