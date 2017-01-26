@@ -6,15 +6,13 @@
     .module('app')
     .controller('HomeController', HomeController);
 
-  HomeController.$inject = ['authService', 'goalService'];
+  HomeController.$inject = ['authService'];
 
-  function HomeController(authService, goals) {
+  function HomeController(authService) {
 
     var vm = this;
     vm.authService = authService;
-    goals.myTest("hello!");
 
-    
   }
 
 }());

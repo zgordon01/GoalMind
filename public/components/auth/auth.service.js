@@ -1,4 +1,4 @@
-(function () {
+(function() {
 
     'use strict';
 
@@ -6,9 +6,9 @@
         .module('app')
         .service('authService', authService);
 
-    authService.$inject = ['lock', 'authManager', '$q'];
+    authService.$inject = ['lock', 'authManager', 'userService'];
 
-    function authService(lock, authManager, $q) {
+    function authService(lock, authManager, userService) {
 
         function login() {
             lock.show();
@@ -17,26 +17,29 @@
         // Logging out just requires removing the user's
         // id_token and profile
         function logout() {
-            localStorage.removeItem('id_token');
-            localStorage.removeItem('profile');
+            sessionStorage.removeItem('id_token');
+            sessionStorage.removeItem('userProfile');
+            sessionStorage.removeItem('profile');
             authManager.unauthenticate();
         }
 
         // Set up the logic for when a user authenticates
         // This method is called from app.run.js
         function registerAuthenticationListener() {
-            var deferredProfile = $q.defer();
-            lock.on('authenticated', function (authResult) {
-                localStorage.setItem('id_token', authResult.idToken);
-                lock.getProfile(authResult.idToken, function (error, profile) {
+            lock.on('authenticated', function(authResult) {
+                lock.getProfile(authResult.idToken, function(error, profile) {
                     if (error) {
-                        return console.log(error);
+                        return console.log(error);//throw better error here(redirect to page?)
+                    } else {
+                        userService.mongoAuth(profile.user_id, authResult.idToken, function(response) {
+                            sessionStorage.setItem('profile', JSON.stringify(response));
+                            sessionStorage.setItem('id_token', authResult.idToken);
+                            sessionStorage.setItem('userProfile', JSON.stringify(profile));
+                            authManager.authenticate();
+                            console.log("LOGGED IN");
+                        });
                     }
-                    localStorage.setItem('profile', JSON.stringify(profile));
-                    deferredProfile.resolve(profile);
-                    console.log("logged in");
                 });
-                authManager.authenticate();
             });
         }
 

@@ -9,7 +9,7 @@ router.route('/')
 	.get(function(req, res) {
 		SmartGoal.find(function(err, goals) {
 			if (err){
-				res.send(err);
+				res.status(500).send(err);
 			}
 			res.json(goals);
 		});
@@ -22,7 +22,7 @@ router.route('/byuser')
 		SmartGoal.find(query, function (err, goals) {
 			if (err)
 			{
-				res.send(err);
+				res.status(500).send(err);
 			}
 			res.json(goals);
 		});
@@ -33,7 +33,7 @@ router.route('/complete')
 		goal = SmartGoal.findById(req.body.goal_id, function(err, goal) {
 			if (err)
 			{
-				res.send(err);
+				res.status(500).send(err);
 			}
 			goal.complete = true;
 			goal.user_id = req.body.user_id;
@@ -48,7 +48,7 @@ router.route('/complete')
 			goal.save(function(err) {
 				if (err)
 				{
-					res.send(err.message);
+					res.status(500).send(err.message);
 				}
 				else {
 					res.json({message: "Goal set as complete."});
@@ -76,7 +76,7 @@ router.route('/goal')
 
 			goal.save(function(err) {
 				if (err){
-					res.send(err.message);
+					res.status(500).send(err.message);
 				}
 				else{
 					res.json({message: 'Created Goal'});
@@ -90,7 +90,7 @@ router.route('/update')
 		goal = SmartGoal.findById(req.body.goal_id, function(err, goal) {
 			if (err)
 			{
-				res.send(err);
+				res.status(500).send(err);
 			}
 			goal.title = req.body.title;
 	    goal.description = req.body.description;
@@ -104,7 +104,7 @@ router.route('/update')
 			goal.save(function(err) {
 				if (err)
 				{
-					res.send(err.message);
+					res.status(500).send(err.message);
 				}
 				else {
 					res.json({message: "Goal successfully updated."});

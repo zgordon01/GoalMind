@@ -7,16 +7,16 @@ router.post('/', function(req, res, next) {
     //this route will create a new user if it does not exist and returns the data about the user if the user exists. Also updates the user_token. Requires a user_id and user_token
     if (req.body.user_id && req.body.user_token) {
         UserSchema.findOneAndUpdate({user_id:req.body.user_id}, {user_token:req.body.user_token},{upsert:true, new:true, setDefaultsOnInsert: true}, function(err, user){
-          if(err){
-            res.json({success:false, message: "MongoDB failure"});
-          }
-          else{
-            res.json({success:true, user});
-          }
+            if(err){
+                res.status(500).send("MongoDB failure");
+            }
+            else{
+                res.json({user});
+            }
         });
     }
     else{
-      res.json({success:false, message: "Must send user_id and user_token"});
+        res.status(401).send("Must send user_id and user_token");
     }
 });
 
