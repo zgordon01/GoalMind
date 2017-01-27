@@ -11,6 +11,11 @@
     var vm = this;
     vm.authService = authService;
 
+    
+    console.log("home controller running");
+
+
   }
+
 
 }());
