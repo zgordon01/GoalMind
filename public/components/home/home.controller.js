@@ -2,17 +2,20 @@
 
   'use strict';
 
-  angular
-    .module('app')
-    .controller('HomeController', HomeController);
+  angular.module('app').controller('HomeController', HomeController);
 
-  HomeController.$inject = ['authService'];
+  HomeController.$inject = ['$scope', '$state', '$http', 'authService'];
 
-  function HomeController(authService) {
+  function HomeController($scope, $state, $http, authService) {
 
     var vm = this;
     vm.authService = authService;
-    
+    $scope.searchResults={};
+
+    $http.get
+
+
+
   }
 
 }());

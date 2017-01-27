@@ -6,9 +6,9 @@
         .module('app')
         .service('authService', authService);
 
-    authService.$inject = ['lock', 'authManager', '$q'];
+    authService.$inject = ['lock', 'authManager', '$q', '$state'];
 
-    function authService(lock, authManager, $q) {
+    function authService(lock, authManager, $q, $state) {
 
         function login() {
             lock.show();
@@ -34,8 +34,10 @@
                     }
                     localStorage.setItem('profile', JSON.stringify(profile));
                     deferredProfile.resolve(profile);
+                    $state.transitionTo('userHome');
                 });
                 authManager.authenticate();
+
             });
         }
 
@@ -43,6 +45,6 @@
             login: login,
             logout: logout,
             registerAuthenticationListener: registerAuthenticationListener
-        }
+        };
     }
 })();

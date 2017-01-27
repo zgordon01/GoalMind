@@ -28,7 +28,7 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li><a href="#">Home <span class="sr-only">(current)</span></a></li>
+                        <li ng-if="isAuthenticated"><a ui-sref="userHome">Home <span class="sr-only">(current)</span></a></li>
                         <li ng-if="isAuthenticated"><a ui-sref="new">New Goal</a></li>
                         <li ng-if="!isAuthenticated"><a ng-click="authService.login()" class="makePointer">Log In</a></li>
                         <li ng-if="isAuthenticated"><a ui-sref="home" ng-click="authService.logout()">Log Out</a></li>
@@ -54,6 +54,7 @@
     <script type="text/javascript" src="./components/home/home.controller.js"></script>
     <script type="text/javascript" src="./components/auth/auth.service.js"></script>
     <script type="text/javascript" src="./components/js/goalService.js"></script>
+    <script type="text/javascript" src="./components/UserHomeController.js"></script>
 
 </body>
 

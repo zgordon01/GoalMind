@@ -92,7 +92,7 @@ res.setHeader('Content-Type', 'application/json');
 
 router.route('/update')
 	.post(function(req, res) {
-		res.setHeader('Content-Type', 'application/json');
+		//res.setHeader('Content-Type', 'application/json');
 		goal = SmartGoal.findById(req.body.goal_id, function(err, goal) {
 			if (err)
 			{

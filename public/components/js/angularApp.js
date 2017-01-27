@@ -16,6 +16,11 @@
                 controller: 'HomeController',
                 templateUrl: 'components/home/home.html',
                 controllerAs: 'vm'
+            })
+            .state('userHome', {
+              url: '/home',
+              controller: 'UserHomeController',
+              templateUrl: 'components/userhome.html'
             });
 
         lockProvider.init({
