@@ -6,4 +6,123 @@
 .navbar {
     margin-bottom: 0;
     border-radius: 0;
+    border-bottom: 1px solid #afb3b6; 
 }
+
+/*Start of the dashboard styling*/
+body {
+	background: #ffffff;
+	margin: 0;
+	padding: 0;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+.header {
+	position: absolute;
+	height: 34px;
+	width: 100%;
+	background-color: #fff;
+	border-bottom: 2px solid #afb3b6;
+	z-index: 4;
+}
+
+.side-navbar {
+	position: absolute;
+	width: 100%;
+	background-color: 	#e4e6e7;
+	height: 100vh;
+	z-index: 3;
+	padding-top: 44px;
+}
+
+/* Get rid of bullet points*/
+.side-navbar ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+/* Separate the li elements away from eachother*/
+.side-navbar ul li {
+	padding: 20px 10;
+	border-bottom: 1px solid #afb3b6;	
+}
+
+/* Once fontsawesome are working, change icon color */
+
+.side-navbar ul li i {
+	color: #333;
+}
+
+/* Change menu to a side bar*/
+@media screen and (min-width: 600px) {
+	.side-navbar {
+		width: 80px
+	}
+
+	.side-navbar ul li {
+		text-align: center;
+	}
+
+	.side-navbar ul li span:nth-child(2) {
+		display: none;
+	}
+
+	.side-navbar ul li i {
+		font-size: 26px
+	}
+
+}
+/*Main content style*/
+.main-content {
+	padding-top: 44px;
+}
+
+
+
+/* Adding second media for desktop version*/
+@media screen and (min-width: 1000px) {
+	.side-navbar {
+		width: 200px;
+	}
+
+	.side-navbar ul li {
+		text-align: left;
+	}
+
+	.side-navbar ul li span:nth-child(2) {
+		display: inline;
+	}
+
+	.side-navbar ul li i {
+		font-size: 16px;
+	}
+
+	.main-content {
+		margin-left: 300px;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

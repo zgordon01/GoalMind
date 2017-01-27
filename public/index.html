@@ -5,6 +5,9 @@
     <!-- Viewport settings for iphones-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
+    <!--Fontawesome fonts-->
+   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
     <!-- Styles -->
     <link href="./components/css/bootstrap/bootstrap.min.css" rel="stylesheet" />
     <link href="./components/css/main.css" rel="stylesheet" />
@@ -12,8 +15,8 @@
 
 <body>
 
-    <div ng-app="app">
-        <nav class="navbar navbar-inverse">
+<div ng-app="app">
+    <nav class="navbar navbar-inverse">
             <div class="container-fluid">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -38,9 +41,10 @@
                 </div>
                 <!-- /.navbar-collapse -->
             </div>
-        </nav>
+    </nav>  
+
         <div ui-view></div>
-    </div>
+</div>
     <script type="text/javascript" src="./components/js/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="./components/js/bootstrap/bootstrap.min.js"></script>
     <script type="text/javascript" src="./components/js/auth0-variables.js"></script>
