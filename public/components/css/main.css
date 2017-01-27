@@ -81,8 +81,12 @@ body {
 	padding-top: 44px;
 }
 
-
-
+.main-content h1 {
+	color: black;
+}
+.main-content h3 {
+	color: black;
+}
 /* Adding second media for desktop version*/
 @media screen and (min-width: 1000px) {
 	.side-navbar {
