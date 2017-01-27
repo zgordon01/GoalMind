@@ -17,9 +17,9 @@
         // Logging out just requires removing the user's
         // id_token and profile
         function logout() {
-            sessionStorage.removeItem('id_token');
-            sessionStorage.removeItem('userProfile');
-            sessionStorage.removeItem('profile');
+            localStorage.removeItem('id_token');
+            localStorage.removeItem('userProfile');
+            localStorage.removeItem('profile');
             authManager.unauthenticate();
         }
 
@@ -32,9 +32,9 @@
                         return console.log(error);//throw better error here(redirect to page?)
                     } else {
                         userService.mongoAuth(profile.user_id, authResult.idToken, function(response) {
-                            sessionStorage.setItem('profile', JSON.stringify(response));
-                            sessionStorage.setItem('id_token', authResult.idToken);
-                            sessionStorage.setItem('userProfile', JSON.stringify(profile));
+                            localStorage.setItem('profile', JSON.stringify(response));
+                            localStorage.setItem('id_token', authResult.idToken);
+                            localStorage.setItem('userProfile', JSON.stringify(profile));
                             authManager.authenticate();
                             console.log("LOGGED IN");
                         });
