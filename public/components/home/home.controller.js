@@ -10,11 +10,6 @@
 
     var vm = this;
     vm.authService = authService;
-    $scope.searchResults={};
-
-    $http.get
-
-
 
   }
 

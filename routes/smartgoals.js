@@ -1,32 +1,28 @@
 
 var express =require('express');
 var router = express.Router();
-var mongoose = require('mongoose');
-//var TestGoal = require('../models/testgoal.js');
 var SmartGoal = require('../models/smartgoal.js');
 
 
 router.route('/')
 
 	.get(function(req, res) {
-		res.setHeader('Content-Type', 'application/json');
 		SmartGoal.find(function(err, goals) {
-			if (err)
-				res.send(err);
-
+			if (err){
+				res.status(500).send(err);
+			}
 			res.json(goals);
 		});
 });
 
 router.route('/byuser')
 	.post(function(req, res) {
-		res.setHeader('Content-Type', 'application/json');
 		var query = {};
 		query.user_id = req.body.user_id;
 		SmartGoal.find(query, function (err, goals) {
 			if (err)
 			{
-				res.send(err);
+				res.status(500).send(err);
 			}
 			res.json(goals);
 		});
@@ -34,11 +30,10 @@ router.route('/byuser')
 
 router.route('/complete')
 	.post(function(req, res) {
-		res.setHeader('Content-Type', 'application/json');
 		goal = SmartGoal.findById(req.body.goal_id, function(err, goal) {
 			if (err)
 			{
-				res.send(err);
+				res.status(500).send(err);
 			}
 			goal.complete = true;
 			goal.user_id = req.body.user_id;
@@ -53,7 +48,7 @@ router.route('/complete')
 			goal.save(function(err) {
 				if (err)
 				{
-					res.send(err.message);
+					res.status(500).send(err.message);
 				}
 				else {
 					res.json({message: "Goal set as complete."});
@@ -65,7 +60,6 @@ router.route('/complete')
 router.route('/goal')
 
 	.post(function(req, res) {
-res.setHeader('Content-Type', 'application/json');
 
 		var goal = new SmartGoal();
 
@@ -81,22 +75,22 @@ res.setHeader('Content-Type', 'application/json');
 
 
 			goal.save(function(err) {
-				if (err)
-					res.send(err.message);
-				else
+				if (err){
+					res.status(500).send(err.message);
+				}
+				else{
 					res.json({message: 'Created Goal'});
-
+				}
 			});
 
 });
 
 router.route('/update')
 	.post(function(req, res) {
-		//res.setHeader('Content-Type', 'application/json');
 		goal = SmartGoal.findById(req.body.goal_id, function(err, goal) {
 			if (err)
 			{
-				res.send(err);
+				res.status(500).send(err);
 			}
 			goal.title = req.body.title;
 	    goal.description = req.body.description;
@@ -110,7 +104,7 @@ router.route('/update')
 			goal.save(function(err) {
 				if (err)
 				{
-					res.send(err.message);
+					res.status(500).send(err.message);
 				}
 				else {
 					res.json({message: "Goal successfully updated."});
