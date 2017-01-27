@@ -13,6 +13,10 @@ else {
   $state.transitionTo('home');
 }
 
+$scope.getProfile = localStorage.getItem("userProfile");
+$scope.parseProfile = JSON.parse($scope.getProfile);
+$scope.displayName = $scope.parseProfile.given_name;
+
 
 
 }]);
