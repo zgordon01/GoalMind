@@ -6,7 +6,7 @@
 .navbar {
     margin-bottom: 0;
     border-radius: 0;
-    border-bottom: 1.5px solid #afb3b6; 
+    border-bottom: 1.5px solid #afb3b6;
 }
 
 /*Start of the dashboard styling*/
@@ -36,7 +36,6 @@ body {
 	background-color: 	#f8f8f8;
 	height: 100vh;
 	z-index: 3;
-	padding-top: 44px;
 	/*added right side border on vertical navbar*/
 	border-right: 1px solid lightgrey;
 
@@ -53,7 +52,7 @@ body {
 /* Separate the li elements away from eachother*/
 .side-navbar ul li {
 	padding: 12px 10px;
-	border-bottom: 1px solid lightgrey;	
+	border-bottom: 1px solid lightgrey;
 }
 
 /* Once fontsawesome are working, change icon color */
@@ -116,24 +115,3 @@ body {
 		margin-left: 300px;
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

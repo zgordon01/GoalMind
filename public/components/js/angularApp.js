@@ -14,13 +14,13 @@
             .state('home', {
                 url: '/',
                 controller: 'HomeController',
-                templateUrl: 'components/home/home.html',
+                templateUrl: '../../home/home.html',
                 controllerAs: 'vm'
             })
             .state('userHome', {
               url: '/home',
               controller: 'UserHomeController',
-              templateUrl: 'components/userhome.html'
+              templateUrl: '../../userHome/userhome.html'
             });
 
         lockProvider.init({
