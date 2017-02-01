@@ -36,6 +36,8 @@
                         <li ng-if="isAuthenticated"><a ui-sref="home" ng-click="authService.logout()">Log Out</a></li>
 
                     </ul>
+                    <span ng-if="isAuthenticated"><h3>Hello, {{ displayName }}</h3></span>
+                    <a href="#" class="navbar-trigger"><span></span></a>  
 
                 </div>
                 <!-- /.navbar-collapse -->
