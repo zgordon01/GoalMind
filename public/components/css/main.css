@@ -6,7 +6,7 @@
 .navbar {
     margin-bottom: 0;
     border-radius: 0;
-    border-bottom: 1px solid #afb3b6; 
+    border-bottom: 1.5px solid #afb3b6;
 }
 
 /*Start of the dashboard styling*/
@@ -26,6 +26,14 @@ body {
 	width: 100%;
 	background-color: #ff751a;
 	border-bottom: 2px solid #afb3b6;
+	
+	/*height: 34px;*/
+	/*
+	height: 45;
+	width: 100%;
+	background-color: #f8f8f8;
+	border-bottom: 1px solid lightgrey;
+	*/
 	z-index: 4;
 }
 /* Testing greeding inside header*/
@@ -39,9 +47,12 @@ body {
 	position: absolute;
 	width: 100%;
 	background-color: #e4e6e7;
+/*background-color: 	#f8f8f8; */
 	height: 100vh;
 	z-index: 3;
-	padding-top: 44px;
+	/*added right side border on vertical navbar*/
+	border-right: 1px solid lightgrey;
+
 }
 
 /* Get rid of bullet points*/
@@ -49,12 +60,17 @@ body {
 	list-style: none;
 	padding: 0;
 	margin: 0;
+
 }
 
 /* Separate the li elements away from eachother*/
 .side-navbar ul li {
+/*
 	padding: 20px 15px;
 	border-bottom: 1px solid #afb3b6;	
+*/	
+	padding: 12px 10px;
+	border-bottom: 1px solid lightgrey;
 }
 
 /* Separates the text from the icon*/
@@ -64,7 +80,12 @@ body {
 
 /* Change fontsawesome icon color */
 .side-navbar ul li i {
+/*
 	color: #ff751a;
+*/
+	color: #e9691a;
+	padding-right: 10px;
+	padding-left: 5px;
 }
 
 /* Change menu to a side bar*/
@@ -122,24 +143,3 @@ body {
 		margin-left: 300px;
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
