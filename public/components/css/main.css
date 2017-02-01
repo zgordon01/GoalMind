@@ -26,10 +26,10 @@ body {
 	width: 100%;
 	background-color: #ff751a;
 	border-bottom: 2px solid #afb3b6;
-	
+
 	/*height: 34px;*/
 	/*
-	height: 45;
+	height: 45px;
 	width: 100%;
 	background-color: #f8f8f8;
 	border-bottom: 1px solid lightgrey;
@@ -67,8 +67,8 @@ body {
 .side-navbar ul li {
 /*
 	padding: 20px 15px;
-	border-bottom: 1px solid #afb3b6;	
-*/	
+	border-bottom: 1px solid #afb3b6;
+*/
 	padding: 12px 10px;
 	border-bottom: 1px solid lightgrey;
 }
