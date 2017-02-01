@@ -22,18 +22,21 @@ body {
 
 .header {
 	position: absolute;
-	height: 55px;
+
+  	/*
+  height: 55px;
 	width: 100%;
 	background-color: #ff751a;
 	border-bottom: 2px solid #afb3b6;
+  	*/
 
 	/*height: 34px;*/
-	/*
+
 	height: 45px;
 	width: 100%;
 	background-color: #f8f8f8;
 	border-bottom: 1px solid lightgrey;
-	*/
+
 	z-index: 4;
 }
 /* Testing greeding inside header*/
