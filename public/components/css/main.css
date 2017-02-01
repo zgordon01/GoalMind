@@ -22,17 +22,23 @@ body {
 
 .header {
 	position: absolute;
-	height: 34px;
+	height: 55px;
 	width: 100%;
-	background-color: #fff;
+	background-color: #ff751a;
 	border-bottom: 2px solid #afb3b6;
 	z-index: 4;
+}
+/* Testing greeding inside header*/
+.header span {
+	text-align: center;
+	padding-right: 10px 20px;
+	color: #fff;
 }
 
 .side-navbar {
 	position: absolute;
 	width: 100%;
-	background-color: 	#e4e6e7;
+	background-color: #e4e6e7;
 	height: 100vh;
 	z-index: 3;
 	padding-top: 44px;
@@ -47,14 +53,18 @@ body {
 
 /* Separate the li elements away from eachother*/
 .side-navbar ul li {
-	padding: 20px 10;
+	padding: 20px 15px;
 	border-bottom: 1px solid #afb3b6;	
 }
 
-/* Once fontsawesome are working, change icon color */
+/* Separates the text from the icon*/
+.side-navbar span {
+	padding-left: 10px;
+}
 
+/* Change fontsawesome icon color */
 .side-navbar ul li i {
-	color: #333;
+	color: #ff751a;
 }
 
 /* Change menu to a side bar*/
@@ -63,8 +73,10 @@ body {
 		width: 80px
 	}
 
+	/* Aligns tesx to center and adds color to it*/
 	.side-navbar ul li {
 		text-align: center;
+		color: #ff751a;
 	}
 
 	.side-navbar ul li span:nth-child(2) {
@@ -76,17 +88,18 @@ body {
 	}
 
 }
-/*Main content style*/
+/* Main content style*/
 .main-content {
 	padding-top: 44px;
 }
-
+/* Change color*/
 .main-content h1 {
 	color: black;
 }
 .main-content h3 {
 	color: black;
 }
+
 /* Adding second media for desktop version*/
 @media screen and (min-width: 1000px) {
 	.side-navbar {
