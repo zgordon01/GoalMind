@@ -29,77 +29,91 @@ router.route('/byuser')
 	});
 
 router.route('/complete')
-	.post(function(req, res) {
-		goal = SmartGoal.findById(req.body.goal_id, function(err, goal) {
-			if (err)
-			{
-				res.status(500).send(err);
-			}
-			goal.complete = true;
-			goal.user_id = req.body.user_id;
-			goal.user_token = req.body.user_token;
+    .post(function(req, res) {
+        if (req.body.goal_id) {
+            SmartGoal.findById(req.body.goal_id, function(err, goal) {
+                if (err) {
+                    res.status(500).send(err);
+                } else {
+                    goal.complete = true;
 
-			/*
-				Code for calculating points earned
-				Send points to user object, add points earned to JSON response
+                    /*
+                    	Code for calculating points earned
+                    	Send points to user object, add points earned to JSON response
+                    */
 
-			*/
-
-			goal.save(function(err) {
-				if (err)
-				{
-					res.status(500).send(err.message);
-				}
-				else {
-					res.json({message: "Goal set as complete."});
-				}
-			});
-		});
-	});
-
+                    goal.save(function(err) {
+                        if (err) {
+                            res.status(500).send(err.message);
+                        } else {
+                            res.json({
+                                message: "Goal set as complete."
+                            });
+                        }
+                    });
+                }
+            });
+        } else {
+            res.sendStatus(400);
+        }
+    });
 router.route('/goal')
 
-	.post(function(req, res) {
+    .post(function(req, res) {
 
-		var goal = new SmartGoal();
+        var goal = new SmartGoal();
+        if (req.body.title && req.body.description && req.body.difficulty && req.body.goal_type) {
+            if (req.body.repeat) {
+                goal.repeat = req.body.repeat;
+            }
+            if (req.body.due_date) {
+                goal.due_date = req.body.due_date;
+            }
+            goal.title = req.body.title;
+            goal.description = req.body.description;
+            goal.user_id = req.body.user_id;
+            goal.difficulty = req.body.difficulty;
+            goal.goal_type = req.body.goal_type;
+            goal.due_date = req.body.due_date;
+            goal.complete = false;
 
-		goal.title = req.body.title;
-    goal.description = req.body.description;
-    goal.user_id = req.body.user_id;
-		goal.user_token = req.body.user_token;
-    goal.difficulty = req.body.difficulty;
-		goal.goal_type = req.body.goal_type;
-		goal.due_date = req.body.due_date;
-		goal.repeat = req.body.repeat;
-		goal.complete = false;
+            goal.save(function(err) {
+                if (err) {
+                    res.status(500).send(err.message);
+                } else {
+                    res.json({
+                        message: 'Created Goal'
+                    });
+                }
+            });
+        } else {
+            res.status(400).json({
+                message: "Must send required parameters"
+            });
+        }
 
-
-			goal.save(function(err) {
-				if (err){
-					res.status(500).send(err.message);
-				}
-				else{
-					res.json({message: 'Created Goal'});
-				}
-			});
-
-});
-
+    });
 router.route('/update')
 	.post(function(req, res) {
-		goal = SmartGoal.findById(req.body.goal_id, function(err, goal) {
+		SmartGoal.findById(req.body.goal_id, function(err, goal) {
 			if (err)
 			{
 				res.status(500).send(err);
 			}
-			goal.title = req.body.title;
-	    goal.description = req.body.description;
-	    goal.user_id = req.body.user_id;
-			goal.user_token = req.body.user_token;
-	    goal.difficulty = req.body.difficulty;
-			goal.goal_type = req.body.goal_type;
-			goal.due_date = req.body.due_date;
-			goal.repeat = req.body.repeat;
+			if(req.body.title)
+				goal.title = req.body.title;
+			if(req.body.description)
+	    		goal.description = req.body.description;
+			if(req.body.difficulty)
+	    		goal.difficulty = req.body.difficulty;
+			if(req.body.goal_type)
+				goal.goal_type = req.body.goal_type;
+			if(req.body.due_date)
+				goal.due_date = req.body.due_date;
+			if(req.body.repeat)
+				goal.repeat = req.body.repeat;
+
+			goal.user_id = req.body.user_id;
 
 			goal.save(function(err) {
 				if (err)

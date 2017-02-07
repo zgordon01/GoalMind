@@ -8,42 +8,9 @@
     border-radius: 0;
     border-bottom: 1.5px solid #afb3b6;
 }
-
-/*Start of the dashboard styling*/
-body {
-	background: #ffffff;
-	margin: 0;
-	padding: 0;
-}
-
-* {
-	box-sizing: border-box;
-}
-
-.header {
-	position: absolute;
-
-  	/*
-  height: 55px;
-	width: 100%;
-	background-color: #ff751a;
-	border-bottom: 2px solid #afb3b6;
-  	*/
-
-	/*height: 34px;*/
-
-	height: 45px;
-	width: 100%;
-	background-color: #f8f8f8;
-	border-bottom: 1px solid lightgrey;
-
-	z-index: 4;
-}
-/* Testing greeding inside header*/
-.header span {
-	text-align: center;
-	padding-right: 10px 20px;
-	color: #fff;
+.container-fluid{
+    padding-right: 0px;
+    padding-left: 0px;
 }
 
 .side-navbar {
@@ -112,18 +79,6 @@ body {
 	}
 
 }
-/* Main content style*/
-.main-content {
-	padding-top: 44px;
-}
-/* Change color*/
-.main-content h1 {
-	color: black;
-}
-.main-content h3 {
-	color: black;
-}
-
 /* Adding second media for desktop version*/
 @media screen and (min-width: 1000px) {
 	.side-navbar {

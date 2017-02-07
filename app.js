@@ -29,17 +29,15 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 //middleware to ensure user_token and user_id match for ALL PATHS BUT /users
-app.use(function(req, res, next) {
-    /*request.method==="POST" ? (passedData.user_id = req.body.user_id, passedData.user_token = req.body.user_token) :
-    (passedData.user_id = req.params.user_id, passedData.user_token = req.params.user_token);POSSIBLY WILL NEED LATER IF GET IS USED*/
+/*app.use(function(req, res, next) {
     res.setHeader('Content-Type', 'application/json');
-    if (req.body.user_id && req.body.user_token) {
+    if (req.body.user_id && req.get("Authorization")) {
         if (req.path !== '/users/' && req.path !== '/users') {
             verifyUser(req, res, function(isValid) {
                 if (isValid) {//VALID CREDENTIALS
                     next();//let express pass control to the next middleware function
                 } else {//INVALID CREDENTIALS
-                    res.json({
+                    res.status(401).json({
                         success: false,
                         message: "Incorrect credentials"
                     });
@@ -49,10 +47,29 @@ app.use(function(req, res, next) {
             next();//let express pass control to the next middleware function
         }
     } else {
-        res.json({
-            success: false,
+        res.status(400).json({
             message: "Must send user_id and user_token"
         });
+    }
+});*/
+
+app.use(function(req, res, next) {
+    res.setHeader('Content-Type', 'application/json');
+    if (req.path !== '/users/' && req.path !== '/users') {
+        if (req.get("Authorization") === null || req.get("Authorization") === undefined) {
+            res.sendStatus(401);
+        } else {
+            verifyUser(req, res, function(isValid) {
+                if (isValid) { //VALID CREDENTIALS
+                    next(); //let express pass control to the next middleware function
+                } else { //INVALID CREDENTIALS
+                    res.sendStatus(401);
+                }
+            });
+        }
+    }
+    else{
+        next();
     }
 });
 
@@ -74,14 +91,14 @@ app.use(function(req, res, next) {
 function verifyUser(request, response, callback) {
     var UserSchema = require('./models/user.js');
     UserSchema.findOne({
-        user_id: request.body.user_id
-    }, 'user_token', function(err, user) {
+        user_token: request.get("Authorization")
+    }, function(err, user) {
         if (err) { //handle this better
-            res.json({success:false, message: "MongoDB failure"});
-        }else if (user && (user.user_token === request.body.user_token)) {
-            callback(true);//GOOD CREDENTIALS
+            res.sendStatus(500);
+        }else if (user) {
+            callback(true);//VALID KEY
         } else {
-            callback(false);//BAD CREDENTIALS
+            callback(false);//INVALID KEY
         }
     });
 }

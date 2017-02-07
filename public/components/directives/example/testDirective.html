@@ -1,0 +1,19 @@
+<div class="panel panel-info">
+    <div class="panel-heading">
+    <h3 class="panel-title">This is a directive!</h3>
+  </div>
+    <form class="form-horizontal panel-body">
+        <div class="form-group">
+            <label for="select" class="col-lg-2 control-label">Enter your points</label>
+            <div class="col-lg-10">
+                <textarea class="form-control" rows="1" ng-model="updates.points"></textarea>
+            </div>
+
+            <div class="col-lg-10 col-lg-offset-2">
+                <button type="reset" class="btn btn-default">Cancel</button>
+                <button class="btn btn-primary" ng-click="buttonPressed()">Submit</button>
+            </div>
+
+        </div>
+    </form>
+</div>
