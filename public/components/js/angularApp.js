@@ -24,6 +24,11 @@
                 data: {
                     requiresLogin: true
                 }
+            })
+            .state('dashboard.goals', {
+                url: '/goals',
+                templateUrl: './components/dashboard/goals.html'
+
             });
         $urlRouterProvider.otherwise('/');
         lockProvider.init({

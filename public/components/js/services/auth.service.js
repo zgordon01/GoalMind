@@ -36,6 +36,7 @@
                             profileService.setUserProfile(response);
                             authManager.authenticate();
                             $state.go('dashboard')
+                            //$state.go('dashboard.goals');
                         });
                     }
                 });
