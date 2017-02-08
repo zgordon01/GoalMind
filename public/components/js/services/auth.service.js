@@ -6,9 +6,9 @@
         .module('app')
         .service('authService', authService);
 
-    authService.$inject = ['lock', 'authManager', '$state', 'userService', 'profileService'];
+    authService.$inject = ['lock', 'authManager', 'userService', 'profileService'];
 
-    function authService(lock, authManager, $state, userService, profileService) {
+    function authService(lock, authManager, userService, profileService) {
 
         function login() {
             lock.show();
@@ -35,8 +35,6 @@
                             profileService.setAuthProfile(profile);
                             profileService.setUserProfile(response);
                             authManager.authenticate();
-                            $state.go('dashboard')
-                            //$state.go('dashboard.goals');
                         });
                     }
                 });

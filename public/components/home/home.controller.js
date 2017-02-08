@@ -17,7 +17,7 @@
             console.log("home init ran");
             if (localStorage.getItem('id_token') && !jwtHelper.isTokenExpired(localStorage.getItem('id_token'))) {
                 authManager.authenticate();
-                $state.go('dashboard');
+                $state.go('dashboard.goals');
             } else {
                 authManager.unauthenticate();
             }
