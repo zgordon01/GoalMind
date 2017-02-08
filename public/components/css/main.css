@@ -59,10 +59,12 @@
 }
 
 /* Change menu to a side bar*/
-@media screen and (min-width: 600px) {
-	.side-navbar {
+@media screen and (min-width: 300px) {
+  /* Bootstrap will scale based on the column system, so this is not needed
+  .side-navbar {
 		width: 80px
 	}
+  */
 
 	/* Aligns tesx to center and adds color to it*/
 	.side-navbar ul li {
@@ -81,9 +83,11 @@
 }
 /* Adding second media for desktop version*/
 @media screen and (min-width: 1000px) {
-	.side-navbar {
+  /*
+  .side-navbar {
 		width: 200px;
 	}
+  */
 
 	.side-navbar ul li {
 		text-align: left;
@@ -97,7 +101,9 @@
 		font-size: 16px;
 	}
 
+  /*
 	.main-content {
 		margin-left: 300px;
 	}
+  */
 }
