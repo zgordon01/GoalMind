@@ -18,7 +18,7 @@ router.route('/')
 router.route('/byuser')
 	.post(function(req, res) {
 		var query = {};
-		query.user_id = req.body.user_id;
+		query.user_id = res.locals.user_id;
 		SmartGoal.find(query, function (err, goals) {
 			if (err)
 			{
@@ -60,7 +60,6 @@ router.route('/complete')
 router.route('/goal')
 
     .post(function(req, res) {
-
         var goal = new SmartGoal();
         if (req.body.title && req.body.description && req.body.difficulty && req.body.goal_type) {
             if (req.body.repeat) {
@@ -71,11 +70,11 @@ router.route('/goal')
             }
             goal.title = req.body.title;
             goal.description = req.body.description;
-            goal.user_id = req.body.user_id;
             goal.difficulty = req.body.difficulty;
             goal.goal_type = req.body.goal_type;
-            goal.due_date = req.body.due_date;
             goal.complete = false;
+
+			goal.user_id = res.locals.user_id;
 
             goal.save(function(err) {
                 if (err) {
@@ -113,7 +112,7 @@ router.route('/update')
 			if(req.body.repeat)
 				goal.repeat = req.body.repeat;
 
-			goal.user_id = req.body.user_id;
+			goal.user_id = res.locals.user_id;
 
 			goal.save(function(err) {
 				if (err)

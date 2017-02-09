@@ -28,31 +28,7 @@ app.use(bodyParser.urlencoded({
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-//middleware to ensure user_token and user_id match for ALL PATHS BUT /users
-/*app.use(function(req, res, next) {
-    res.setHeader('Content-Type', 'application/json');
-    if (req.body.user_id && req.get("Authorization")) {
-        if (req.path !== '/users/' && req.path !== '/users') {
-            verifyUser(req, res, function(isValid) {
-                if (isValid) {//VALID CREDENTIALS
-                    next();//let express pass control to the next middleware function
-                } else {//INVALID CREDENTIALS
-                    res.status(401).json({
-                        success: false,
-                        message: "Incorrect credentials"
-                    });
-                }
-            });
-        } else { //this must be the /users route
-            next();//let express pass control to the next middleware function
-        }
-    } else {
-        res.status(400).json({
-            message: "Must send user_id and user_token"
-        });
-    }
-});*/
-
+//middleware to ensure user_token and user_id match for ALL PATHS BUT /users. Also extracts the user_id and ties it to res.locals.user_id
 app.use(function(req, res, next) {
     res.setHeader('Content-Type', 'application/json');
     if (req.path !== '/users/' && req.path !== '/users') {
@@ -94,8 +70,9 @@ function verifyUser(request, response, callback) {
         user_token: request.get("Authorization")
     }, function(err, user) {
         if (err) { //handle this better
-            res.sendStatus(500);
+            response.sendStatus(500);
         }else if (user) {
+            response.locals.user_id = user.user_id;
             callback(true);//VALID KEY
         } else {
             callback(false);//INVALID KEY

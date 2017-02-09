@@ -19,8 +19,6 @@
 * __Action:__ __POST__ request
 	+ Creates a new SmartGoal object.
 	+ Required Parameters:
-		- user_id : String
-		- user_token : String
 		- title : String
 		- description : String
 		- difficulty : String (“LOW”, “MEDIUM”, or “HIGH”)
@@ -37,8 +35,6 @@
 	+ Updates an existing SmartGoal object.
 	+ Required Parameters:
 		- goal_id: String
- 		- user_id: String
-		- user_token: String
 	+ Optional parameters (anything you want to update):
 		- title: String
 		- description: String
@@ -55,8 +51,7 @@
 * __Action:__ __POST__ request
 * Returns all SmartGoal objects in the database with user_id matching the given user_id.
 	+ Required Parameters:
-		- user_id: String
-		- user_token: String
+		- None
 
 
 -----
@@ -66,8 +61,6 @@
 * __Action:__ __POST__ request
 	+ Sets a specific SmartGoal object as complete.
 	+ Required Parameters:
-		- user_id: String
-		- user_token: String
 		- goal_id: String
 
 
@@ -78,7 +71,7 @@
 * __Action:__ __POST__ request
 * Creates a user if one with user_id does not exists. Also updates the user_token. Returns the user object matching by user_id.
 	+ Parameters Required:
-		- user_id: String
+		- None
 
 
 -----
