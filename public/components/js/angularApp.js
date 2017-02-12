@@ -3,19 +3,19 @@
     'use strict';
 
     angular
-        .module('app', ['auth0.lock', 'angular-jwt', 'ui.router'])
+        .module('app', ['auth0.lock', 'angular-jwt', 'ui.router', 'ngFlash'])
         .config(config);
 
-    config.$inject = ['$stateProvider', 'lockProvider', 'jwtOptionsProvider', '$locationProvider', '$urlRouterProvider', '$httpProvider'];
+    config.$inject = ['$stateProvider', 'lockProvider', 'jwtOptionsProvider', '$locationProvider', '$urlRouterProvider', '$httpProvider', 'FlashProvider'];
 
-    function config($stateProvider, lockProvider, jwtOptionsProvider, $locationProvider, $urlRouterProvider, $httpProvider) {
+    function config($stateProvider, lockProvider, jwtOptionsProvider, $locationProvider, $urlRouterProvider, $httpProvider, FlashProvider) {
 
         $stateProvider
             .state('home', {
                 url: '/',
                 controller: 'HomeController',
                 templateUrl: './components/home/home.html',
-                controllerAs: 'vm'
+                controllerAs: 'hm'
             })
             .state('dashboard', {
                 url: '/dashboard',
@@ -57,6 +57,10 @@
         // Remove the ! from the hash so that
         // auth0.js can properly parse it
         $locationProvider.hashPrefix('');
+
+        //setup angular-flash messages
+        FlashProvider.setTimeout(5000);
+        FlashProvider.setShowClose(false);
 
     }
 

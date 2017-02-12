@@ -1,3 +1,8 @@
-angular.module('app').controller('DashboardController', ['$scope', '$state', 'authService', 'profileService', function($scope, $state, authService, profileService){
+angular.module('app').controller('DashboardController', ['userService', function(userService) {
+    init();
 
+    function init() {
+        console.log("dash init ran");
+        userService.sync();
+    }
 }]);

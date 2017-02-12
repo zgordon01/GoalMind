@@ -12,12 +12,14 @@
     padding-right: 0px;
     padding-left: 0px;
 }
-
+.alert{
+    font-size:3em;
+}
+/*NAVBAR STYLES*/
 .side-navbar {
 	position: absolute;
 	width: 100%;
 	background-color: #e4e6e7;
-/*background-color: 	#f8f8f8; */
 	height: 100vh;
 	z-index: 3;
 	/*added right side border on vertical navbar*/
@@ -35,75 +37,45 @@
 
 /* Separate the li elements away from eachother*/
 .side-navbar ul li {
-/*
-	padding: 20px 15px;
-	border-bottom: 1px solid #afb3b6;
-*/
-	padding: 12px 10px;
+	padding: 12px 0px;
 	border-bottom: 1px solid lightgrey;
+    text-align:center;
 }
 
 /* Separates the text from the icon*/
-.side-navbar span {
+.side-navbar {
 	padding-left: 10px;
 }
 
-/* Change fontsawesome icon color */
 .side-navbar ul li i {
-/*
-	color: #ff751a;
-*/
-	color: #e9691a;
+	color: #000000;
 	padding-right: 10px;
 	padding-left: 5px;
 }
 
-/* Change menu to a side bar*/
+/* Mobile version*/
 @media screen and (min-width: 300px) {
-  /* Bootstrap will scale based on the column system, so this is not needed
-  .side-navbar {
-		width: 80px
-	}
-  */
-
-	/* Aligns tesx to center and adds color to it*/
 	.side-navbar ul li {
 		text-align: center;
-		color: #ff751a;
 	}
 
 	.side-navbar ul li span:nth-child(2) {
-		display: none;
+		display: block;
 	}
 
 	.side-navbar ul li i {
-		font-size: 26px
+		font-size: 1em;
 	}
 
 }
-/* Adding second media for desktop version*/
-@media screen and (min-width: 1000px) {
-  /*
-  .side-navbar {
-		width: 200px;
-	}
-  */
-
-	.side-navbar ul li {
-		text-align: left;
-	}
+/* Desktop version*/
+@media screen and (min-width: 767px) {
 
 	.side-navbar ul li span:nth-child(2) {
 		display: inline;
 	}
 
 	.side-navbar ul li i {
-		font-size: 16px;
+		font-size: 2.5em;
 	}
-
-  /*
-	.main-content {
-		margin-left: 300px;
-	}
-  */
 }
