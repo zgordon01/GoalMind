@@ -23,6 +23,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: false
 }));
+app.use('/ang-flash', express.static(__dirname + '/node_modules/angular-flash-alert/dist/'));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
