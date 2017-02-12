@@ -26,7 +26,14 @@ app.use(bodyParser.urlencoded({
     extended: false
 }));
 app.use(cookieParser());
+//static pathing
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/ui-router', express.static(__dirname + '/node_modules/angular-ui-router/release/'));
+app.use('/ang-jwt', express.static(__dirname + '/node_modules/angular-jwt/dist/'));
+app.use('/lock', express.static(__dirname + '/node_modules/angular-lock/dist'));
+app.use('/ang', express.static(__dirname + '/node_modules/angular/'));
+app.use('/boots', express.static(__dirname + '/node_modules/bootstrap/dist/js/'));
+app.use('/jq', express.static(__dirname + '/node_modules/jquery/dist/'));
 
 //middleware to ensure user_token and user_id match for ALL PATHS BUT /users. Also extracts the user_id and ties it to res.locals.user_id
 app.use(function(req, res, next) {

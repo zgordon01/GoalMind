@@ -1,3 +1,3 @@
-angular.module('app').controller('DashboardController', ['$scope', '$state', 'authService', 'profileService', function($scope, $state, authService, profileService){
-
+angular.module('app').controller('DashboardController', ['$state', 'authService', 'profileService', function($state, authService, profileService) {
+    var dash = this;
 }]);
