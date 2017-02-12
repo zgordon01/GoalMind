@@ -5,4 +5,5 @@ angular.module('app').controller('DashboardController', ['userService', function
         console.log("dash init ran");
         userService.sync();
     }
+    var dash = this;
 }]);

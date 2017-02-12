@@ -23,11 +23,16 @@
                 templateUrl: './components/dashboard/dashboard.html',
                 data: {
                     requiresLogin: true
-                }
+                },
+                controllerAs: 'dash'
             })
             .state('dashboard.goals', {
                 url: '/goals',
                 templateUrl: './components/dashboard/goals.html'
+
+            }).state('dashboard.calendar', {
+                url: '/calendar',
+                templateUrl: './components/dashboard/calendar.html'
 
             });
         $urlRouterProvider.otherwise('/');
@@ -36,12 +41,11 @@
             domain: 'zgordon01.auth0.com',
             options: {
                 languageDictionary: {
-                    emailInputPlaceholder: "something@youremail.com",
                     title: "SmartGoals"
                 },
                 rememberLastLogin: false,
                 theme : {
-                    primaryColor: '#4dd149'
+                    //pick color
                 }
             }
         });
