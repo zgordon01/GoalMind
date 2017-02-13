@@ -1,0 +1,18 @@
+<div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
+
+
+  <div class="panel panel-default" >
+    <div class="panel-heading">
+      <h1 class="panel-title">{{goal.title}}</h1>
+    </div>
+    <div class="panel-body">
+      <span ng-if="goal.goal_type=='OPEN'">Priority: {{ goal.priority }} <br/> </span>
+      <span ng-if="goal.goal_type=='SINGLE'">Due Date: {{ goal.due_date }} <br /></span>
+      <span ng-if="goal.description">Description: {{ goal.description }}<br /></span>
+      <span ng-if="goal.goal_type=='REPEAT'">Repeat: {{ goal.repeat }}<br /></span>
+    </div>
+  </div>
+
+  <!--Add buttons for editing, deleting, marking goal as complete -->
+  
+</div>

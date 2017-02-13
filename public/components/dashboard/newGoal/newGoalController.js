@@ -1,4 +1,13 @@
-angular.module('app').controller('NewGoalController', ['$scope', '$state', 'goalService', function($scope, $state, goalService){
+angular.module('app').controller('NewGoalController', ['$scope', '$state', 'goalService', 'jwtHelper', '$state', function($scope, $state, goalService, jwtHelper, $state){
+  /*
+  if (localStorage.getItem('id_token') && !jwtHelper.isTokenExpired(localStorage.getItem('id_token'))) {
+      console.log("auth good");
+  } else {
+      authManager.unauthenticate();
+      $state.transitionTo('home');
+  }
+  */
+
   $scope.selection;
   $scope.newgoal={};
   $scope.buttonPressed = function(){
@@ -63,6 +72,16 @@ angular.module('app').controller('NewGoalController', ['$scope', '$state', 'goal
   }
   $scope.clearSelection=function(){
     $scope.selection="";
+  }
+
+  function init() {
+      console.log("home init ran");
+      if (localStorage.getItem('id_token') && !jwtHelper.isTokenExpired(localStorage.getItem('id_token'))) {
+          console.log("auth good");
+      } else {
+          authManager.unauthenticate();
+          $state.transitionTo('home');
+      }
   }
 
 

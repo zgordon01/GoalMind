@@ -60,6 +60,21 @@ router.route('/complete')
             res.sendStatus(400);
         }
     });
+		router.route('/view')
+		    .post(function(req, res) {
+		        if (req.body.goal_id) {
+		            SmartGoal.findById(req.body.goal_id, function(err, goal) {
+		                if (err) {
+		                    res.status(500).send(err);
+		                } else {
+
+		                  res.json(goal);
+		                }
+		            });
+		        } else {
+		            res.sendStatus(400);
+		        }
+		    });
 router.route('/')
 
     .post(function(req, res) {
@@ -82,7 +97,7 @@ router.route('/')
 							{
 								goal.priority=req.body.priority;
 							}
-						
+
             goal.complete = false;
 
 			goal.user_id = res.locals.user_id;

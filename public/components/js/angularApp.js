@@ -29,22 +29,27 @@
                 url: '/dashboard',
                 controller: 'DashboardController',
                 templateUrl: './components/dashboard/dashboard.html',
-                data: {
-                    requiresLogin: true
-                },
+
                 controllerAs: 'dash'
             })
             .state('dashboard.goals', {
                 url: '/goals',
-                templateUrl: './components/dashboard/goalList.html',
+                templateUrl: './components/dashboard/goalList/goalList.html',
                 controller: "GoalListController"
 
             }).state('dashboard.newGoal', {
                 url: '/newgoal',
-                templateUrl: './components/dashboard/newGoal.html',
+                templateUrl: './components/dashboard/newGoal/newGoal.html',
                 controller: 'NewGoalController'
 
+            }).state('dashboard.viewGoal', {
+                url: '/viewgoal',
+                templateUrl: './components/dashboard/viewGoal/viewGoal.html',
+                params : { goalId: null, hiddenParam:'YES',},
+                controller: 'ViewGoalController'
+
             })
+
             .state('dashboard.calendar', {
                 url: '/calendar',
                 templateUrl: './components/dashboard/calendar.html'

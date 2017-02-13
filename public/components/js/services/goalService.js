@@ -47,6 +47,27 @@ angular.module('app').factory('goalService', ['$http', function(http) {
                 return "this is bad";//must change at a later date
 
             });
+        },
+        getSingleGoal : function(goal_id, callback){
+            http({
+                method: 'POST',
+                url: '/smartgoals/view',
+                data: {
+                  "goal_id": goal_id
+
+
+                },
+                headers: {
+                    "Content-Type": 'application/json'
+                }
+            }).then(function successCallback(response) {//successCallback
+                callback(response.data);
+
+            }, function errorCallback(response) {//errorCallback do something to inform of error
+
+                return "this is bad";//must change at a later date
+
+            });
         }
     }
 }]);
