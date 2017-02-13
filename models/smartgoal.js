@@ -11,7 +11,7 @@ var SmartGoalSchema = new Schema({
   description: String, //Do we want description to be required?
   user_id: {type: String, required: true}, //Number or string?
   //user_token: {type: String, required: true}  <-- By removing from schema, token should not be stored in object
-  difficulty: {type: String, enum: diff, required: true},
+  priority: {type: String, enum: diff, required: true},
   goal_type: {type: String, enum: types, required: true},
   due_date: Date,
   repeat: {type: String, enum: rep},

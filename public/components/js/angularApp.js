@@ -17,6 +17,14 @@
                 templateUrl: './components/home/home.html',
                 controllerAs: 'vm'
             })
+            .state('home.about', {
+              url: 'about',
+              templateUrl: './components/home/about.html'
+            })
+            .state('home.features', {
+              url: 'features',
+              templateUrl: './components/home/features.html'
+            })
             .state('dashboard', {
                 url: '/dashboard',
                 controller: 'DashboardController',
@@ -28,11 +36,23 @@
             })
             .state('dashboard.goals', {
                 url: '/goals',
-                templateUrl: './components/dashboard/goals.html'
+                templateUrl: './components/dashboard/goalList.html',
+                controller: "GoalListController"
 
-            }).state('dashboard.calendar', {
+            }).state('dashboard.newGoal', {
+                url: '/newgoal',
+                templateUrl: './components/dashboard/newGoal.html',
+                controller: 'NewGoalController'
+
+            })
+            .state('dashboard.calendar', {
                 url: '/calendar',
                 templateUrl: './components/dashboard/calendar.html'
+
+            })
+            .state('dashboard.graph', {
+                url: '/graph',
+                templateUrl: './components/dashboard/graph.html'
 
             });
         $urlRouterProvider.otherwise('/');

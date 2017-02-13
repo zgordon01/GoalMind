@@ -19,6 +19,7 @@ router.route('/byuser')
 	.post(function(req, res) {
 		var query = {};
 		query.user_id = res.locals.user_id;
+
 		SmartGoal.find(query, function (err, goals) {
 			if (err)
 			{
@@ -26,6 +27,8 @@ router.route('/byuser')
 			}
 			res.json(goals);
 		});
+
+
 	});
 
 router.route('/complete')
@@ -57,11 +60,11 @@ router.route('/complete')
             res.sendStatus(400);
         }
     });
-router.route('/goal')
+router.route('/')
 
     .post(function(req, res) {
         var goal = new SmartGoal();
-        if (req.body.title && req.body.description && req.body.difficulty && req.body.goal_type) {
+        if (req.body.title && req.body.description && req.body.priority && req.body.goal_type) {
             if (req.body.repeat) {
                 goal.repeat = req.body.repeat;
             }
@@ -70,7 +73,7 @@ router.route('/goal')
             }
             goal.title = req.body.title;
             goal.description = req.body.description;
-            goal.difficulty = req.body.difficulty;
+            goal.priority = req.body.priority;
             goal.goal_type = req.body.goal_type;
             goal.complete = false;
 

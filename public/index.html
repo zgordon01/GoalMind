@@ -49,9 +49,11 @@
                 <div class="col-xs-2" ng-if="isAuthenticated">
                     <nav class="side-navbar">
                         <ul>
-                            <li><a ui-sref="dashboard.goals"><span><i class="fa fa-line-chart"></i></span><span>Goals</span></a></li>
-                            <li><a ui-sref="dashboard.calendar"><span><i class="fa fa-calendar"></i></span><span>Calendar</span></a></li>
-                            <li><a href="#"><span><i class="fa fa-bar-chart"></i></span><span>Graph</span></a></li>
+                            <li><a ui-sref="dashboard.goals"><span><i class="fa fa-tasks"></i></span><span>Goals</span></a></li>
+                            <li><a ui-sref="dashboard.newGoal"><span><i class="fa fa-edit"></i></span><span>Goals</span></a></li>
+
+                            <li><a ui-sref="dashboard.calendar"><span><i class="fa fa-calendar-check-o"></i></span><span>Calendar</span></a></li>
+                            <li><a ui-sref="dashboard.graph"><span><i class="fa fa-bar-chart"></i></span><span>Graph</span></a></li>
 
                             <li><span>You have {{userProfile.points}} points!</span></li>
                         </ul>
@@ -82,6 +84,10 @@
     <script type="text/javascript" src="./components/dashboard/dashboardController.js"></script>
     <script type="text/javascript" src="./components/directives/example/testDirectiveController.js"></script>
     <script type="text/javascript" src="./components/directives/example/testDirective.js"></script>
+    <script type="text/javascript" src="./components/dashboard/goalListController.js"></script>
+    <script type="text/javascript" src="./components/dashboard/newGoalController.js"></script>
+
+
 
 
 </body>
