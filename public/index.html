@@ -11,56 +11,15 @@
 
     <title>Smart Goals</title>
 
-    <!-- Bootstrap Core CSS -->
-    <link href="./components/home_theme/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom Fonts -->
-    <link href="./components/home_theme/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
-    <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
-
-    <!-- Theme CSS -->
-    <link href="./components/home_theme/css/agency.min.css" rel="stylesheet">
-
     <!-- Styles -->
-    <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
-    <!--<link href="./components/css/bootstrap/bootstrap.min.css" rel="stylesheet" />-->
+    <link href="./components/css/agency.min.css" rel="stylesheet" />
+    <link href="./components/css/bootstrap/bootstrap.min.css" rel="stylesheet" />
     <link href="./components/css/main.css" rel="stylesheet" />
 
 </head>
-
 <body>
-
     <div ng-app="app">
         <div class="container-fluid">
-            <!--<nav class="navbar navbar-inverse">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                      <span class="sr-only">Toggle navigation</span>-->
-                      <!-- Next 3 lines creates the "hamburger" -->
-                      <!--<span class="icon-bar"></span>
-                      <span class="icon-bar"></span>
-                      <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" ui-sref="home">Smart Goals</a>
-                </div>-->
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <!--<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav">
-                        <li ng-if="isAuthenticated"><a ui-sref="dashboard">Home<span class="sr-only">(current)</span></a></li>
-                        <li ng-if="!isAuthenticated"><a ng-click="authService.login()" class="makePointer">Log In</a></li>
-                        <li ng-if="isAuthenticated"><a ui-sref="home" ng-click="authService.logout()">Log Out</a></li>
-
-                    </ul>
-                    <a href="#" class="navbar-trigger"><span></span></a>
-
-                </div>-->
-                <!-- /.navbar-collapse -->
-
-            <!--</nav>-->
-
             <div class="row">
                 <!--Create vertical navbar-->
                 <div class="col-xs-2" ng-if="isAuthenticated">
@@ -88,25 +47,18 @@
         </div>
     </div>
 
-   <!-- jQuery -->
-    <script src="./components/home_theme/vendor/jquery/jquery.min.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="./components/home_theme/vendor/bootstrap/js/bootstrap.min.js"></script>
-
-    <!-- Plugin JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js" integrity="sha384-mE6eXfrb8jxl0rzJDBRanYqgBxtJ6Unn4/1F7q4xRRyIw7Vdg9jP4ycT7x1iVsgb" crossorigin="anonymous"></script>
-
-    <!-- Contact Form JavaScript -->
-    <script src="./components/home_theme/js/jqBootstrapValidation.js"></script>
-    <script src="./components/home_theme/js/contact_me.js"></script>
-
-    <!-- Theme JavaScript -->
-    <script src="./components/home_theme/js/agency.min.js"></script>
-
-
+    <!-- JQuery and Bootstrap JS -->
     <script type="text/javascript" src="/jq/jquery.min.js"></script>
     <script type="text/javascript" src="/boots/bootstrap.min.js"></script>
+
+    <!-- Home Page -->
+    <script type="text/javascript" src="./components/js/jqBootstrapValidation.js"></script>
+    <script type="text/javascript" src="./components/js/contact_me.js"></script>
+    <script type="text/javascript" src="./components/js/agency.min.js"></script>
+    <script type="text/javascript" src="./components/js/easing.js"></script>
+
+    <!-- App -->
+
     <script type="text/javascript" src="/ang/angular.min.js"></script>
     <script type="text/javascript" src="https://cdn.auth0.com/js/lock/10.8/lock.min.js"></script>
     <script type="text/javascript" src="/lock/angular-lock.min.js"></script>
