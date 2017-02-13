@@ -63,8 +63,18 @@
         $locationProvider.hashPrefix('');
 
         //setup angular-flash messages
-        FlashProvider.setTimeout(5000);
+        FlashProvider.setTimeout(4000);
         FlashProvider.setShowClose(false);
+        FlashProvider.setAutoDismiss(true);
+        FlashProvider.setTemplate(`
+        <div style="text-align:center; margin-bottom:0px;" role="alert" id="{{flash.config.id}}" class="alert {{flash.config.class}} alert-{{flash.type}} alert-dismissible alertIn alertOut">
+            <div type="button" class="close" ng-if="flash.showClose" close-flash="{{flash.id}}">
+                <span aria-hidden="true">&times;</span>
+                <span class="sr-only">Close</span>
+            </div>
+            <span dynamic="flash.text"></span>
+        </div>
+    `);
 
     }
 

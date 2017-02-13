@@ -9,7 +9,7 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
     <!-- Styles -->
-    <link href="./components/css/angular-flash.css" rel="stylesheet" />
+    <link href="/ang-flash/angular-flash.min.css" rel="stylesheet" />
     <link href="./components/css/bootstrap/bootstrap.min.css" rel="stylesheet" />
     <link href="./components/css/main.css" rel="stylesheet" />
 </head>
@@ -20,10 +20,10 @@
         <div class="container-fluid">
             <nav ng-if="isAuthenticated" class="navbar navbar-inverse">
                 <!-- Collect the nav links, forms, and other content for toggling -->
-                    <ul class="nav navbar-nav">
-                        <li><a ng-click="authService.logout()" class="makepointer">Log Out</a></li>
-                    </ul>
-                    <flash-message style="text-align:center;"></flash-message>
+                <ul class="nav navbar-nav">
+                    <li><a ng-click="authService.logout()" class="makepointer">Log Out</a></li>
+                </ul>
+                <flash-message></flash-message>
                 <!-- /.navbar-collapse -->
 
             </nav>
@@ -60,7 +60,7 @@
     <script type="text/javascript" src="/ang-jwt/angular-jwt.min.js"></script>
     <script type="text/javascript" src="/ui-router/angular-ui-router.min.js"></script>
     <script type="text/javascript" src="./components/js/auth0-variables.js"></script>
-    <script type="text/javascript" src="/ang-flash/angular-flash.min.js"></script>
+    <script type="text/javascript" src="./components/js/angular-flash.js"></script>
     <script type="text/javascript" src="./components/js/angularApp.js"></script>
     <script type="text/javascript" src="./components/js/angularApp.run.js"></script>
     <script type="text/javascript" src="./components/js/services/userService.js"></script>
