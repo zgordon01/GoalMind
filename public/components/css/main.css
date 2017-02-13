@@ -35,13 +35,14 @@
 
 /* Separate the li elements away from eachother*/
 .side-navbar ul li {
-/*
-	padding: 20px 15px;
-	border-bottom: 1px solid #afb3b6;
-*/
 	padding: 12px 10px;
 	border-bottom: 1px solid lightgrey;
 }
+/*Hover side nav-bar elements*/
+.side-navbar ul li:hover {
+	background-color: #ffffff;
+}
+
 
 /* Separates the text from the icon*/
 .side-navbar span {
