@@ -1,46 +1,92 @@
 <div class="row">
-    <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
+    <div ng-if="!selection" class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
       <div class="panel panel-info">
           <div class="panel-heading">
           <h3 class="panel-title">New Goal</h3>
         </div>
           <div class="row">
           <form class="form-horizontal panel-body">
-              <div class="form-group">
-                  <label for="select" class="col-lg-4 col-md-3 col-sm-2 control-label">Title</label>
-                  <div class="col-sm-10 col-md-9 col-lg-8">
-                      <textarea class="form-control" rows="1" ng-model="newgoal.title"></textarea>
-                  </div>
-                  <label for="select" class="col-lg-4 col-md-3 col-sm-2 control-label">Description</label>
-                  <div class="col-sm-10 col-md-9 col-lg-8">
-                      <textarea class="form-control" rows="1" ng-model="newgoal.description"></textarea>
-                  </div>
-                  <label for="select" class="col-lg-4 col-md-3 col-sm-2 control-label">Priority</label>
-                  <div class="col-sm-10 col-md-9 col-lg-8">
-                      <textarea class="form-control" rows="1" ng-model="newgoal.priority"></textarea>
-                  </div>
-                  <label for="select" class="col-lg-4 col-md-3 col-sm-2 control-label">Goal Type</label>
-                  <div class="col-sm-10 col-md-9 col-lg-8">
-                      <textarea class="form-control" rows="1" ng-model="newgoal.goal_type"></textarea>
-                  </div>
-                  <label for="select" class="col-lg-4 col-md-3 col-sm-2 col-md-8 col-lg-6 control-label">Due Date</label>
-                  <div class="col-sm-10 col-md-9 col-lg-8">
-                      <textarea class="form-control" rows="1" ng-model="newgoal.due_date"></textarea>
-                  </div>
-                  <label for="select" class="col-lg-4 col-md-3 col-sm-2 col-md-8 col-lg-6 control-label">Repeat</label>
-                  <div class="col-sm-10 col-md-9 col-lg-8">
-                      <textarea class="form-control" rows="1" ng-model="newgoal.repeat"></textarea>
-                  </div>
-
-                  <div class="col-sm-10 col-md-9 col-lg-8">
-                      <button class="btn btn-primary" ng-click="buttonPressed()">Submit</button>
-                  </div>
-
-              </div>
+            <div ng-click="setSelection('OPEN')">
+              <h3>Basic Goal or Task</h3>
+              <p>For simple, one-time tasks you would like to accomplish.  No set due date, but you can assign a priority level.</p>
+            </div>
+            <div ng-click="setSelection('SINGLE')">
+              <h3>Basic Goal, Due Date</h3>
+              <p>For simple, one-time tasks that you have to accomplish by a certian date.</p>
+            </div>
+            <div ng-click="setSelection('REPEAT')">
+              <h3>Repeating Goal</h3>
+              <p>For an activity you would like to accomplish a set number of times per week or per month.</p>
+            </div>
+            <div ng-click="setSelection('PROJECT')">
+              <h3>Project Goal *under construction*</h3>
+              <p>For a large-scale project, with assignable checkpoints</p>
+            </div>
           </form>
         </div>
       </div>
-
-
     </div>
   </div>
+
+
+<div class="row">
+    <div ng-if="selection" class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
+      <div class="panel panel-info">
+          <div class="panel-heading">
+          <h3 class="panel-title">{{ selection }}</h3>
+        </div>
+          <div class="row">
+            <form class="form-horizontal panel-body">
+
+                <div class="form-group">
+                    <label for="select" class="col-lg-4 col-md-3 col-sm-2 control-label">Title</label>
+                    <div class="col-sm-10 col-md-9 col-lg-8">
+                        <textarea class="form-control" rows="1" ng-model="newgoal.title"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="select" class="col-lg-4 col-md-3 col-sm-2 control-label">Description (Optional)</label>
+                    <div class="col-sm-10 col-md-9 col-lg-8">
+                        <textarea class="form-control" rows="1" ng-model="newgoal.description"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                  <div ng-if="isOpen()">
+                    <label for="select" class="col-lg-4 col-md-3 col-sm-2 control-label">Priority</label>
+
+                    <select name="select" class="col-sm-10 col-md-9 col-lg-8" ng-model="newgoal.priority">
+                      <option value="LOW" >Low</option>
+                      <option value="MEDIUM">Medium</option>
+                      <option value="HIGHT">High</option>
+                    </select>
+
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div ng-if="isSingle()">
+                    <label for="select" class="col-lg-4 col-md-3 col-sm-2 control-label" >Due Date</label>
+                    <div class="col-sm-10 col-md-9 col-lg-8" >
+                        <input type="date" class="form-control" ng-model="newgoal.due_date">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                    <div ng-if="isRepeat()">
+                    <label for="select" class="col-lg-4 col-md-3 col-sm-2 control-label" >Repeat</label>
+                    <div class="col-sm-10 col-md-9 col-lg-8" >
+                        <textarea class="form-control" rows="1" ng-model="newgoal.repeat"></textarea>
+                    </div>
+                  </div>
+                </div>
+            </div>
+                  <button class="btn btn-primary col-xs-5 " ng-click="clearSelection()">Back</button>
+                  <div class="col-xs-2"></div>
+                  <button class="btn btn-primary col-xs-5 " ng-click="buttonPressed()">Submit</button>
+            </form>
+        </div>
+      </div>
+    </div>

@@ -64,7 +64,11 @@ router.route('/')
 
     .post(function(req, res) {
         var goal = new SmartGoal();
-        if (req.body.title && req.body.description && req.body.priority && req.body.goal_type) {
+        if (req.body.title && req.body.goal_type) {
+						if (req.body.description)
+						{
+							goal.description = req.body.description;
+						}
             if (req.body.repeat) {
                 goal.repeat = req.body.repeat;
             }
@@ -72,9 +76,13 @@ router.route('/')
                 goal.due_date = req.body.due_date;
             }
             goal.title = req.body.title;
-            goal.description = req.body.description;
-            goal.priority = req.body.priority;
             goal.goal_type = req.body.goal_type;
+
+							if(req.body.priority)
+							{
+								goal.priority=req.body.priority;
+							}
+						
             goal.complete = false;
 
 			goal.user_id = res.locals.user_id;

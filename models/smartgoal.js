@@ -11,7 +11,7 @@ var SmartGoalSchema = new Schema({
   description: String, //Do we want description to be required?
   user_id: {type: String, required: true}, //Number or string?
   //user_token: {type: String, required: true}  <-- By removing from schema, token should not be stored in object
-  priority: {type: String, enum: diff, required: true},
+  priority: {type: String},
   goal_type: {type: String, enum: types, required: true},
   due_date: Date,
   repeat: {type: String, enum: rep},
@@ -24,6 +24,10 @@ SmartGoalSchema.pre('save', function(next){
   if (this.goal_type == "SINGLE" && !this.due_date)
   {
     return next(new Error("ERROR: Must set due_date when goal_type is SINGLE"));
+  }
+  if (this.goal_type == "OPEN" && !this.priority)
+  {
+    return next(new Error("ERROR: Must set priority when goal_type is OPEN"));
   }
   else if (this.goal_type == "REPEAT" && !this.repeat)
   {
