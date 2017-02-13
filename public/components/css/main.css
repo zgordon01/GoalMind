@@ -3,11 +3,17 @@
     cursor: pointer;
 }
 
-.navbar {
+/*.navbar {
     margin-bottom: 0;
     border-radius: 0;
     border-bottom: 1.5px solid #afb3b6;
+}*/
+
+.btn-primary {
+	margin-top: 7px;
+	margin-left: 10px;
 }
+
 .container-fluid{
     padding-right: 0px;
     padding-left: 0px;
