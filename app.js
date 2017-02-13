@@ -16,15 +16,14 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 
-
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(favicon(path.join(__dirname, 'public', './components/img/favicon.ico')));//favicon setup
 console.log("START OF USE STATEMENTS");
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: false
 }));
+
 app.use(cookieParser());
 //static pathing
 app.use(express.static(path.join(__dirname, 'public')));
@@ -34,6 +33,7 @@ app.use('/lock', express.static(__dirname + '/node_modules/angular-lock/dist'));
 app.use('/ang', express.static(__dirname + '/node_modules/angular/'));
 app.use('/boots', express.static(__dirname + '/node_modules/bootstrap/dist/js/'));
 app.use('/jq', express.static(__dirname + '/node_modules/jquery/dist/'));
+app.use('/ang-flash', express.static(__dirname + '/node_modules/angular-flash-alert/dist/'));
 
 //middleware to ensure user_token and user_id match for ALL PATHS BUT /users. Also extracts the user_id and ties it to res.locals.user_id
 app.use(function(req, res, next) {
@@ -55,6 +55,21 @@ app.use(function(req, res, next) {
         next();
     }
 });
+function verifyUser(request, response, callback) {
+    var UserSchema = require('./models/user.js');
+    UserSchema.findOne({
+        user_token: request.get("Authorization")
+    }, function(err, user) {
+        if (err) { //handle this better
+            response.sendStatus(500);
+        }else if (user) {
+            response.locals.user_id = user.user_id;
+            callback(true);//VALID KEY
+        } else {
+            callback(false);//INVALID KEY
+        }
+    });
+}
 
 //route configuration
 console.log("START OF ROUTE DECLARATIONS");
@@ -71,21 +86,6 @@ app.use(function(req, res, next) {
     next(err);
 });
 
-function verifyUser(request, response, callback) {
-    var UserSchema = require('./models/user.js');
-    UserSchema.findOne({
-        user_token: request.get("Authorization")
-    }, function(err, user) {
-        if (err) { //handle this better
-            response.sendStatus(500);
-        }else if (user) {
-            response.locals.user_id = user.user_id;
-            callback(true);//VALID KEY
-        } else {
-            callback(false);//INVALID KEY
-        }
-    });
-}
 
 // error handler
 app.use(function(err, req, res, next) {

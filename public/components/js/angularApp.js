@@ -3,19 +3,19 @@
     'use strict';
 
     angular
-        .module('app', ['auth0.lock', 'angular-jwt', 'ui.router'])
+        .module('app', ['auth0.lock', 'angular-jwt', 'ui.router', 'ngFlash'])
         .config(config);
 
-    config.$inject = ['$stateProvider', 'lockProvider', 'jwtOptionsProvider', '$locationProvider', '$urlRouterProvider', '$httpProvider'];
+    config.$inject = ['$stateProvider', 'lockProvider', 'jwtOptionsProvider', '$locationProvider', '$urlRouterProvider', '$httpProvider', 'FlashProvider'];
 
-    function config($stateProvider, lockProvider, jwtOptionsProvider, $locationProvider, $urlRouterProvider, $httpProvider) {
+    function config($stateProvider, lockProvider, jwtOptionsProvider, $locationProvider, $urlRouterProvider, $httpProvider, FlashProvider) {
 
         $stateProvider
             .state('home', {
                 url: '/',
                 controller: 'HomeController',
                 templateUrl: './components/home/home.html',
-                controllerAs: 'vm'
+                controllerAs: 'hm'
             })
             .state('home.about', {
               url: 'about',
@@ -86,6 +86,20 @@
         // Remove the ! from the hash so that
         // auth0.js can properly parse it
         $locationProvider.hashPrefix('');
+
+        //setup angular-flash messages
+        FlashProvider.setTimeout(4000);
+        FlashProvider.setShowClose(false);
+        FlashProvider.setAutoDismiss(true);
+        FlashProvider.setTemplate(`
+        <div style="text-align:center; margin-bottom:0px;" role="alert" id="{{flash.config.id}}" class="alert {{flash.config.class}} alert-{{flash.type}} alert-dismissible alertIn alertOut">
+            <div type="button" class="close" ng-if="flash.showClose" close-flash="{{flash.id}}">
+                <span aria-hidden="true">&times;</span>
+                <span class="sr-only">Close</span>
+            </div>
+            <span dynamic="flash.text"></span>
+        </div>
+    `);
 
     }
 

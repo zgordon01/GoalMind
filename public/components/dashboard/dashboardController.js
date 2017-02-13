@@ -11,4 +11,11 @@ angular.module('app').controller('DashboardController', ['$state', 'authService'
 
 
 
+    init();
+
+    function init() {
+        console.log("dash init ran");
+        userService.sync();
+    }
+    var dash = this;
 }]);

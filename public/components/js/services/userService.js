@@ -1,4 +1,5 @@
-angular.module('app').factory('userService', ['$http', 'profileService',function(http, profileService) {
+'use strict';
+angular.module('app').factory('userService', ['$http', '$rootScope', function(http, $rootScope) {
     return {
         mongoAuth: function(user_id, callback) {
             http({
@@ -11,13 +12,10 @@ angular.module('app').factory('userService', ['$http', 'profileService',function
                     "Content-Type": 'application/json'
                 }
             }).then(function successCallback(response) {//successCallback
-
-                callback(response.data);
-
+                localStorage.setItem('userProfile', JSON.stringify(response));
+                callback(true);
             }, function errorCallback(response) {//errorCallback do something to inform of error
-
-                return "this is bad";//must change at a later date
-
+                callback(false)
             });
         },
         updateUser : function(updates, callback){
@@ -31,14 +29,22 @@ angular.module('app').factory('userService', ['$http', 'profileService',function
                     "Content-Type": 'application/json'
                 }
             }).then(function successCallback(response) {//successCallback
-                profileService.setUserProfile(response.data);
-                callback(response.data);
+                localStorage.setItem('userProfile', JSON.stringify(response.data));
+                $rootScope.userProfile = response.data;
+                callback(true);
 
             }, function errorCallback(response) {//errorCallback do something to inform of error
-
-                return "this is bad";//must change at a later date
-
+                callback(false);
             });
+        },
+        logout : function(){
+            localStorage.removeItem('id_token');
+            localStorage.removeItem('userProfile');
+            localStorage.removeItem('authProfile');
+        },
+        sync : function(){
+            $rootScope.authProfile = JSON.parse(localStorage.getItem('authProfile'));
+            $rootScope.userProfile = JSON.parse(localStorage.getItem('userProfile'));
         }
     }
 }]);

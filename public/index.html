@@ -12,6 +12,7 @@
     <title>Smart Goals</title>
 
     <!-- Styles -->
+    <link href="/ang-flash/angular-flash.min.css" rel="stylesheet" />
     <link href="./components/css/agency.min.css" rel="stylesheet" />
     <link href="./components/css/bootstrap/bootstrap.min.css" rel="stylesheet" />
     <link href="./components/css/main.css" rel="stylesheet" />
@@ -20,6 +21,16 @@
 <body>
     <div ng-app="app">
         <div class="container-fluid">
+            <nav ng-if="isAuthenticated" class="navbar navbar-inverse">
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <ul class="nav navbar-nav">
+                    <li><a ng-click="authService.logout()" class="makepointer">Log Out</a></li>
+                </ul>
+                <flash-message></flash-message>
+                <!-- /.navbar-collapse -->
+
+            </nav>
+
             <div class="row">
                 <!--Create vertical navbar-->
                 <div class="col-xs-2" ng-if="isAuthenticated">
@@ -36,6 +47,12 @@
                             <li ng-if="isAuthenticated"><a ui-sref="home" ng-click="authService.logout()">Log Out</a></li>
 
 
+                            <li>
+                                <div style="text-align:center;">
+                                    <a ui-sref="dashboard"><img class="img-circle center-block img-responsive" src="{{authProfile.picture_large ? authProfile.picture_large : authProfile.picture}}" width="200" height="200" /></a>
+                                    <span class="badge">{{userProfile.points}}</span>
+                                </div>
+                            </li>
                         </ul>
                     </nav>
                 </div>
@@ -65,10 +82,10 @@
     <script type="text/javascript" src="/ang-jwt/angular-jwt.min.js"></script>
     <script type="text/javascript" src="/ui-router/angular-ui-router.min.js"></script>
     <script type="text/javascript" src="./components/js/auth0-variables.js"></script>
+    <script type="text/javascript" src="./components/js/angular-flash.js"></script>
     <script type="text/javascript" src="./components/js/angularApp.js"></script>
     <script type="text/javascript" src="./components/js/angularApp.run.js"></script>
     <script type="text/javascript" src="./components/js/services/userService.js"></script>
-    <script type="text/javascript" src="./components/js/services/profileService.js"></script>
     <script type="text/javascript" src="./components/js/services/goalService.js"></script>
     <script type="text/javascript" src="./components/js/services/auth.service.js"></script>
     <script type="text/javascript" src="./components/home/home.controller.js"></script>
