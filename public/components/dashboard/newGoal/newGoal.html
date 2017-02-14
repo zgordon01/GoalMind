@@ -1,40 +1,42 @@
-<div class="row">
     <div ng-if="!selection" class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
-      <div class="panel panel-info">
-          <div class="panel-heading">
-          <h3 class="panel-title">New Goal</h3>
+
+
+      <h1>New Goal</h1>
+      <hr />
+      <a ng-click="setSelection('OPEN')"><h3>Basic Goal, Priority Level</h3></a>
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div>
+              For simple, one-time tasks or activities you would like to accomplish.  No set due date, but you can assign a priority level.</p>
+            </div>
+          </div>
         </div>
-          <div class="row">
-          <form class="form-horizontal panel-body">
-            <div ng-click="setSelection('OPEN')">
-              <h3>Basic Goal or Task</h3>
-              <p>For simple, one-time tasks you would like to accomplish.  No set due date, but you can assign a priority level.</p>
-            </div>
-            <div ng-click="setSelection('SINGLE')">
-              <h3>Basic Goal, Due Date</h3>
-              <p>For simple, one-time tasks that you have to accomplish by a certian date.</p>
-            </div>
-            <div ng-click="setSelection('REPEAT')">
-              <h3>Repeating Goal</h3>
-              <p>For an activity you would like to accomplish a set number of times per week or per month.</p>
-            </div>
-            <div ng-click="setSelection('PROJECT')">
-              <h3>Project Goal *under construction*</h3>
-              <p>For a large-scale project, with assignable checkpoints</p>
-            </div>
-          </form>
+
+      <a ng-click="setSelection('SINGLE')"><h3>Basic Goal, Due Date</h3></a>
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div>
+              For simple, one-time tasks or activities that you have to accomplish by a certian date.
+          </div>
+        </div>
+      </div>
+
+      <a ng-click="setSelection('REPEAT')"><h3>Repeating Goal</h3></a>
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div>
+            For an activity you would like to accomplish a set number of times per week or per month.
+          </div>
         </div>
       </div>
     </div>
-  </div>
+
 
 
 <div class="row">
     <div ng-if="selection" class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
+      <h1>{{ selection }} Goal</h1>
       <div class="panel panel-info">
-          <div class="panel-heading">
-          <h3 class="panel-title">{{ selection }}</h3>
-        </div>
           <div class="row">
             <form class="form-horizontal panel-body">
 
