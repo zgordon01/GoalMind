@@ -33,11 +33,11 @@ angular.module('app').controller('ViewGoalController', ['$scope', '$state', '$st
         console.log(response);
         if(response.message == "Goal Complete!")
         {
-          alert(response.message);
+          //alert(response.message);
           $state.transitionTo("dashboard.goals");
         }
         else {
-          alert("Error with goal..."); //Not sure when this would happen, probably need better error
+          //alert("Error with goal..."); //Not sure when this would happen, probably need better error
         }
       });
     }
@@ -49,12 +49,12 @@ angular.module('app').controller('ViewGoalController', ['$scope', '$state', '$st
       goalService.deleteGoal($stateParams.goalId, function(response) {
         if(response.message == "Goal Deleted")
         {
-          console.log(response);
-          alert(response.message);
+          //console.log(response);
+          //lert(response.message);
           $state.transitionTo("dashboard.goals");
         }
         else {
-          alert("error deleting goal..."); //better message here
+          //alert("error deleting goal..."); //better message here
         }
       })
     }
