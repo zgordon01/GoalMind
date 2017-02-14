@@ -1,12 +1,4 @@
 angular.module('app').controller('NewGoalController', ['$scope', '$state', 'goalService', 'jwtHelper', '$state', function($scope, $state, goalService, jwtHelper, $state){
-  /*
-  if (localStorage.getItem('id_token') && !jwtHelper.isTokenExpired(localStorage.getItem('id_token'))) {
-      console.log("auth good");
-  } else {
-      authManager.unauthenticate();
-      $state.transitionTo('home');
-  }
-  */
 
   $scope.selection;
   $scope.newgoal={};
@@ -18,7 +10,7 @@ angular.module('app').controller('NewGoalController', ['$scope', '$state', 'goal
         $state.transitionTo("dashboard.goals");
       }
       else {
-        alert("error making goal");
+        //alert("error making goal");
         console.log("error");
       }
 
@@ -32,7 +24,6 @@ angular.module('app').controller('NewGoalController', ['$scope', '$state', 'goal
   $scope.setSelection = function(sel){
     $scope.selection=sel;
     $scope.newgoal.goal_type=sel;
-    console.log(sel);
   }
   $scope.isOpen=function(){
     if ($scope.selection=="OPEN")
@@ -74,15 +65,7 @@ angular.module('app').controller('NewGoalController', ['$scope', '$state', 'goal
     $scope.selection="";
   }
 
-  function init() {
-      console.log("home init ran");
-      if (localStorage.getItem('id_token') && !jwtHelper.isTokenExpired(localStorage.getItem('id_token'))) {
-          console.log("auth good");
-      } else {
-          authManager.unauthenticate();
-          $state.transitionTo('home');
-      }
-  }
+
 
 
 
