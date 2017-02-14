@@ -1,26 +1,28 @@
 <div class="row">
     <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
       <div ng-if="!noGoals">
-        <h1>Goal List</h1>
+        <h1>Active Goals</h1>
+        <hr />
       </div>
       <div ng-if="noGoals">
         <h3>You don't have any active goals. Set some goals!</h3>
         <button class="btn btn-primary" ng-click=goToNewGoal()>Create Goal</button>
         <hr />
       </div>
-
-
-      <div class="panel panel-default" ng-repeat="goal in goalList">
-        <div class="panel-heading">
-          <a ui-sref="dashboard.viewGoal({goalId: goal._id})"><h3 class="panel-title">{{goal.title}}</h3></a>
+      <div ng-repeat="goal in goalList">
+        <a ui-sref="dashboard.viewGoal({goalId: goal._id})"><h3>{{goal.title}}</h3></a>
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <span ng-if="goal.goal_type=='OPEN'">Priority: {{ goal.priority }} <br/> </span>
+            <span ng-if="goal.goal_type=='SINGLE'">Due Date: {{ goal.due_date }} <br /></span>
+            <span ng-if="goal.description">Description: {{ goal.description }}<br /></span>
+            <span ng-if="goal.goal_type=='REPEAT'">Repeat: {{ goal.repeat }}</span>
+          </div>
+          <div class="panel-footer">
+            <button class="btn btn-primary" ng-click="setAsComplete(goal._id)">Complete!</button>
+          </div>
         </div>
-        <div class="panel-body">
-          <span ng-if="goal.goal_type=='OPEN'">Priority: {{ goal.priority }} <br/> </span>
-          <span ng-if="goal.goal_type=='SINGLE'">Due Date: {{ goal.due_date }} <br /></span>
-          <span ng-if="goal.description">Description: {{ goal.description }}<br /></span>
-          <span ng-if="goal.goal_type=='REPEAT'">Repeat: {{ goal.repeat }}<br /></span>
-          <button class="btn btn-primary" ng-click="setAsComplete()">Complete!</button> <br />
-        </div>
+        <hr />
       </div>
     </div>
 </div>

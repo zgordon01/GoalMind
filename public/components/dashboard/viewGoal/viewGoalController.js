@@ -25,8 +25,10 @@ angular.module('app').controller('ViewGoalController', ['$scope', '$state', '$st
     $state.transitionTo("dashboard.goals");
   }
 
+
+
   $scope.setAsComplete = function() {
-    confirmComplete = confirm("Mark the goal " + $scope.goal.title + " as complete?");
+    confirmComplete = confirm("Mark the goal as complete?");
     if(confirmComplete)
     {
       goalService.setAsComplete($stateParams.goalId, function(response) {

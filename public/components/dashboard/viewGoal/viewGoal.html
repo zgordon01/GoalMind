@@ -1,19 +1,47 @@
-<div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
+<div class="col-sm-10 col-sm-offset-1 col-lg-8 col-lg-offset-2">
+
+  <h1 >{{goal.title}}</h1>
 
 
-  <div class="panel panel-default" >
-    <div class="panel-heading">
-      <h1 class="panel-title">{{goal.title}}</h1>
+
+      <div ng-if="goal.goal_type=='OPEN'"><h3>Priority:</h3>
+        <div class="panel panel-default" >
+          <div class="panel-body">
+            <h4>{{ goal.priority }} </h4>
+          </div>
+        </div>
+      </div>
+
+      <div ng-if="goal.goal_type=='SINGLE'"><h3>Due Date:</h3>
+        <div class="panel panel-default" >
+          <div class="panel-body">
+            <h4>{{ goal.due_date }} </h4>
+          </div>
+        </div>
+      </div>
+
+      <div ng-if="goal.description"><h3>Description:</h3>
+        <div class="panel panel-default" >
+          <div class="panel-body">
+            <h4>{{ goal.description }} </h4>
+          </div>
+        </div>
+      </div>
+
+      <div ng-if="goal.goal_type=='REPEAT'"><h3>Repeat:</h3>
+        <div class="panel panel-default" >
+          <div class="panel-body">
+            <h4>{{ goal.repeat }}</h4>
+          </div>
+        </div>
+      </div>
+
+    <div class="panel panel-default" >
+      <div class="panel-body">
+        <button class="btn btn-primary" ng-click="setAsComplete()">Complete!</button> <br /> <hr />
+        <button class="btn btn-danger" ng-click="deleteGoal()">Delete Goal</button>
+      </div>
     </div>
-    <div class="panel-body">
-      <span ng-if="goal.goal_type=='OPEN'">Priority: {{ goal.priority }} <br/> </span>
-      <span ng-if="goal.goal_type=='SINGLE'">Due Date: {{ goal.due_date }} <br /></span>
-      <span ng-if="goal.description">Description: {{ goal.description }}<br /></span>
-      <span ng-if="goal.goal_type=='REPEAT'">Repeat: {{ goal.repeat }}<br /></span>
-      <button class="btn btn-primary" ng-click="setAsComplete()">Complete!</button> <br />
-      <button class="btn btn-danger" ng-click="deleteGoal()">Delete Goal</button>
-    </div>
-  </div>
 
   <!--Add buttons for editing, deleting, marking goal as complete -->
 

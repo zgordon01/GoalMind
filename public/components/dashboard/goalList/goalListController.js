@@ -22,22 +22,34 @@ angular.module('app').controller('GoalListController', ['$scope', 'goalService',
         console.log("Received user's goals.");
       }
   });
+  $scope.refreshGoals=function()
+  {
+      goalService.getGoals(function(response) {
+          $scope.goalList=response;
+          if($scope.goalList=="")
+          {
+            console.log("User has no goals.");
+            $scope.noGoals=true;
+          }
+          else {
+            console.log("Received user's goals.");
+          }
+      });
+  }
   $scope.goToNewGoal = function() {
     $state.transitionTo("dashboard.newGoal");
   }
-  $scope.setAsComplete = function() {
-    confirmComplete = confirm("Mark the goal " + $scope.goal.title + " as complete?");
+  $scope.setAsComplete = function(goalId) {
+    confirmComplete = confirm("Mark the goal as complete?");
     if(confirmComplete)
     {
-      goalService.setAsComplete($stateParams.goalId, function(response) {
+      goalService.setAsComplete(goalId, function(response) {
         console.log(response);
         if(response.message == "Goal Complete!")
         {
-          //alert(response.message);
-          $state.transitionTo("dashboard.goals");
-        }
-        else {
-          //alert("Error with goal..."); //Not sure when this would happen, probably need better error
+          $scope.refreshGoals();
+          scroll(0,0);
+          //jquery scroll to top with animation, doesnt seem to work: $('html, body').animate({ scrollTop: 0 }, 'fast');
         }
       });
     }
