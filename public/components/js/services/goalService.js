@@ -1,4 +1,4 @@
-angular.module('app').factory('goalService', ['$http', function(http) {
+angular.module('app').factory('goalService', ['$http', 'Flash', function(http, flash) {
 
     return {
         myTest: function(para) {
@@ -19,7 +19,7 @@ angular.module('app').factory('goalService', ['$http', function(http) {
 
             }, function errorCallback(response) {//errorCallback do something to inform of error
 
-                return "this is bad";//must change at a later date
+                flash.create('danger', "OOPS! There was an issue on our end. Try again!");
 
             });
         },
@@ -40,11 +40,12 @@ angular.module('app').factory('goalService', ['$http', function(http) {
                     "Content-Type": 'application/json'
                 }
             }).then(function successCallback(response) {//successCallback
+                flash.create('success', "Goal created.");
                 callback(response.data);
 
             }, function errorCallback(response) {//errorCallback do something to inform of error
 
-                return "this is bad";//must change at a later date
+                flash.create('danger', "OOPS! There was an issue making your goal. Try again!");
 
             });
         },
@@ -65,7 +66,7 @@ angular.module('app').factory('goalService', ['$http', function(http) {
 
             }, function errorCallback(response) {//errorCallback do something to inform of error
 
-                return "this is bad";//must change at a later date
+                flash.create('danger', "OOPS! There was an issue on our end. Try again!");
 
             });
         }
