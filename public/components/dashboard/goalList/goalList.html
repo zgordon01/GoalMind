@@ -19,7 +19,7 @@
           <span ng-if="goal.goal_type=='SINGLE'">Due Date: {{ goal.due_date }} <br /></span>
           <span ng-if="goal.description">Description: {{ goal.description }}<br /></span>
           <span ng-if="goal.goal_type=='REPEAT'">Repeat: {{ goal.repeat }}<br /></span>
-          <!-- possibly have "mark as complete" button on here too -->
+          <button class="btn btn-primary" ng-click="setAsComplete()">Complete!</button> <br />
         </div>
       </div>
     </div>

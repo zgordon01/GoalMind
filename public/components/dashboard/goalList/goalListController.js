@@ -25,6 +25,23 @@ angular.module('app').controller('GoalListController', ['$scope', 'goalService',
   $scope.goToNewGoal = function() {
     $state.transitionTo("dashboard.newGoal");
   }
+  $scope.setAsComplete = function() {
+    confirmComplete = confirm("Mark the goal " + $scope.goal.title + " as complete?");
+    if(confirmComplete)
+    {
+      goalService.setAsComplete($stateParams.goalId, function(response) {
+        console.log(response);
+        if(response.message == "Goal Complete!")
+        {
+          //alert(response.message);
+          $state.transitionTo("dashboard.goals");
+        }
+        else {
+          //alert("Error with goal..."); //Not sure when this would happen, probably need better error
+        }
+      });
+    }
+  }
 
 
 
