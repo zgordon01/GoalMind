@@ -10,11 +10,22 @@ angular.module('app').controller('GoalListController', ['$scope', 'goalService',
   */
 
 
+  $scope.noGoals=false;
   goalService.getGoals(function(response) {
       $scope.goalList=response;
+      if($scope.goalList=="")
+      {
+        console.log("no goals");
+        $scope.noGoals=true;
+      }
+      console.log($scope.goalList);
       //console.log(response);
+
       console.log("got goals.");
   });
+  $scope.goToNewGoal = function() {
+    $state.transitionTo("dashboard.newGoal");
+  }
 
 
 

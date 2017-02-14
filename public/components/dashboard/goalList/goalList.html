@@ -1,7 +1,13 @@
 <div class="row">
     <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
+      <div ng-if="!noGoals">
+        <h1>Goal List</h1>
+      </div>
+      <div ng-if="noGoals">
+        <h3>You don't have any active goals. Set some goals!</h3>
+        <button class="btn btn-primary" ng-click=goToNewGoal()>Create Goal</button>
+      </div>
 
-      <h1>goal list</h1>
 
       <div class="panel panel-default" ng-repeat="goal in goalList">
         <div class="panel-heading">
