@@ -13,6 +13,7 @@ angular.module('app').controller('GoalListController', ['$scope', 'goalService',
   goalService.getGoals(function(response) {
       $scope.goalList=response;
       //console.log(response);
+      console.log("got goals.");
   });
 
 

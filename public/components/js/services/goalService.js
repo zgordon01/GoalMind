@@ -69,6 +69,48 @@ angular.module('app').factory('goalService', ['$http', 'Flash', function(http, f
                 flash.create('danger', "OOPS! There was an issue on our end. Try again!");
 
             });
+        },
+        setAsComplete : function(goal_id, callback){
+            http({
+                method: 'POST',
+                url: '/smartgoals/complete',
+                data: {
+                  "goal_id": goal_id
+
+
+                },
+                headers: {
+                    "Content-Type": 'application/json'
+                }
+            }).then(function successCallback(response) {//successCallback
+                callback(response.data);
+
+            }, function errorCallback(response) {//errorCallback do something to inform of error
+
+                callback("this is bad");//must change at a later date
+
+            });
+        },
+        deleteGoal : function(goal_id, callback){
+            http({
+                method: 'DELETE',
+                url: '/smartgoals/delete/'+goal_id,
+                data: {
+                  "goal_id": goal_id
+
+
+                },
+                headers: {
+                    "Content-Type": 'application/json'
+                }
+            }).then(function successCallback(response) {//successCallback
+                callback(response.data);
+
+            }, function errorCallback(response) {//errorCallback do something to inform of error
+
+                callback("this is bad");//must change at a later date
+
+            });
         }
     }
 }]);

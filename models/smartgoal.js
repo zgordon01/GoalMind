@@ -15,7 +15,9 @@ var SmartGoalSchema = new Schema({
   goal_type: {type: String, enum: types, required: true},
   due_date: Date,
   repeat: {type: String, enum: rep},
-  complete: Boolean
+  completeDates: [Date],
+  complete: Boolean,
+  date_created: {type: Date, default: Date.now}
 
 });
 

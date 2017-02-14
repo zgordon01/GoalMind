@@ -1,6 +1,7 @@
 
 var express =require('express');
 var router = express.Router();
+var moment = require('moment');
 var SmartGoal = require('../models/smartgoal.js');
 
 
@@ -17,8 +18,9 @@ router.route('/')
 
 router.route('/byuser')
 	.post(function(req, res) {
-		var query = {};
+		var query = {}
 		query.user_id = res.locals.user_id;
+		query.complete = { "$ne" : true };
 
 		SmartGoal.find(query, function (err, goals) {
 			if (err)
@@ -32,49 +34,62 @@ router.route('/byuser')
 	});
 
 router.route('/complete')
-    .post(function(req, res) {
-        if (req.body.goal_id) {
-            SmartGoal.findById(req.body.goal_id, function(err, goal) {
-                if (err) {
-                    res.status(500).send(err);
-                } else {
-                    goal.complete = true;
+.post(function(req, res) {
+	SmartGoal.findById(req.body.goal_id, function(err, goal) {
+		if (err)
+		{
+			res.status(500).send(err);
+		}
 
-                    /*
-                    	Code for calculating points earned
-                    	Send points to user object, add points earned to JSON response
-                    */
 
-                    goal.save(function(err) {
-                        if (err) {
-                            res.status(500).send(err.message);
-                        } else {
-                            res.json({
-                                message: "Goal set as complete."
-                            });
-                        }
-                    });
-                }
-            });
-        } else {
-            res.sendStatus(400);
-        }
-    });
-		router.route('/view')
-		    .post(function(req, res) {
-		        if (req.body.goal_id) {
-		            SmartGoal.findById(req.body.goal_id, function(err, goal) {
-		                if (err) {
-		                    res.status(500).send(err);
-		                } else {
 
-		                  res.json(goal);
-		                }
-		            });
-		        } else {
-		            res.sendStatus(400);
-		        }
-		    });
+
+			var date = new Date;
+			//date.setDate(20);
+			goal.completeDates.addToSet(date);
+			if(goal.goal_type !== "REPEAT")
+			{
+				goal.complete=true;
+				/*
+				CODE HERE FOR GIVING USER points
+				*/
+			}
+
+
+
+		goal.save(function(err) {
+			if (err)
+			{
+				res.status(500).send(err.message);
+			}
+			else {
+				console.log(goal);
+				res.status(200).json({message: "Goal Complete!"});
+			}
+		});
+	});
+});
+router.delete('/delete/:goal_id', function(req,res) {
+	SmartGoal.findById(req.params.goal_id)
+		.exec(function(err, doc) {
+			if (err || !doc){
+				res.statusCode = 404;
+				res.send({});
+			}else {
+				doc.remove(function(err) {
+					if(err) {
+						res.statusCode=403;
+						res.send(err);
+
+					}else {
+						res.statusCode=200;
+						res.send({message: "Goal Deleted"});
+					}
+				})
+			}
+		})
+	});
+
 router.route('/')
 
     .post(function(req, res) {
@@ -151,4 +166,19 @@ router.route('/update')
 			});
 		});
 	});
+	router.route('/view')
+        .post(function(req, res) {
+            if (req.body.goal_id) {
+                SmartGoal.findById(req.body.goal_id, function(err, goal) {
+                    if (err) {
+                        res.status(500).send(err);
+                    } else {
+
+                      res.json(goal);
+                    }
+                });
+            } else {
+                res.sendStatus(400);
+            }
+        });
 module.exports = router;
