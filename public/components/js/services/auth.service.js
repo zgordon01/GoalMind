@@ -36,6 +36,7 @@
                                 localStorage.setItem('authProfile', JSON.stringify(profile));
                                 userService.sync();
                                 authManager.authenticate();
+                                $state.go('dashboard.goals');
                             }
                         });
                     }

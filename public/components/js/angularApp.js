@@ -60,7 +60,7 @@
                 templateUrl: './components/dashboard/graph.html'
 
             });
-        $urlRouterProvider.otherwise('/');
+        //$urlRouterProvider.otherwise('/');
         lockProvider.init({
             clientID: 'GkzbEfm3t2d2DNUgAYkUZnR7X9pLcpn5',
             domain: 'zgordon01.auth0.com',
