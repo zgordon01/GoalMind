@@ -78,8 +78,11 @@
 
             <!-- Main Content -->
             <div ng-class="{'side-body' : isAuthenticated}" ui-view></div>
-
         </div>
+        <footer>
+            <flash-message></flash-message>
+        </footer>
+
     </div>
     <!-- JQuery and Bootstrap JS -->
     <script type="text/javascript" src="/jq/jquery.min.js"></script>

@@ -1,18 +1,3 @@
-/* INDEX.HTML STYLES*/
-/*.navbar {
-    margin-bottom: 0;
-    border-radius: 0;
-    border-bottom: 1.5px solid #afb3b6;
-}*/
-
-.btn {
-	/* <-----Why was this here? Makes no sense
-	margin-top: 7px;
-	margin-left: 10px;
-	*/
-
-
-}
 .viewGoalPanel{
 	padding-top: 50px;
 	padding-bottom: 50px;
@@ -34,7 +19,6 @@
 	z-index: 3;
 	/*added right side border on vertical navbar*/
 	border-right: 1px solid lightgrey;
-
 }
 
 /* Get rid of bullet points*/
@@ -67,6 +51,16 @@
 	color: #2B3E50;
 }
 /* END OF JAKES ADD */
+
+/*FOOTER FOR FLASH MESSAGES*/
+footer{
+	position:fixed;
+	left:0px;
+	bottom:0px;
+	width:100%;
+}
+
+
 
 /* Mobile version*/
 @media screen and (min-width: 300px) {
