@@ -33,6 +33,23 @@ router.route('/byuser')
 
 	});
 
+	router.route('/byuser/history')
+		.post(function(req, res) {
+			var query = {}
+			query.user_id = res.locals.user_id;
+			query.complete = true;
+
+			SmartGoal.find(query, function (err, goals) {
+				if (err)
+				{
+					res.status(500).send(err);
+				}
+				res.json(goals);
+			});
+
+
+		});
+
 router.route('/complete')
 .post(function(req, res) {
 	SmartGoal.findById(req.body.goal_id, function(err, goal) {

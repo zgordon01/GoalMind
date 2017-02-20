@@ -23,6 +23,25 @@ angular.module('app').factory('goalService', ['$http', 'Flash', function(http, f
 
             });
         },
+        getGoalHistory : function(callback){
+            http({
+                method: 'POST',
+                url: '/smartgoals/byuser/history',
+                data: {
+
+                },
+                headers: {
+                    "Content-Type": 'application/json'
+                }
+            }).then(function successCallback(response) {//successCallback
+                callback(response.data);
+
+            }, function errorCallback(response) {//errorCallback do something to inform of error
+
+                flash.create('danger', "OOPS! There was an issue on our end. Try again!");
+
+            });
+        },
         newGoal : function(title, description, priority, goal_type, due_date, repeat, callback){
             http({
                 method: 'POST',
