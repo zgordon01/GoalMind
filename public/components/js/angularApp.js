@@ -59,6 +59,11 @@
                 url: '/graph',
                 templateUrl: './components/dashboard/graph.html'
 
+            })
+            .state('dashboard.profile',{//   profile/profile ....
+                url: '/profile',
+                templateUrl: './components/dashboard/profile/profile.html',
+                controller: 'profileController'
             });
         //$urlRouterProvider.otherwise('/');
         lockProvider.init({

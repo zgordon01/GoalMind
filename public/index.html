@@ -1,3 +1,93 @@
+<html>
+
+<head>
+    <title>Smart Goals</title>
+    <!-- Viewport settings for iphones-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <!--Fontawesome fonts-->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+    <!-- Styles -->
+    <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
+    <link href="./components/css/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <link href="./components/css/main.css" rel="stylesheet" />
+</head>
+
+<body>
+
+    <div ng-app="app">
+        <div class="container-fluid">
+            <nav class="navbar navbar-inverse">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                      <span class="sr-only">Toggle navigation</span>
+                      <!-- Next 3 lines creates the "hamburger" -->
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" ui-sref="home">Smart Goals</a>
+                </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li ng-if="isAuthenticated"><a ui-sref="dashboard">Home<span class="sr-only">(current)</span></a></li>
+                        <li ng-if="!isAuthenticated"><a ng-click="authService.login()" class="makePointer">Log In</a></li>
+                        <li ng-if="isAuthenticated"><a ui-sref="home" ng-click="authService.logout()">Log Out</a></li>
+
+                    </ul>
+                    <a href="#" class="navbar-trigger"><span></span></a>
+
+                </div>
+                <!-- /.navbar-collapse -->
+
+            </nav>
+
+            <div class="row">
+                <!--Create vertical navbar-->
+                <div class="col-xs-2" ng-if="isAuthenticated">
+                    <nav class="side-navbar">
+                        <ul>
+                            <li><a ui-sref="dashboard.goals"><span><i class="fa fa-line-chart"></i></span><span>Goals</span></a></li>
+                            <li><a ui-sref="dashboard.calendar"><span><i class="fa fa-calendar"></i></span><span>Calendar</span></a></li>
+                            <li><a href="#"><span><i class="fa fa-bar-chart"></i></span><span>Graph</span></a></li>
+
+                            <li><span>You have {{userProfile.points}} points!</span></li>
+                        </ul>
+                    </nav>
+                </div>
+
+                <div ui-view class="col-xs-10" ng-if="isAuthenticated"></div>
+                <div ui-view class="col-xs-12" ng-if="!isAuthenticated"></div>
+
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="/jq/jquery.min.js"></script>
+    <script type="text/javascript" src="/boots/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/ang/angular.min.js"></script>
+    <script type="text/javascript" src="https://cdn.auth0.com/js/lock/10.8/lock.min.js"></script>
+    <script type="text/javascript" src="/lock/angular-lock.min.js"></script>
+    <script type="text/javascript" src="/ang-jwt/angular-jwt.min.js"></script>
+    <script type="text/javascript" src="/ui-router/angular-ui-router.min.js"></script>
+    <script type="text/javascript" src="./components/js/auth0-variables.js"></script>
+    <script type="text/javascript" src="./components/js/angularApp.js"></script>
+    <script type="text/javascript" src="./components/js/angularApp.run.js"></script>
+    <script type="text/javascript" src="./components/js/services/userService.js"></script>
+    <script type="text/javascript" src="./components/js/services/profileService.js"></script>
+    <script type="text/javascript" src="./components/js/services/goalService.js"></script>
+    <script type="text/javascript" src="./components/js/services/auth.service.js"></script>
+    <script type="text/javascript" src="./components/home/home.controller.js"></script>
+    <script type="text/javascript" src="./components/dashboard/dashboardController.js"></script>
+    <script type="text/javascript" src="./components/directives/example/testDirectiveController.js"></script>
+    <script type="text/javascript" src="./components/directives/example/testDirective.js"></script>
+
+
+</body>
+
+</html>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -120,3 +210,4 @@
 </body>
 
 </html>
+    <script type="text/javascript" src="./components/dashboard/profile/profileController.js"></script>
