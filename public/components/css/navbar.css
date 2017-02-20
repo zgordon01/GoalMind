@@ -19,7 +19,7 @@
     you also need to tweek the animation. Just uncomment the code in that section
     --------------------------------------------------------------------------------------------------------------------
     If you want to make it really neat i suggest you look into an alternative like http://areaaperta.com/nicescroll/
-    This will allow the menu to say fixed on body scoll and scoll on the side bar if it get to large
+    This will allow the menu to stay fixed on body scroll and scroll on the side bar if it get to large
 */
 /*.absolute-wrapper{
     position: fixed;

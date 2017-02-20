@@ -53,7 +53,7 @@
 /* END OF JAKES ADD */
 
 /*FOOTER FOR FLASH MESSAGES*/
-footer{
+#flashmsg {
 	position:fixed;
 	left:0px;
 	bottom:0px;
