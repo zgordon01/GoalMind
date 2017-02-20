@@ -35,6 +35,7 @@ app.use('/ang', express.static(__dirname + '/node_modules/angular/'));
 app.use('/boots', express.static(__dirname + '/node_modules/bootstrap/dist/js/'));
 app.use('/jq', express.static(__dirname + '/node_modules/jquery/dist/'));
 app.use('/ang-flash', express.static(__dirname + '/node_modules/angular-flash-alert/dist/'));
+app.use('/moment', express.static(__dirname + '/node_modules/moment/'));
 
 //middleware to ensure user_token and user_id match for ALL PATHS BUT /users. Also extracts the user_id and ties it to res.locals.user_id
 app.use(function(req, res, next) {
