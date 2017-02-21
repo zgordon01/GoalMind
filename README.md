@@ -17,7 +17,7 @@
 		- due_date : Date (Required if goal_type is SINGLE)
 		- repeat : Number (Integer) (Required if goal_type is REPEAT - This is currently how many times the user wants to accomplish the goal per week.)
 	+ Optional Parameters:
-		- description: String
+		- notes: String
 
 
 -----
@@ -30,7 +30,7 @@
 		- goal_id: String
 	+ Optional parameters (anything you want to update):
 		- title: String
-		- description: String
+		- notes: String
 		- priority: String (“LOW”, “MEDIUM”, or “HIGH”)
 		- goal_type: String (“OPEN”, “SINGLE”, “REPEAT”)
 		- due_date: Date (Required if goal_type is SINGLE)
@@ -47,13 +47,13 @@
 		- None, User_ID is passed automatically
 * Returned values:
 	+ title: String,
-  + description: String (If Set),
+  + notes: String (If Set),
   + user_id: String,
   + priority: String (Will be set if OPEN goal),
   + goal_type: String (OPEN, SINGLE, REPEAT),
   + due_date: Date (Will be set if SINGLE goal),
   + repeat: Number (Will be set if REPEAT goal, # of requested repeats per week),
-  + completeDates: [Date] (Array of Dates, one for each "complete" action. SINGLE goals should only have one. REPEAT goals may have many.)
+  + completeDates: Date (Array of Dates, one for each "complete" action. SINGLE goals should only have one. REPEAT goals may have many.)
   + completesThisWeek: Number (A pre-calculated number of complete actions for the current week. Only really applies to REPEAT goals.)
   + complete: Boolean (Yes/No value for if the goal is currently considered complete.  Complete goals will not show up on the active list.  Repeat goals will reset their complete value to false automatically when a new week starts, and re-appear on the active list)
   + date_created: Date, default: moment().format() (A Moment.js object for the current date, set automatically when created)
@@ -68,7 +68,7 @@
 		- None, User_ID is passed automatically
 * Returned values:
 	+ title: String,
-  + description: String (If Set),
+  + notes: String (If Set),
   + user_id: String,
   + priority: String (Will be set if OPEN goal),
   + goal_type: String (OPEN, SINGLE, REPEAT),
@@ -101,7 +101,7 @@
 		- goal_id: String
 * Returned values:
 	+ title: String,
-  + description: String (If Set),
+  + notes: String (If Set),
   + user_id: String,
   + priority: String (Will be set if OPEN goal),
   + goal_type: String (OPEN, SINGLE, REPEAT),
