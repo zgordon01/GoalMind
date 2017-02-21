@@ -74,7 +74,7 @@
   + goal_type: String (OPEN, SINGLE, REPEAT),
   + due_date: Date (Will be set if SINGLE goal),
   + repeat: Number (Will be set if REPEAT goal, # of requested repeats per week),
-  + completeDates: [Date] (Array of Dates, one for each "complete" action. SINGLE goals should only have one. REPEAT goals may have many.)
+  + completeDates: Date (Array of Dates, one for each "complete" action. SINGLE goals should only have one. REPEAT goals may have many.)
   + completesThisWeek: Number (A pre-calculated number of complete actions for the current week. Only really applies to REPEAT goals.)
   + complete: Boolean (Yes/No value for if the goal is currently considered complete.  Complete goals will not show up on the active list.  Repeat goals will reset their complete value to false automatically when a new week starts, and re-appear on the active list)
   + date_created: Date, default: moment().format() (A Moment.js object for the current date, set automatically when created)
@@ -107,7 +107,7 @@
   + goal_type: String (OPEN, SINGLE, REPEAT),
   + due_date: Date (Will be set if SINGLE goal),
   + repeat: Number (Will be set if REPEAT goal, # of requested repeats per week),
-  + completeDates: [Date] (Array of Dates, one for each "complete" action. SINGLE goals should only have one. REPEAT goals may have many.)
+  + completeDates: Date (Array of Dates, one for each "complete" action. SINGLE goals should only have one. REPEAT goals may have many.)
   + completesThisWeek: Number (A pre-calculated number of complete actions for the current week. Only really applies to REPEAT goals.)
   + complete: Boolean (Yes/No value for if the goal is currently considered complete.  Complete goals will not show up on the active list.  Repeat goals will reset their complete value to false automatically when a new week starts, and re-appear on the active list)
   + date_created: Date, default: moment().format() (A Moment.js object for the current date, set automatically when created)
