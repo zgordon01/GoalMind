@@ -4,6 +4,20 @@ var router = express.Router();
 var moment = require('moment');
 var SmartGoal = require('../models/smartgoal.js');
 
+//This is how many weeks you want to jump ahead when using testDate
+var addWeeks=9;
+
+var realDate = moment();
+var testDate = moment().add(addWeeks, 'week');
+realDate.format();
+testDate.format();
+
+//Set to realDate or testDate if you want to jump ahead in time for testing, you will have to go through the code and change all
+//var date=testDate to var date=realDate, or vice versa. control (or command on mac) + f is useful
+var date = realDate;
+
+var currentWeek = moment(date).week();
+
 
 router.route('/')
 
@@ -20,17 +34,71 @@ router.route('/byuser')
 	.post(function(req, res) {
 		var query = {}
 		query.user_id = res.locals.user_id;
-		query.complete = { "$ne" : true };
 
 		SmartGoal.find(query, function (err, goals) {
 			if (err)
 			{
 				res.status(500).send(err);
 			}
-			res.json(goals);
+			else{
+
+				goals.forEach(function (goal)
+				{
+					var thisWeek=0;
+					if(goal.goal_type == "REPEAT")
+					{
+						goal.complete=false;
+
+						var realDate = moment();
+						var testDate = moment().add(addWeeks, 'week');
+						realDate.format();
+						testDate.format();
+						var date = realDate;
+						var currentWeek = moment(date).week();
+
+						goal.completeDates.forEach(function (eachDate)
+						{
+							console.log(eachDate);
+							if (moment(eachDate).week() == currentWeek)
+							{
+								thisWeek++;
+								//console.log("foundone");
+							}
+						});
+						goal.completesThisWeek=thisWeek;
+						if(goal.repeat == thisWeek || goal.repeat <thisWeek)
+						{
+							goal.complete=true;
+						}
+						else {
+							goal.complete=false;
+						}
+						goal.save(function(err) {
+							if (err)
+							{
+								//res.status(500).send(err.message);
+							}
+							else {
+								//console.log(goal);
+								//res.status(200).json({message: "Goal updated"});
+							}
+						});
+					}
+				});
+			}
+				var query = {}
+				query.user_id = res.locals.user_id;
+				query.complete = false;
+				SmartGoal.find(query, function (err, goals) {
+					if (err)
+					{
+						res.status(500).send(err);
+					}
+					else {
+						res.send(goals);
+					}
+			});
 		});
-
-
 	});
 
 	router.route('/byuser/history')
@@ -57,30 +125,59 @@ router.route('/complete')
 		{
 			res.status(500).send(err);
 		}
-
-
-
-
-			var date = new Date;
-			//date.setDate(20);
-			goal.completeDates.addToSet(date);
+		//console.log("===================================");
+			goal.complete=false;
+			var realDate = moment();
+			var testDate = moment().add(addWeeks, 'week');
+			realDate.format();
+			testDate.format();
+			var date = realDate;
+			var currentWeek = moment(date).week();
+			goal.completeDates.addToSet(date.format());
+			//console.log("adding to set: " + date.format());
+			//console.log("for goal: " + goal._id);
 			if(goal.goal_type !== "REPEAT")
 			{
 				goal.complete=true;
 				/*
 				CODE HERE FOR GIVING USER points
+				THIS IS WHEN THEY HAVE COMPLETED THEIR NON REPEATING GOAL
 				*/
 			}
+			else {
+				var thisWeek=0;
+				goal.complete=false;
 
+				goal.completeDates.forEach(function (eachDate)
+				{
+					//console.log("current : " + currentWeek);
+					//console.log("goal: " + moment(eachDate).week());
 
-
+					if (moment(eachDate).week() == currentWeek)
+					{
+						thisWeek++;
+						//console.log("found a match this week");
+					}
+				});
+				goal.completesThisWeek=thisWeek;
+				if(goal.repeat == thisWeek || goal.repeat < thisWeek)
+				{
+					goal.complete=true;
+					/* CODE FOR GIVING USER POINTS */
+					/* THIS IS WHEN THEY HAVE COMPLETED THEIR SET AMOUNT OF REPEATS PER WEEK */
+				}
+				else
+				{
+					goal.complete=false;
+				}
+			}
 		goal.save(function(err) {
 			if (err)
 			{
 				res.status(500).send(err.message);
 			}
 			else {
-				console.log(goal);
+				//console.log(goal);
 				res.status(200).json({message: "Goal Complete!"});
 			}
 		});
@@ -131,6 +228,7 @@ router.route('/')
 							}
 
             goal.complete = false;
+						goal.completesThisWeek = 0;
 
 			goal.user_id = res.locals.user_id;
 
@@ -198,4 +296,5 @@ router.route('/update')
                 res.sendStatus(400);
             }
         });
+
 module.exports = router;

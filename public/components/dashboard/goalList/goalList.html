@@ -16,7 +16,10 @@
             <span ng-if="goal.goal_type=='OPEN'">Priority: {{ goal.priority }} <br/> </span>
             <span ng-if="goal.goal_type=='SINGLE'">Due Date: {{ goal.due_date }} <br /></span>
             <span ng-if="goal.description">Description: {{ goal.description }}<br /></span>
-            <span ng-if="goal.goal_type=='REPEAT'">Repeat: {{ goal.repeat }}</span>
+            <span ng-if="goal.goal_type=='REPEAT'">Repeat Goal: {{ goal.repeat }} Times Per Week</span><br />
+            <span ng-if="goal.goal_type=='REPEAT'">Completes This Week: {{ goal.completesThisWeek }} / {{ goal.repeat }}</span><br />
+
+
           </div>
           <div class="panel-footer">
             <button class="btn btn-primary" ng-click="setAsComplete(goal._id)">Complete!</button>

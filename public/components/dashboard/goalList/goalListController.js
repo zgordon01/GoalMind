@@ -32,9 +32,13 @@ angular.module('app').controller('GoalListController', ['$scope', 'goalService',
             $scope.noGoals=true;
           }
           else {
-            console.log("Received user's goals.");
+            console.log("User's goals refreshed.");
           }
+        
+
+
       });
+
   }
   $scope.goToNewGoal = function() {
     $state.transitionTo("dashboard.newGoal");
@@ -44,7 +48,6 @@ angular.module('app').controller('GoalListController', ['$scope', 'goalService',
     if(confirmComplete)
     {
       goalService.setAsComplete(goalId, function(response) {
-        console.log(response);
         if(response.message == "Goal Complete!")
         {
           $scope.refreshGoals();
@@ -54,12 +57,4 @@ angular.module('app').controller('GoalListController', ['$scope', 'goalService',
       });
     }
   }
-
-
-
-
-
-
-
-
 }]);

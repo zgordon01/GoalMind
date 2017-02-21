@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var moment= require('moment');
 
 var diff = 'LOW MEDIUM HIGH'.split(' ');
 var types = 'OPEN SINGLE REPEAT'.split(' '); //can change these
@@ -8,15 +9,17 @@ var rep = 'DAILY WEEKLY MONTHLY'.split(' '); //can change these
 
 var SmartGoalSchema = new Schema({
   title: {type: String, required: true},
-  description: String, 
+  description: String,
   user_id: {type: String, required: true},
   priority: {type: String, enum:diff},
   goal_type: {type: String, enum: types, required: true},
   due_date: Date,
-  repeat: {type: String, enum: rep},
+  //repeat: {type: String, enum: rep},
+  repeat: Number,
   completeDates: [Date],
+  completesThisWeek: Number,
   complete: Boolean,
-  date_created: {type: Date, default: Date.now}
+  date_created: {type: Date, default: moment().format()}
 
 });
 
