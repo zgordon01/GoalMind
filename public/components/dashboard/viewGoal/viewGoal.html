@@ -39,7 +39,9 @@
 
     <div class="panel panel-default" >
       <div class="panel-body">
-        <button class="btn btn-primary" ng-click="setAsComplete()">Complete!</button> <br /> <hr />
+        <button class="btn btn-primary" ng-click="setAsComplete()" ng-if="goal.complete == false">Complete!<br /></button>
+        <h4 ng-if="goal.complete == true">Already Complete.</h4>  <hr />
+
         <button class="btn btn-danger" ng-click="deleteGoal()">Delete Goal</button>
       </div>
     </div>

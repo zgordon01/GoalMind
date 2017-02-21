@@ -20,6 +20,10 @@ angular.module('app').controller('GoalListController', ['$scope', 'goalService',
       }
       else {
         console.log("Received user's goals.");
+        response.forEach(function (goal) {
+          goal.readableDate = moment(goal.completeDates[0]).format('ddd MM/DD/YY');
+          //console.log(moment(goal.completeDates[0]).format('ddd MM/DD/YY'));
+        });
       }
   });
   $scope.refreshGoals=function()
@@ -33,8 +37,12 @@ angular.module('app').controller('GoalListController', ['$scope', 'goalService',
           }
           else {
             console.log("User's goals refreshed.");
+            response.forEach(function (goal) {
+              goal.readableDate = moment(goal.completeDates[0]).format('ddd MM/DD/YY');
+              //console.log(moment(goal.completeDates[0]).format('ddd MM/DD/YY'));
+            });
           }
-        
+
 
 
       });
