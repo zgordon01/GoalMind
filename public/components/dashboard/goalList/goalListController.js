@@ -21,7 +21,7 @@ angular.module('app').controller('GoalListController', ['$scope', 'goalService',
       else {
         console.log("Received user's goals.");
         response.forEach(function (goal) {
-          goal.readableDate = moment(goal.completeDates[0]).format('ddd MM/DD/YY');
+          goal.readableDate = moment(goal.due_date).format('ddd MM/DD/YY');
           //console.log(moment(goal.completeDates[0]).format('ddd MM/DD/YY'));
         });
       }
@@ -38,7 +38,7 @@ angular.module('app').controller('GoalListController', ['$scope', 'goalService',
           else {
             console.log("User's goals refreshed.");
             response.forEach(function (goal) {
-              goal.readableDate = moment(goal.completeDates[0]).format('ddd MM/DD/YY');
+              goal.readableDate = moment(goal.due_date).format('ddd MM/DD/YY');
               //console.log(moment(goal.completeDates[0]).format('ddd MM/DD/YY'));
             });
           }
@@ -51,8 +51,8 @@ angular.module('app').controller('GoalListController', ['$scope', 'goalService',
   $scope.goToNewGoal = function() {
     $state.transitionTo("dashboard.newGoal");
   }
-  $scope.setAsComplete = function(goalId) {
-    confirmComplete = confirm("Mark the goal as complete?");
+  $scope.setAsComplete = function(goalId, goalTitle) {
+    confirmComplete = confirm("Mark the goal '" + goalTitle + "' as complete?");
     if(confirmComplete)
     {
       goalService.setAsComplete(goalId, function(response) {

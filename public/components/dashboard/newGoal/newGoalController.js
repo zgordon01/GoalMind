@@ -3,7 +3,7 @@ angular.module('app').controller('NewGoalController', ['$scope', '$state', 'goal
   $scope.selection;
   $scope.newgoal={};
   $scope.buttonPressed = function(){
-      goalService.newGoal($scope.newgoal.title, $scope.newgoal.description, $scope.newgoal.priority, $scope.newgoal.goal_type, $scope.newgoal.due_date, $scope.newgoal.repeat, function(response){
+      goalService.newGoal($scope.newgoal.title, $scope.newgoal.notes, $scope.newgoal.priority, $scope.newgoal.goal_type, $scope.newgoal.due_date, $scope.newgoal.repeat, function(response){
       //console.log(response);
       if (response.message=="Created Goal")
       {

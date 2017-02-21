@@ -9,7 +9,7 @@ var rep = 'DAILY WEEKLY MONTHLY'.split(' '); //can change these
 
 var SmartGoalSchema = new Schema({
   title: {type: String, required: true},
-  description: String,
+  notes: String,
   user_id: {type: String, required: true},
   priority: {type: String, enum:diff},
   goal_type: {type: String, enum: types, required: true},

@@ -209,9 +209,9 @@ router.route('/')
     .post(function(req, res) {
         var goal = new SmartGoal();
         if (req.body.title && req.body.goal_type) {
-						if (req.body.description)
+						if (req.body.notes)
 						{
-							goal.description = req.body.description;
+							goal.notes = req.body.notes;
 						}
             if (req.body.repeat) {
                 goal.repeat = req.body.repeat;
@@ -231,7 +231,7 @@ router.route('/')
 						goal.completesThisWeek = 0;
 
 			goal.user_id = res.locals.user_id;
-
+					console.log(goal);
             goal.save(function(err) {
                 if (err) {
                     res.status(500).send(err.message);

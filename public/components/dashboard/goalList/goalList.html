@@ -15,14 +15,14 @@
           <div class="panel-body">
             <span ng-if="goal.goal_type=='OPEN'">Priority: {{ goal.priority }} <br/> </span>
             <span ng-if="goal.goal_type=='SINGLE'">Due Date: {{ goal.readableDate }} <br /></span>
-            <span ng-if="goal.description">Description: {{ goal.description }}<br /></span>
+            <span ng-if="goal.notes">Notes: {{ goal.notes }}<br /></span>
             <span ng-if="goal.goal_type=='REPEAT'">Repeat Goal: {{ goal.repeat }} Times Per Week<br /></span>
             <span ng-if="goal.goal_type=='REPEAT'">Completes This Week: {{ goal.completesThisWeek }} / {{ goal.repeat }}<br /></span>
 
 
           </div>
           <div class="panel-footer">
-            <button class="btn btn-primary" ng-click="setAsComplete(goal._id)">Complete!</button>
+            <button class="btn btn-primary" ng-click="setAsComplete(goal._id, goal.title)">Complete!</button>
           </div>
         </div>
         <hr />
