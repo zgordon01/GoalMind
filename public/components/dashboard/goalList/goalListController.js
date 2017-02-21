@@ -59,7 +59,7 @@ angular.module('app').controller('GoalListController', ['$scope', 'goalService',
         if(response.message == "Goal Complete!")
         {
           $scope.refreshGoals();
-          scroll(0,0);
+          //scroll(0,0);
           //jquery scroll to top with animation, doesnt seem to work: $('html, body').animate({ scrollTop: 0 }, 'fast');
         }
       });
