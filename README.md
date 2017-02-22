@@ -130,17 +130,25 @@
 
 - [x] 9. __Route:__ ```localhost/users```
 * __Action:__ __POST__ request
-* Creates a user if one with user_id does not exists. Also updates the user_token. Returns the user object matching by user_id.
+* Creates a user if one with user_id does not exists. Also updates the user_token. Returns the user object
 	+ Parameters Required:
-		- None
+		- user_id : String
 
 
 -----
 
 - [x] 10. __Route:__ ```localhost/users/updateUser```
 * __Action:__ __POST__ request
-* Updates a user object with the specified parameters
+* Updates a user object with the specified parameters and then returns the updated user object
 	+ Optional Parameters:
 		- updates: Object
 			- Updates may contain the following properties:
 				- Points : Number
+
+-----
+
+- [x] 11. __Route:__ ```localhost/users/points```
+* __Action:__ __POST__ request
+* Updates a user object with the specified parameters. Returns updated user object
+	+ Required Parameters:
+		- isSubtract : boolean
