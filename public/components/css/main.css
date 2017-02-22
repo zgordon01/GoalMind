@@ -30,6 +30,9 @@ a[href], a[ng-click], input[type='submit'], input[type='image'], label[for], sel
 	/*added right side border on vertical navbar*/
 	border-right: 1px solid lightgrey;
 }
+.navbar-toggle{
+	float: left;
+}
 
 /* Get rid of bullet points*/
 .side-navbar ul {
