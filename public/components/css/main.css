@@ -1,3 +1,7 @@
+/*so all clickable elements are given a pointer*/
+a[href], a[ng-click], input[type='submit'], input[type='image'], label[for], select, button, .pointer {
+	cursor: pointer;
+}
 
 /*customized a brighter shade of the 'text-muted' class/color for paragraphs for visiblity*/
 .text-grey {
