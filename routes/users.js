@@ -35,31 +35,32 @@ router.post('/updateUser', function(req, res, next) {
 });
 
 
-router.post('/points', function(req, res, next){
+//router.post('/points', function(req, res, next){
 //this route will add/subtract points. requires boolean 'isSubtract' for add/subtract and points property. Will return success code and new point user object
-    if(req.body.points){
+//    test(req,res,next);
+//});
+
+router.post('/achievements', function(req, res, next) {
+    //this route will add achievements. requires achievement_id
+});
+
+router.points = function(req, points){
+    if(points){
         var query = {user_token : req.get("Authorization")};
-        pointsBuffer = parseInt(req.body.points, 10);
-        if(req.body.isSubtract==="true"){
-            pointsBuffer = -pointsBuffer;
-        }
+        pointsBuffer = parseInt(points, 10);
         UserSchema.findOneAndUpdate(query, {$inc:{points:pointsBuffer}}, {new:true}, function(err, user){
             if(err){
-                res.sendStatus(500);
+                return false;
             }
             else{
-                res.json(user);
+                return true;
             }
         });
 
     }
     else{
-        res.sendStatus(400);
+        return false;
     }
-});
-
-router.post('/achievements', function(req, res, next) {
-    //this route will add achievements. requires achievement_id
-});
+}
 
 module.exports = router;

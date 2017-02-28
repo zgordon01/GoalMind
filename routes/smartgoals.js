@@ -120,12 +120,12 @@ router.route('/byuser')
 
 router.route('/complete')
 .post(function(req, res) {
+	var users = require('./users.js');
 	SmartGoal.findById(req.body.goal_id, function(err, goal) {
 		if (err)
 		{
 			res.status(500).send(err);
 		}
-		//console.log("===================================");
 			goal.complete=false;
 			var realDate = moment();
 			var testDate = moment().add(addWeeks, 'week');
@@ -138,11 +138,26 @@ router.route('/complete')
 			//console.log("for goal: " + goal._id);
 			if(goal.goal_type !== "REPEAT")
 			{
+				var pointsBuffer = 5;//default, starting point value
+				if(goal.priority){
+					switch(goal.priority){
+						case 'LOW': pointsBuffer+=1;break;
+						case 'MEDIUM': pointsBuffer+=3;break;
+						case 'HIGH': pointsBuffer+=5;break;
+						default: pointsBuffer = 5;
+					}
+				}
+				if(goal.due_date){
+				/*	if(moment(goal.due_date).startOf('day').diff(moment().startOf('day')) >= 0){//seeing if it is done on time
+						pointsBuffer += 5;
+					}
+					else{
+						pointsBuffer -= 2;
+					}*/
+					pointsBuffer += moment(goal.due_date).startOf('day').diff(moment().startOf('day')) >= 0 ? 5 : -2;
+				}
 				goal.complete=true;
-				/*
-				CODE HERE FOR GIVING USER points
-				THIS IS WHEN THEY HAVE COMPLETED THEIR NON REPEATING GOAL
-				*/
+				users.points(req, Math.floor(pointsBuffer));
 			}
 			else {
 				var thisWeek=0;

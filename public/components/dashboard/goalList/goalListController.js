@@ -1,4 +1,4 @@
-angular.module('app').controller('GoalListController', ['$scope', 'goalService', 'jwtHelper', '$state', function($scope, goalService, jwtHelper, $state){
+angular.module('app').controller('GoalListController', ['$scope', 'goalService', 'jwtHelper', '$state', 'userService',function($scope, goalService, jwtHelper, $state, userService){
 
   /*
   if (localStorage.getItem('id_token') && !jwtHelper.isTokenExpired(localStorage.getItem('id_token'))) {
@@ -58,7 +58,15 @@ angular.module('app').controller('GoalListController', ['$scope', 'goalService',
       goalService.setAsComplete(goalId, function(response) {
         if(response.message == "Goal Complete!")
         {
-          $scope.refreshGoals();
+            userService.updateUser({}, function(success){
+                if(!success){
+                    flash.create('danger', "<strong>OOPS! Something has gone wrong.</strong>");
+                }
+                else{
+                    $scope.refreshGoals();
+                }
+            });
+
           //scroll(0,0);
           //jquery scroll to top with animation, doesnt seem to work: $('html, body').animate({ scrollTop: 0 }, 'fast');
         }
