@@ -148,16 +148,10 @@ router.route('/complete')
 					}
 				}
 				if(goal.due_date){
-				/*	if(moment(goal.due_date).startOf('day').diff(moment().startOf('day')) >= 0){//seeing if it is done on time
-						pointsBuffer += 5;
-					}
-					else{
-						pointsBuffer -= 2;
-					}*/
 					pointsBuffer += moment(goal.due_date).startOf('day').diff(moment().startOf('day')) >= 0 ? 5 : -2;
 				}
 				goal.complete=true;
-				users.points(req, Math.floor(pointsBuffer));
+				users.points(req, Math.floor(pointsBuffer));//throws boolean. use that to change response
 			}
 			else {
 				var thisWeek=0;
