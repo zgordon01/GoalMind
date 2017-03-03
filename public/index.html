@@ -60,7 +60,7 @@
 
                             <li>
                                 <div style="text-align:center; padding-bottom:15px;">
-                                    <a ui-sref="dashboard.profile"><img class="img-circle center-block img-responsive" src="{{authProfile.picture_large ? authProfile.picture_large : authProfile.picture}}" width="165" height="165" /></a>
+                                    <a ui-sref="dashboard.profile"><img class="img-circle center-block img-responsive" ng-src="{{authProfile.picture_large ? authProfile.picture_large : authProfile.picture}}" width="165" height="165" /></a>
                                     <span class="badge">{{userProfile.points}}</span>
                                 </div>
                             </li>

@@ -3,6 +3,11 @@ a[href], a[ng-click], input[type='submit'], input[type='image'], label[for], sel
 	cursor: pointer;
 }
 
+/*style for progress bar, gives a darker background so it is visible against the light blue background*/
+.progress {
+	background-color: #485563;
+}
+
 /*customized a brighter shade of the 'text-muted' class/color for paragraphs for visiblity*/
 .text-grey {
 	color: #87939e;
