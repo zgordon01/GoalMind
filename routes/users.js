@@ -40,20 +40,22 @@ router.post('/updateUser', function(req, res, next) {
 //    test(req,res,next);
 //});
 
-router.post('/achievements', function(req, res, next) {
+router.post('/achievements', function(req, res, next) {//make function?
     //this route will add achievements. requires achievement_id
 });
 
-router.points = function(req, points){
+router.points = function(req, res, points){//returns if the user leveled up or not (boolean)
     if(points){
         var query = {user_token : req.get("Authorization")};
         pointsBuffer = parseInt(points, 10);
+        console.log("about to hit the real update with " + pointsBuffer);
         UserSchema.findOneAndUpdate(query, {$inc:{points:pointsBuffer}}, {new:true}, function(err, user){
             if(err){
                 return false;
             }
             else{
-                return true;
+                return determineLevel(req, res, user.points);
+                //return true;
             }
         });
 
@@ -61,6 +63,29 @@ router.points = function(req, points){
     else{
         return false;
     }
+}
+function determineLevel(req, res, points){//PUT POINTS REMAINING UNTIL NEXT LEVEL IN USER OBJECT(done)
+    console.log("in determineLevel with " + points + " points");
+    var playerLevel = 1;
+    var levelThreshold = 10;
+    var levelMultiplier = 1.35;
+    do{
+        console.log("points is " + points + " and thresh is " + levelThreshold);
+        console.log("at level " + playerLevel + " with " + points + " points");
+        levelThreshold *= levelMultiplier;
+        playerLevel++;
+    }while(points > levelThreshold);
+    UserSchema.findOneAndUpdate({user_token : req.get("Authorization")}, {pointsToNext:(levelThreshold-points), level:playerLevel}, {new:false}, function(err, user){
+        if(err){
+            res.status(500);
+        }
+        else{
+            console.log("player leveled up " + playerLevel > user.level);
+            //return playerLevel > user.level;
+            return {leveled : true, newLevel : playerLevel};
+        }
+    });
+    return {leveled : false};
 }
 
 module.exports = router;

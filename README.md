@@ -7,7 +7,7 @@
 
 -----
 
-- [x] 2. __Route:__ ```localhost/smartgoals/goal```
+- [x] 2. __Route:__ ```localhost/smartgoals/```
 * __Action:__ __POST__ request
 	+ Creates a new SmartGoal object.
 	+ Required Parameters:
@@ -117,7 +117,6 @@
 
 - [x] 8. __Route:__ ```localhost/smartgoals/delete/:goal_id```
 * __Action:__ __DELETE__ request
-	+ NOTE: The goal_id parameter is set to be hidden, meaning it does not need to be placed in the actual route, just in the body
 	+ Deletes a single SmartGoal object, with the given goal_id
 	+ Required Parameters:
 		- goal_id: String
@@ -143,4 +142,6 @@
 	+ Optional Parameters:
 		- updates: Object
 			- Updates may contain the following properties:
-				- Points : Number
+				- points : Number
+				- level : Number
+				- pointsToNext : Number
