@@ -48,16 +48,26 @@ angular.module('app').controller('GoalListController', ['$scope', 'goalService',
   $scope.goToNewGoal = function() {
     $state.transitionTo("dashboard.newGoal");
   }
+
   $scope.setAsComplete = function(goalId, goalTitle) {
-    confirmComplete = confirm("Mark the goal '" + goalTitle + "' as complete?");
-    if(confirmComplete)
-    {
-      goalService.setAsComplete(goalId, function(response) {
+
+    BootstrapDialog.confirm("Mark the goal '" + goalTitle + "' as complete?", function(confirmComplete){
+      //console.log("from setAsComplete function (glc): " + confirmComplete);
+      if(confirmComplete) {
+ 
+        goalService.setAsComplete(goalId, function(response) {
         if(response.message == "Goal Complete!")
         {
           $scope.refreshGoals();
         }
       });
-    }
+
+      }
+      else {
+        //close the dialog window
+        close();
+      }
+    }); 
   }
-}]);
+
+}]); //end of controller
