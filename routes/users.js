@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 var UserSchema = require('../models/user.js');
 
-
 router.post('/', function(req, res, next) {//the only query that directly uses the auth0 user_id
     //this route will create a new user if it does not exist and returns the data about the user if the user exists. Also updates the user_token. Requires a user_id and user_token
     if (req.body.user_id && req.get("Authorization")) {
@@ -34,58 +33,47 @@ router.post('/updateUser', function(req, res, next) {
     });
 });
 
-
-//router.post('/points', function(req, res, next){
-//this route will add/subtract points. requires boolean 'isSubtract' for add/subtract and points property. Will return success code and new point user object
-//    test(req,res,next);
-//});
-
 router.post('/achievements', function(req, res, next) {//make function?
     //this route will add achievements. requires achievement_id
 });
 
-router.points = function(req, res, points){//returns if the user leveled up or not (boolean)
+router.points = function(req, res, points, callback){//returns if the user leveled up or not (boolean)
     if(points){
         var query = {user_token : req.get("Authorization")};
         pointsBuffer = parseInt(points, 10);
-        console.log("about to hit the real update with " + pointsBuffer);
         UserSchema.findOneAndUpdate(query, {$inc:{points:pointsBuffer}}, {new:true}, function(err, user){
             if(err){
-                return false;
+                callback(false);
             }
             else{
-                return determineLevel(req, res, user.points);
-                //return true;
+                determineLevel(req,res,user.points, function(leveled, demoted){
+                    console.log("in pipeline we have " + leveled);
+                    callback(leveled, demoted, points);
+                });
             }
         });
 
     }
     else{
-        return false;
+        callback(false);
     }
 }
-function determineLevel(req, res, points){//PUT POINTS REMAINING UNTIL NEXT LEVEL IN USER OBJECT(done)
-    console.log("in determineLevel with " + points + " points");
+function determineLevel(req, res, points, callback){
     var playerLevel = 1;
-    var levelThreshold = 10;
+    var levelThreshold = 10;//level2
     var levelMultiplier = 1.35;
-    do{
-        console.log("points is " + points + " and thresh is " + levelThreshold);
-        console.log("at level " + playerLevel + " with " + points + " points");
+    while(points > Math.floor(levelThreshold)){
         levelThreshold *= levelMultiplier;
         playerLevel++;
-    }while(points > levelThreshold);
-    UserSchema.findOneAndUpdate({user_token : req.get("Authorization")}, {pointsToNext:(levelThreshold-points), level:playerLevel}, {new:false}, function(err, user){
+    }
+    UserSchema.findOneAndUpdate({user_token : req.get("Authorization")}, {pointsToNext:Math.floor((levelThreshold-points)), level:playerLevel}, {new:false}, function(err, user){
         if(err){
             res.status(500);
         }
         else{
-            console.log("player leveled up " + playerLevel > user.level);
-            //return playerLevel > user.level;
-            return {leveled : true, newLevel : playerLevel};
+            callback(playerLevel > user.level, playerLevel < user.level);
         }
     });
-    return {leveled : false};
 }
 
 module.exports = router;

@@ -1,14 +1,4 @@
-angular.module('app').controller('GoalListController', ['$scope', 'goalService', 'jwtHelper', '$state', 'userService',function($scope, goalService, jwtHelper, $state, userService){
-
-  /*
-  if (localStorage.getItem('id_token') && !jwtHelper.isTokenExpired(localStorage.getItem('id_token'))) {
-      console.log("auth good");
-  } else {
-      authManager.unauthenticate();
-      $state.transitionTo('home');
-  }
-  */
-
+angular.module('app').controller('GoalListController', ['$scope', 'goalService', 'jwtHelper', '$state', 'userService', '$rootScope', 'Flash',function($scope, goalService, jwtHelper, $state, userService, $rootScope, flash){
 
   $scope.noGoals=false;
   goalService.getGoals(function(response) {
@@ -22,7 +12,6 @@ angular.module('app').controller('GoalListController', ['$scope', 'goalService',
         console.log("Received user's goals.");
         response.forEach(function (goal) {
           goal.readableDate = moment(goal.due_date).format('ddd MM/DD/YY');
-          //console.log(moment(goal.completeDates[0]).format('ddd MM/DD/YY'));
         });
       }
   });
@@ -39,7 +28,6 @@ angular.module('app').controller('GoalListController', ['$scope', 'goalService',
             console.log("User's goals refreshed.");
             response.forEach(function (goal) {
               goal.readableDate = moment(goal.due_date).format('ddd MM/DD/YY');
-              //console.log(moment(goal.completeDates[0]).format('ddd MM/DD/YY'));
             });
           }
 
@@ -56,20 +44,26 @@ angular.module('app').controller('GoalListController', ['$scope', 'goalService',
     if(confirmComplete)
     {
       goalService.setAsComplete(goalId, function(response) {
-        if(response.message == "Goal Complete!")
-        {
-            userService.updateUser({}, function(success){
-                if(!success){
-                    flash.create('danger', "<strong>OOPS! Something has gone wrong.</strong>");
+        userService.updateUser({}, function(success){
+            if(!success){
+                flash.create('danger', "<strong>OOPS! Something has gone wrong.</strong>");
+            }
+            else{
+                if(response.levelUp){
+                    flash.create('success', response.pointsAdded + " points. <strong>You are now level " + $rootScope.userProfile.level+"!</strong>");
+                }
+                else if(response.demoted){
+                    flash.create('warning', response.pointsAdded + " points. <strong>Goal Complete, but you have been demoted to level" + $rootScope.userProfile.level + "</strong>:(");
+                }
+                else if(response.points){
+                    flash.create('success', response.pointsAdded + " points. <strong>Goal Complete.</strong>");
                 }
                 else{
-                    $scope.refreshGoals();
+                    flash.create('success', "<strong>Goal Marked Complete.</strong>");
                 }
-            });
-
-          //scroll(0,0);
-          //jquery scroll to top with animation, doesnt seem to work: $('html, body').animate({ scrollTop: 0 }, 'fast');
-        }
+                $scope.refreshGoals();
+            }
+        });
       });
     }
   }

@@ -108,10 +108,13 @@ router.route('/complete')
     .post(function(req, res) {
         if (req.body.goal_id) {
             console.log("starting complete");
-            var response = {levelUp:false};
             var userObject;
             var UserSchema = require('../models/user.js');
             var users = require('./users.js');
+            var response = {
+                levelUp : false,
+                demoted : false
+            };
             UserSchema.find({
                 user_token: req.get('Authorization')
             }, function(err, user) {
@@ -126,75 +129,95 @@ router.route('/complete')
                 if (err) {
                     res.status(500).send(err);
                 }
-                goal.complete = false;
-                var realDate = moment();
-                var testDate = moment().add(addWeeks, 'week');
-                realDate.format();
-                testDate.format();
-                var date = realDate;
-                var currentWeek = moment(date).week();
-                goal.completeDates.addToSet(date.format());
-                //console.log("adding to set: " + date.format());
-                //console.log("for goal: " + goal._id);
-                if (goal.goal_type !== "REPEAT") {
-                    var pointsBuffer = Math.floor((Math.random() * (10 - 5)) + 5);//default, starting point value
-                    console.log("starting with " + pointsBuffer);
-                    if (goal.priority) {
-                        switch (goal.priority) {
-                            case 'LOW':
-                                pointsBuffer += Math.floor((Math.random() * (3 - 1)) + 1);
-                                break;
-                            case 'MEDIUM':
-                                pointsBuffer += Math.floor((Math.random() * (5 - 2)) + 2);
-                                break;
-                            case 'HIGH':
-                                pointsBuffer += Math.floor((Math.random() * (7 - 4)) + 4);
-                                break;
-                            default:
-                                pointsBuffer = 5;
+                if (!goal.complete) {
+                    var realDate = moment();
+                    var testDate = moment().add(addWeeks, 'week');
+                    realDate.format();
+                    testDate.format();
+                    var date = realDate;
+                    var currentWeek = moment(date).week();
+                    goal.completeDates.addToSet(date.format());
+                    var pointsBuffer = Math.floor((Math.random() * (10 - 5)) + 5); //default, starting point value
+                    if (goal.goal_type !== "REPEAT") {
+                        //console.log("pointsbuffer starting with " + pointsBuffer);
+                        if (goal.priority) {
+                            switch (goal.priority) {
+                                case 'LOW':
+                                    pointsBuffer += Math.floor((Math.random() * (3 - 1)) + 1);
+                                    break;
+                                case 'MEDIUM':
+                                    pointsBuffer += Math.floor((Math.random() * (5 - 2)) + 2);
+                                    break;
+                                case 'HIGH':
+                                    pointsBuffer += Math.floor((Math.random() * (7 - 4)) + 4);
+                                    break;
+                                default:
+                                    pointsBuffer = 5;
+                            }
                         }
-                    }
-                    if (goal.due_date) {
-                        pointsBuffer += moment(goal.due_date).startOf('day').diff(moment().startOf('day')) >= 0 ? Math.floor((Math.random() * (7 - 4)) + 4) : -Math.floor((Math.random() * (5 - 1)) + 5);
-                    }
-                    //goal.complete=true; UNCOMMENT TO MAKE EVERYTHING WORK
-                    console.log("after the calcs pointsBuffer is " + pointsBuffer);
-                    response.levelUp = users.points(req, res, Math.floor(pointsBuffer));//throws boolean for if leveled up. use that to change response
-                } else {
-                    var thisWeek = 0;
-                    goal.complete = false;
-
-                    goal.completeDates.forEach(function(eachDate) {
-                        //console.log("current : " + currentWeek);
-                        //console.log("goal: " + moment(eachDate).week());
-
-                        if (moment(eachDate).week() == currentWeek) {
-                            thisWeek++;
-                            //console.log("found a match this week");
+                        if (goal.due_date) {
+                            pointsBuffer += moment(goal.due_date).startOf('day').diff(moment().startOf('day')) >= 0 ? Math.floor((Math.random() * (7 - 4)) + 4) : -Math.floor((Math.random() * (5 - 1)) + 5);
                         }
-                    });
-                    goal.completesThisWeek = thisWeek;
-                    if (goal.repeat == thisWeek || goal.repeat < thisWeek) {
                         goal.complete = true;
-                        /* CODE FOR GIVING USER POINTS */
-                        /* THIS IS WHEN THEY HAVE COMPLETED THEIR SET AMOUNT OF REPEATS PER WEEK */
+                        //console.log("after the calcs pointsBuffer is " + pointsBuffer);
+                        users.points(req, res, Math.floor(pointsBuffer), function(isLeveled, isDemoted, pointsAdded) {
+                            response.levelUp = isLeveled;
+                            response.demoted = isDemoted;
+                            response.pointsAdded = pointsAdded;
+                            goal.save(function(err){
+                                if (err) {
+                                    res.status(500).send(err.message);
+                                } else {
+                                    res.status(200).json(response);
+                                }
+                            });
+                        });
                     } else {
-                        goal.complete = false;
+                        var thisWeek = 0;
+
+                        goal.completeDates.forEach(function(eachDate) {
+
+                            if (moment(eachDate).week() == currentWeek) {
+                                thisWeek++;
+                            }
+                        });
+                        goal.completesThisWeek = thisWeek;
+                        if (goal.repeat == thisWeek || goal.repeat < thisWeek) {
+                            goal.complete = true;
+                            pointsBuffer += Math.floor((Math.random() * (5 - 2)) + 2);
+                            //console.log("after the calcs pointsBuffer is " + pointsBuffer);
+                            users.points(req, res, Math.floor(pointsBuffer), function(isLeveled, isDemoted, pointsAdded) {
+                                response.levelUp = isLeveled;
+                                response.demoted = isDemoted;
+                                response.pointsAdded = pointsAdded;
+                                goal.save(function(err){
+                                    if (err) {
+                                        res.status(500).send(err.message);
+                                    } else {
+                                        res.status(200).json(response);
+                                    }
+                                });
+                            });
+                        } else {
+                            goal.complete = false;
+                            goal.save(function(err){
+                                if (err) {
+                                    res.status(500).send(err.message);
+                                } else {
+                                    res.status(200).json(response);
+                                }
+                            });
+                        }
                     }
                 }
-                goal.save(function(err) {
-                    if (err) {
-                        res.status(500).send(err.message);
-                    } else {
-                        //console.log(goal);
-                        res.status(200).json(response);
-                    }
-                });
+                else{//gets here if goal is already completed
+                    res.status(200).send();
+                }
             });
         }
-		else{
-			res.status(400).send();
-		}
+        else{//gets here if goal_id is not passed
+            res.status(400).send();
+        }
     });
 router.delete('/delete/:goal_id', function(req, res) {
     SmartGoal.findById(req.params.goal_id)
