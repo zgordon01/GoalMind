@@ -19,12 +19,16 @@ var SmartGoalSchema = new Schema({
   completeDates: [Date],
   completesThisWeek: Number,
   complete: Boolean,
+  priorityLevel: Number,
+  overDue: Boolean,
   date_created: {type: Date, default: moment().format()}
 
 });
 
 
 SmartGoalSchema.pre('save', function(next){
+  this.priorityLevel=0;
+  this.overDue=false;
   if (this.goal_type == "SINGLE" && !this.due_date)
   {
     return next(new Error("ERROR: Must set due_date when goal_type is SINGLE"));
@@ -36,6 +40,18 @@ SmartGoalSchema.pre('save', function(next){
   else if (this.goal_type == "REPEAT" && !this.repeat)
   {
     return next(new Error("ERROR: Must set repeat when goal_type is REPEAT"));
+  }
+  else if (this.goal_type == "SINGLE")
+  {
+    this.max_priority = 15;
+  }
+  else if (this.goal_type == "OPEN")
+  {
+    this.max_priority == 14;
+  }
+  else if (this.goal_type == "REPEAT")
+  {
+    this.max_priority = 13;
   }
   next();
 

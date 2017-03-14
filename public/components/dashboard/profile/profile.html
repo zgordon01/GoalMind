@@ -1,14 +1,39 @@
 <div class="row">
-  	<div class="col-xs-12">
-      	<h3 class="text-left">User Profile</h3>
+  <div class="col-sm-10 col-sm-offset-1 col-lg-8 col-lg-offset-2">
+      	<h1 class="text-center" style="color: #DF691A"><strong>User Profile</strong></h1>
+        <hr />
       	<img img class="img-circle center-block img-responsive" src="{{authProfile.picture}}" width="200" height="200"/>
-     	<h5 class="text-center"><strong>Name:</strong> {{authProfile.given_name}}</h5>
-      	<h5 class="text-center"><strong>Nickname:</strong> {{authProfile.nickname}}</h5>
-     	<h5 class="text-center"><strong><i class="fa fa-fw fa-envelope-o fa-2x"></i>Email:</strong> {{authProfile.email}}</h5>
+     	<h4 class="text-center" style="color: #DF691A"><strong>Name:</strong> {{authProfile.given_name}}</h4>
+      <!--	<h4 class="text-center" style="color: #DF691A"><strong>Nickname:</strong> {{authProfile.nickname}}</h4> -->
+     	<!-- <h5 class="text-center"><strong><i class="fa fa-fw fa-envelope-o fa-2x"></i>Email:</strong> {{authProfile.email}}</h5> -->
       	<hr><!--Horizontal line-->
-      	<h5 class="text-left"><strong>Goal Created At: </strong> {{authProfile.goal_created}}</h5>
-      	<h5 class="text-left"><strong>Updated At: </strong> {{authProfile.updated}}</h5>
-        <hr><!--Horizontal line-->{{test}}
+        <h5 class="text-center" style="color: #DF691A"><strong>Total SmartPoints: </strong></h5>
+        <h5 class="text-center" style="color: #DF691A"><strong>Current Level: </strong></h5>
+        <h5 class="text-center" style="color: #DF691A"><strong>Achievements Unlocked: </strong></h5>
+        <hr />
+
+        <h3 class="text-center"><strong>Complete/Inactive Goals</strong></h3>
+        <hr />
+        <div ng-repeat="goal in goalList">
+          <a ui-sref="dashboard.viewGoal({goalId: goal._id})"><h4>{{goal.title}}</h4></a>
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <span ng-if="goal.goal_type=='OPEN'">Priority: {{ goal.priority }} <br/> </span>
+              <span ng-if="goal.goal_type=='SINGLE'">Due Date: {{ goal.due_date }} <br /></span>
+              <span ng-if="goal.notes">Notes: {{ goal.notes }}<br /></span>
+              <span ng-if="goal.goal_type=='REPEAT'">Repeat Goal: {{ goal.repeat }} Times Per Week<br /></span>
+              <span ng-if="goal.goal_type=='REPEAT'">Completes This Week: {{ goal.completesThisWeek }} / {{ goal.repeat }}<br /></span>
+
+
+            </div>
+            <div class="panel-footer">
+              <h5 ng-if="goal.goal_type=='REPEAT'">Completed For The Current Week</h5>
+              <h5 ng-if="goal.goal_type!=='REPEAT'">Completed on {{goal.readableDate}} </h5>
+            </div>
+          </div>
+          <hr />
+        </div>
+
+
   	</div>
 </div>
-

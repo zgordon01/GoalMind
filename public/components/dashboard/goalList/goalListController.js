@@ -21,8 +21,8 @@ angular.module('app').controller('GoalListController', ['$scope', 'goalService',
       else {
         console.log("Received user's goals.");
         response.forEach(function (goal) {
-          goal.readableDate = moment(goal.due_date).format('ddd MM/DD/YY');
-          //console.log(moment(goal.completeDates[0]).format('ddd MM/DD/YY'));
+          goal.duedate = moment(goal.due_date).format('ddd MM/DD/YY');
+          goal.created = moment(goal.created_on).format('ddd MM/DD/YY');
         });
       }
   });
@@ -38,15 +38,12 @@ angular.module('app').controller('GoalListController', ['$scope', 'goalService',
           else {
             console.log("User's goals refreshed.");
             response.forEach(function (goal) {
-              goal.readableDate = moment(goal.due_date).format('ddd MM/DD/YY');
+              goal.duedate = moment(goal.due_date).format('ddd MM/DD/YY');
+              goal.created = moment(goal.created_on).format('ddd MM/DD/YY');
               //console.log(moment(goal.completeDates[0]).format('ddd MM/DD/YY'));
             });
           }
-
-
-
       });
-
   }
   $scope.goToNewGoal = function() {
     $state.transitionTo("dashboard.newGoal");
@@ -59,8 +56,6 @@ angular.module('app').controller('GoalListController', ['$scope', 'goalService',
         if(response.message == "Goal Complete!")
         {
           $scope.refreshGoals();
-          //scroll(0,0);
-          //jquery scroll to top with animation, doesnt seem to work: $('html, body').animate({ scrollTop: 0 }, 'fast');
         }
       });
     }

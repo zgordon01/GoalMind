@@ -9,20 +9,23 @@
         <button class="btn btn-primary" ng-click=goToNewGoal()>Create Goal</button>
         <hr />
       </div>
-      <div ng-repeat="goal in goalList">
-        <a ui-sref="dashboard.viewGoal({goalId: goal._id})"><h3>{{goal.title}}</h3></a>
+
+      <div ng-repeat="goal in goalList | orderBy: 'priorityLevel'">
+
+        <a ui-sref="dashboard.viewGoal({goalId: goal._id})"><h3><span ng-if="goal.overDue==true">**Overdue: </span>{{goal.title}}</h3></a>
         <div class="panel panel-default">
           <div class="panel-body">
             <span ng-if="goal.goal_type=='OPEN'">Priority: {{ goal.priority }} <br/> </span>
-            <span ng-if="goal.goal_type=='SINGLE'">Due Date: {{ goal.readableDate }} <br /></span>
+            <span ng-if="goal.goal_type=='SINGLE'">Due Date: {{ goal.duedate }} <br /></span>
             <span ng-if="goal.notes">Notes: {{ goal.notes }}<br /></span>
-            <span ng-if="goal.goal_type=='REPEAT'">Repeat Goal: {{ goal.repeat }} Times Per Week<br /></span>
             <span ng-if="goal.goal_type=='REPEAT'"> Completes This Week: {{ goal.completesThisWeek }} / {{ goal.repeat }}
             <!-- progres bar animation -->
               <div class="progress progress-striped active">
                 <div class="progress-bar progress-bar-info" ng-style="{ 'width': ( ({{ goal.completesThisWeek }} / {{ goal.repeat }}) * 100 ) + '%' }"></div>
-            </div>
-            </span>
+            </div> </span>
+            <div> Priority Level: {{goal.priorityLevel}} </div>
+            <div> Created On: {{goal.created}} </div>
+
 
           </div>
           <div class="panel-footer">

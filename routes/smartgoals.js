@@ -3,20 +3,15 @@ var express =require('express');
 var router = express.Router();
 var moment = require('moment');
 var SmartGoal = require('../models/smartgoal.js');
-
-//This is how many weeks you want to jump ahead when using testDate
-var addWeeks=9;
-
 var realDate = moment();
-var testDate = moment().add(addWeeks, 'week');
 realDate.format();
-testDate.format();
 
-//Set to realDate or testDate if you want to jump ahead in time for testing, you will have to go through the code and change all
-//var date=testDate to var date=realDate, or vice versa. control (or command on mac) + f is useful
 var date = realDate;
-
 var currentWeek = moment(date).week();
+//Variables to determine when the priority level goals max out their priority, for ordering
+var daysToMaxHigh=7;
+var daysToMaxMedium=10;
+var daysToMaxLow=14;
 
 
 router.route('/')
@@ -41,51 +36,10 @@ router.route('/byuser')
 				res.status(500).send(err);
 			}
 			else{
+				updateRepeats(goals);
 
-				goals.forEach(function (goal)
-				{
-					var thisWeek=0;
-					if(goal.goal_type == "REPEAT")
-					{
-						goal.complete=false;
 
-						var realDate = moment();
-						var testDate = moment().add(addWeeks, 'week');
-						realDate.format();
-						testDate.format();
-						var date = realDate;
-						var currentWeek = moment(date).week();
 
-						goal.completeDates.forEach(function (eachDate)
-						{
-							console.log(eachDate);
-							if (moment(eachDate).week() == currentWeek)
-							{
-								thisWeek++;
-								//console.log("foundone");
-							}
-						});
-						goal.completesThisWeek=thisWeek;
-						if(goal.repeat == thisWeek || goal.repeat <thisWeek)
-						{
-							goal.complete=true;
-						}
-						else {
-							goal.complete=false;
-						}
-						goal.save(function(err) {
-							if (err)
-							{
-								//res.status(500).send(err.message);
-							}
-							else {
-								//console.log(goal);
-								//res.status(200).json({message: "Goal updated"});
-							}
-						});
-					}
-				});
-			}
 				var query = {}
 				query.user_id = res.locals.user_id;
 				query.complete = false;
@@ -95,10 +49,12 @@ router.route('/byuser')
 						res.status(500).send(err);
 					}
 					else {
+						//console.log(goals);
+						updatePriorities(goals);
 						res.send(goals);
 					}
 			});
-		});
+		}});
 	});
 
 	router.route('/byuser/history')
@@ -128,9 +84,7 @@ router.route('/complete')
 		//console.log("===================================");
 			goal.complete=false;
 			var realDate = moment();
-			var testDate = moment().add(addWeeks, 'week');
 			realDate.format();
-			testDate.format();
 			var date = realDate;
 			var currentWeek = moment(date).week();
 			goal.completeDates.addToSet(date.format());
@@ -296,5 +250,141 @@ router.route('/update')
                 res.sendStatus(400);
             }
         });
+
+	updateRepeats = function(goals){
+		goals.forEach(function (goal)
+		{
+			var thisWeek=0;
+			if(goal.goal_type == "REPEAT")
+			{
+				goal.complete=false;
+
+				var realDate = moment();
+				//var testDate = moment().add(addWeeks, 'week');
+				realDate.format();
+				//testDate.format();
+				var date = realDate;
+				var currentWeek = moment(date).week();
+
+				goal.completeDates.forEach(function (eachDate)
+				{
+					//console.log(eachDate);
+					if (moment(eachDate).week() == currentWeek)
+					{
+						thisWeek++;
+						//console.log("foundone");
+					}
+				});
+				goal.completesThisWeek=thisWeek;
+				if(goal.repeat == thisWeek || goal.repeat <thisWeek)
+				{
+					goal.complete=true;
+				}
+				else {
+					goal.complete=false;
+				}
+				goal.save(function(err) {
+					if (err)
+					{
+						//res.status(500).send(err.message);
+					}
+					else {
+						//console.log(goal);
+						//res.status(200).json({message: "Goal updated"});
+					}
+				});
+			}
+		});
+	}
+	updatePriorities = function(goals){
+		goals.forEach(function (goal)
+		{
+			if (goal.goal_type == 'SINGLE')
+			{
+				var dueDate=moment(goal.due_date);
+				var date = moment();
+				var daysAway=dueDate.diff(date, 'days');
+				console.log(goal.title+": days til due: "+daysAway);
+				goal.priorityLevel=daysAway;
+				if (daysAway<0)
+				{
+					goal.priorityLevel=-1;
+					goal.overDue=true;
+				}
+				goal.save(function(err) {
+					if (err)
+					{
+						//res.status(500).send(err.message);
+					}
+					else
+					{
+						//console.log(goal);
+						//res.status(200).json({message: "Goal updated"});
+					}
+				});
+			}
+			else if (goal.goal_type == 'OPEN')
+			{
+				var date = moment();
+				var dateMade = moment(goal.date_created, 'days');
+				var daysAgo=date.diff(dateMade, 'days');
+					if (goal.priority=="LOW")
+					{
+						goal.priorityLevel=(daysToMaxLow-daysAgo);
+						if (goal.priorityLevel < 0)
+						{
+							goal.priorityLevel=0;
+						}
+					}
+					else if (goal.priority=="MEDIUM")
+					{
+						goal.priorityLevel=(daysToMaxMedium-daysAgo);
+						if (goal.priorityLevel < 0)
+						{
+							goal.priorityLevel=0;
+						}
+					}
+					else if (goal.priority=="HIGH") //HIGH
+					{
+						goal.priorityLevel=(daysToMaxHigh-daysAgo);
+						if (goal.priorityLevel < 0)
+						{
+							goal.priorityLevel=0;
+						}
+					}
+				goal.save(function(err) {
+					if (err)
+					{
+						//res.status(500).send(err.message);
+					}
+					else {
+						//console.log(goal);
+						//res.status(200).json({message: "Goal updated"});
+					}
+				});
+			}
+				else if (goal.goal_type == 'REPEAT')
+				{
+					var completesRemaining = (goal.repeat-goal.completesThisWeek);
+					var date=moment();
+					var dayOfWeek=date.day();
+					dayOfWeek++;
+					var daysLeft=(7-dayOfWeek);
+					var freeDays = daysLeft-completesRemaining;
+					goal.priorityLevel=freeDays*2;
+					goal.save(function(err) {
+						if (err)
+						{
+							//res.status(500).send(err.message);
+						}
+						else {
+							//console.log(goal);
+							//res.status(200).json({message: "Goal updated"});
+						}
+					});
+				}
+		});
+	}
+
 
 module.exports = router;
