@@ -9,7 +9,6 @@ angular.module('app').controller('ViewGoalController', ['$scope', '$state', '$st
 
 
 
-
   if ($stateParams.goalId)
   {
     goalService.getSingleGoal($stateParams.goalId, function(response) {
@@ -28,43 +27,61 @@ angular.module('app').controller('ViewGoalController', ['$scope', '$state', '$st
 
 
   $scope.setAsComplete = function() {
-    confirmComplete = confirm("Mark the goal as complete?");
-    if(confirmComplete)
-    {
-      goalService.setAsComplete($stateParams.goalId, function(response) {
-        console.log(response);
-        if(response.message == "Goal Complete!")
-        {
-          //alert(response.message);
-          $state.transitionTo("dashboard.goals");
+
+    BootstrapDialog.confirm({
+
+      title: "WARNING",
+      message: "Mark the goal as complete?",
+      type: BootstrapDialog.TYPE_PRIMARY,
+
+      callback: function(confirmComplete){
+        //confirmComplete will be true if button was click, while it will be false if user closes the dialog directly.
+        if(confirmComplete) {
+ 
+          goalService.setAsComplete($stateParams.goalId, function(response) {
+            console.log(response);
+            if(response.message == "Goal Complete!"){
+              //alert(response.message);
+              $state.transitionTo("dashboard.goals");
+            }
+          });
         }
         else {
           //alert("Error with goal..."); //Not sure when this would happen, probably need better error
         }
-      });
-    }
+      }
+    });
   }
+
+
+
   $scope.deleteGoal = function() {
-    confirmDelete = confirm("Are you sure you want to delete this goal? This is not the same as completing it.");
-    if(confirmDelete)
-    {
-      goalService.deleteGoal($stateParams.goalId, function(response) {
-        if(response.message == "Goal Deleted")
-        {
-          //console.log(response);
-          //lert(response.message);
-          $state.transitionTo("dashboard.goals");
+
+    BootstrapDialog.confirm({
+
+      title: "WARNING",
+      message: "Are you sure you want to delete this goal? This is not the same as completing it.",
+      type: BootstrapDialog.TYPE_PRIMARY,
+
+      callback: function(confirmComplete){
+        //confirmComplete will be true if button was click, while it will be false if user closes the dialog directly.
+        if(confirmComplete) {
+ 
+          goalService.deleteGoal($stateParams.goalId, function(response) {
+    
+            if(response.message == "Goal Deleted"){
+
+              //console.log(response);
+              //alert(response.message);
+              $state.transitionTo("dashboard.goals");
+            }
+          });
         }
         else {
           //alert("error deleting goal..."); //better message here
         }
-      })
-    }
+      }
+    }); 
   }
-
-
-
-
-
 
 }]);

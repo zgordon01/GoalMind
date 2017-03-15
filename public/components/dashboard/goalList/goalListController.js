@@ -51,21 +51,21 @@ angular.module('app').controller('GoalListController', ['$scope', 'goalService',
 
   $scope.setAsComplete = function(goalId, goalTitle) {
 
-    BootstrapDialog.confirm("Mark the goal '" + goalTitle + "' as complete?", function(confirmComplete){
-      //console.log("from setAsComplete function (glc): " + confirmComplete);
-      if(confirmComplete) {
+    BootstrapDialog.confirm({
+      title: "WARNING",
+      message: "Mark the goal '" + goalTitle + "' as complete?",
+      type: BootstrapDialog.TYPE_PRIMARY,
+      callback: function(confirmComplete) {
+        //confirmComplete will be true if button was clicked, while it will be false if user closes the dialog directly.
+        if(confirmComplete) {
  
-        goalService.setAsComplete(goalId, function(response) {
-        if(response.message == "Goal Complete!")
-        {
-          $scope.refreshGoals();
+          goalService.setAsComplete(goalId, function(response) {
+            if(response.message == "Goal Complete!"){
+              
+              $scope.refreshGoals();
+            }
+          });
         }
-      });
-
-      }
-      else {
-        //close the dialog window
-        close();
       }
     }); 
   }
