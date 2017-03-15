@@ -64,7 +64,7 @@ router.route('/byuser')
                         } else {
                             goal.complete = false;
                         }
-                        goal.save(function(err) {
+                        goal.save(function(err) {//???? what is the point of this commented out?
                             if (err) {
                                 //res.status(500).send(err.message);
                             } else {
@@ -124,12 +124,11 @@ router.route('/complete')
                     userObject = user;
                 }
             });
-            console.log("past grab user");
             SmartGoal.findById(req.body.goal_id, function(err, goal) {
                 if (err) {
                     res.status(500).send(err);
                 }
-                if (!goal.complete) {
+                if (goal && !goal.complete) {
                     var realDate = moment();
                     var testDate = moment().add(addWeeks, 'week');
                     realDate.format();
@@ -210,7 +209,7 @@ router.route('/complete')
                         }
                     }
                 }
-                else{//gets here if goal is already completed
+                else{//gets here if goal is already completed or does not exist
                     res.status(200).send();
                 }
             });
@@ -267,7 +266,6 @@ router.route('/')
             goal.completesThisWeek = 0;
 
             goal.user_id = res.locals.user_id;
-            console.log(goal);
             goal.save(function(err) {
                 if (err) {
                     res.status(500).send(err.message);
