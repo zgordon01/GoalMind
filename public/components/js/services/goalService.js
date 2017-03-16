@@ -59,7 +59,7 @@ angular.module('app').factory('goalService', ['$http', 'Flash', function(http, f
                     "Content-Type": 'application/json'
                 }
             }).then(function successCallback(response) { //successCallback
-                flash.create('success', "Goal created.");
+                flash.create('info', "Goal created.");
                 callback(response.data);
 
             }, function errorCallback(response) { //errorCallback do something to inform of error
@@ -102,10 +102,7 @@ angular.module('app').factory('goalService', ['$http', 'Flash', function(http, f
                     "Content-Type": 'application/json'
                 }
             }).then(function successCallback(response) { //successCallback
-                flash.create('success', "Goal Complete!");
                 callback(response.data);
-                //console.log(response.data);
-                //console.log(response);
 
             }, function errorCallback(response) { //errorCallback do something to inform of error
                 flash.create('danger', "OOPS! There was an issue on our end. Try again!");

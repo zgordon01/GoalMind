@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 var UserSchema = require('../models/user.js');
 
-
 router.post('/', function(req, res, next) {//the only query that directly uses the auth0 user_id
     //this route will create a new user if it does not exist and returns the data about the user if the user exists. Also updates the user_token. Requires a user_id and user_token
     if (req.body.user_id && req.get("Authorization")) {
@@ -34,13 +33,47 @@ router.post('/updateUser', function(req, res, next) {
     });
 });
 
-
-router.post('/points', function(req, res, next) {
-    //this route will add/subtract points. requires boolean 'isAdd' for add/subtract and amount. Will return success code and new point value
-});
-
-router.post('/achievements', function(req, res, next) {
+router.post('/achievements', function(req, res, next) {//make function?
     //this route will add achievements. requires achievement_id
 });
+
+router.points = function(req, res, points, callback){//returns if the user leveled up or not (boolean)
+    if(points){
+        var query = {user_token : req.get("Authorization")};
+        pointsBuffer = parseInt(points, 10);
+        UserSchema.findOneAndUpdate(query, {$inc:{points:pointsBuffer}}, {new:true}, function(err, user){
+            if(err){
+                callback(false);
+            }
+            else{
+                determineLevel(req,res,user.points, function(leveled, demoted){
+                    console.log("in pipeline we have " + leveled);
+                    callback(leveled, demoted, points);
+                });
+            }
+        });
+
+    }
+    else{
+        callback(false);
+    }
+}
+function determineLevel(req, res, points, callback){
+    var playerLevel = 1;
+    var levelThreshold = 10;//level2
+    var levelMultiplier = 1.35;
+    while(points > Math.floor(levelThreshold)){
+        levelThreshold *= levelMultiplier;
+        playerLevel++;
+    }
+    UserSchema.findOneAndUpdate({user_token : req.get("Authorization")}, {pointsToNext:Math.floor((levelThreshold-points)), level:playerLevel}, {new:false}, function(err, user){
+        if(err){
+            res.status(500);
+        }
+        else{
+            callback(playerLevel > user.level, playerLevel < user.level);
+        }
+    });
+}
 
 module.exports = router;

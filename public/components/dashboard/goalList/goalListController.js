@@ -1,14 +1,4 @@
-angular.module('app').controller('GoalListController', ['$scope', 'goalService', 'jwtHelper', '$state', function($scope, goalService, jwtHelper, $state){
-
-  /*
-  if (localStorage.getItem('id_token') && !jwtHelper.isTokenExpired(localStorage.getItem('id_token'))) {
-      console.log("auth good");
-  } else {
-      authManager.unauthenticate();
-      $state.transitionTo('home');
-  }
-  */
-
+angular.module('app').controller('GoalListController', ['$scope', 'goalService', 'jwtHelper', '$state', 'userService', '$rootScope', 'Flash',function($scope, goalService, jwtHelper, $state, userService, $rootScope, flash){
 
   $scope.noGoals=false;
   goalService.getGoals(function(response) {
@@ -50,6 +40,32 @@ angular.module('app').controller('GoalListController', ['$scope', 'goalService',
   }
 
   $scope.setAsComplete = function(goalId, goalTitle) {
+    confirmComplete = confirm("Mark the goal '" + goalTitle + "' as complete?");
+    if(confirmComplete)
+    {
+      goalService.setAsComplete(goalId, function(response) {
+        userService.updateUser({}, function(success){
+            if(!success){
+                flash.create('danger', "<strong>OOPS! Something has gone wrong.</strong>");
+            }
+            else{
+                if(response.levelUp){
+                    flash.create('success', response.pointsAdded + " points. <strong>You are now level " + $rootScope.userProfile.level+"!</strong>");
+                }
+                else if(response.demoted){
+                    flash.create('warning', response.pointsAdded + " points. <strong>Goal Complete, but you have been demoted to level" + $rootScope.userProfile.level + "</strong>:(");
+                }
+                else if(response.points){
+                    flash.create('success', response.pointsAdded + " points. <strong>Goal Complete.</strong>");
+                }
+                else{
+                    flash.create('success', "<strong>Goal Marked Complete.</strong>");
+                }
+                $scope.refreshGoals();
+            }
+        });
+      });
+    }
 
     BootstrapDialog.confirm({
       title: "WARNING",
