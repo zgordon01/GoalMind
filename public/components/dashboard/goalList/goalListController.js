@@ -40,50 +40,39 @@ angular.module('app').controller('GoalListController', ['$scope', 'goalService',
   }
 
   $scope.setAsComplete = function(goalId, goalTitle) {
-    confirmComplete = confirm("Mark the goal '" + goalTitle + "' as complete?");
-    if(confirmComplete)
-    {
-      goalService.setAsComplete(goalId, function(response) {
-        userService.updateUser({}, function(success){
-            if(!success){
-                flash.create('danger', "<strong>OOPS! Something has gone wrong.</strong>");
-            }
-            else{
-                if(response.levelUp){
-                    flash.create('success', response.pointsAdded + " points. <strong>You are now level " + $rootScope.userProfile.level+"!</strong>");
-                }
-                else if(response.demoted){
-                    flash.create('warning', response.pointsAdded + " points. <strong>Goal Complete, but you have been demoted to level" + $rootScope.userProfile.level + "</strong>:(");
-                }
-                else if(response.points){
-                    flash.create('success', response.pointsAdded + " points. <strong>Goal Complete.</strong>");
-                }
-                else{
-                    flash.create('success', "<strong>Goal Marked Complete.</strong>");
-                }
-                $scope.refreshGoals();
-            }
-        });
-      });
-    }
+      BootstrapDialog.confirm({
+        title: "WARNING",
+        message: "Mark the goal '" + goalTitle + "' as complete?",
+        type: BootstrapDialog.TYPE_PRIMARY,
+        callback: function(confirmComplete) {
+          //confirmComplete will be true if button was clicked, while it will be false if user closes the dialog directly.
+          if(confirmComplete) {
 
-    BootstrapDialog.confirm({
-      title: "WARNING",
-      message: "Mark the goal '" + goalTitle + "' as complete?",
-      type: BootstrapDialog.TYPE_PRIMARY,
-      callback: function(confirmComplete) {
-        //confirmComplete will be true if button was clicked, while it will be false if user closes the dialog directly.
-        if(confirmComplete) {
- 
-          goalService.setAsComplete(goalId, function(response) {
-            if(response.message == "Goal Complete!"){
-              
-              $scope.refreshGoals();
-            }
-          });
+            goalService.setAsComplete(goalId, function(response) {
+                userService.updateUser({}, function(success){
+                    if(!success){
+                        flash.create('danger', "<strong>OOPS! Something has gone wrong.</strong>");
+                    }
+                    else{
+                        if(response.levelUp){
+                            flash.create('success', response.pointsAdded + " points. <strong>You are now level " + $rootScope.userProfile.level+"!</strong>");
+                        }
+                        else if(response.demoted){
+                            flash.create('warning', response.pointsAdded + " points. <strong>Goal Complete, but you have been demoted to level" + $rootScope.userProfile.level + "</strong>:(");
+                        }
+                        else if(response.points){
+                            flash.create('success', response.pointsAdded + " points. <strong>Goal Complete.</strong>");
+                        }
+                        else{
+                            flash.create('success', "<strong>Goal Marked Complete.</strong>");
+                        }
+                        $scope.refreshGoals();
+                    }
+                });
+            });
+          }
         }
-      }
-    }); 
+      });
   }
 
 }]); //end of controller

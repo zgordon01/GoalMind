@@ -2,7 +2,7 @@
   <div class="col-sm-10 col-sm-offset-1 col-lg-8 col-lg-offset-2">
       	<h1 class="text-center" style="color: #DF691A"><strong>User Profile</strong></h1>
         <hr />
-      	<img img class="img-circle center-block img-responsive" src="{{authProfile.picture}}" width="200" height="200"/>
+      	<img class="img-circle center-block img-responsive" ng-src="{{authProfile.picture_large ? authProfile.picture_large : authProfile.picture}}" width="165" height="165" />
      	<h4 class="text-center" style="color: #DF691A"><strong>Name:</strong> {{authProfile.given_name}}</h4>
       <!--	<h4 class="text-center" style="color: #DF691A"><strong>Nickname:</strong> {{authProfile.nickname}}</h4> -->
      	<!-- <h5 class="text-center"><strong><i class="fa fa-fw fa-envelope-o fa-2x"></i>Email:</strong> {{authProfile.email}}</h5> -->

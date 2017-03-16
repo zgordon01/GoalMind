@@ -5,7 +5,7 @@ angular.module('app').controller('ViewGoalController', ['$scope', '$state', '$st
             $scope.goal = response;
             //console.log(response);
         });
-    } 
+    }
     else{
         //if you refresh on the view goal page, the stateparams will be null. This causes a 400 error and the page will just be blank
         //Another way to handle this would be to temporarily store the stateparams in sessionstorage and check there if null
@@ -24,10 +24,10 @@ angular.module('app').controller('ViewGoalController', ['$scope', '$state', '$st
       callback: function(confirmComplete){
         //confirmComplete will be true if button was click, while it will be false if user closes the dialog directly.
         if(confirmComplete) {
- 
+
           goalService.setAsComplete($stateParams.goalId, function(response) {
             console.log(response);
-            if(response.message == "Goal Complete!"){
+            if(response.points){
               //alert(response.message);
               $state.transitionTo("dashboard.goals");
             }
@@ -53,9 +53,9 @@ angular.module('app').controller('ViewGoalController', ['$scope', '$state', '$st
       callback: function(confirmComplete){
         //confirmComplete will be true if button was click, while it will be false if user closes the dialog directly.
         if(confirmComplete) {
- 
+
           goalService.deleteGoal($stateParams.goalId, function(response) {
-    
+
             if(response.message == "Goal Deleted"){
 
               //console.log(response);
@@ -68,7 +68,7 @@ angular.module('app').controller('ViewGoalController', ['$scope', '$state', '$st
           //alert("error deleting goal..."); //better message here
         }
       }
-    }); 
+    });
   }
 
 }]);

@@ -98,9 +98,7 @@ router.route('/complete')
                 }
                 if (goal && !goal.complete) {
                     var realDate = moment();
-                    var testDate = moment().add(addWeeks, 'week');
                     realDate.format();
-                    testDate.format();
                     var date = realDate;
                     var currentWeek = moment(date).week();
                     goal.completeDates.addToSet(date.format());
@@ -282,13 +280,21 @@ router.route('/update')
             });
         });
     });
-router.route('/view')
-    .post(function(req, res) {
-        if (req.body.goal_id) {
-            SmartGoal.findById(req.body.goal_id, function(err, goal) {
-                if (err) {
-                    res.status(500).send(err);
-                } else {
+    router.route('/view')
+        .post(function(req, res) {
+            if (req.body.goal_id) {
+                SmartGoal.findById(req.body.goal_id, function(err, goal) {
+                    if (err) {
+                        res.status(500).send(err);
+                    } else {
+
+                      res.json(goal);
+                    }
+                });
+            } else {
+                res.sendStatus(400);
+            }
+        });
 
 	updateRepeats = function(goals){
 		goals.forEach(function (goal)
@@ -299,9 +305,7 @@ router.route('/view')
 				goal.complete=false;
 
 				var realDate = moment();
-				//var testDate = moment().add(addWeeks, 'week');
 				realDate.format();
-				//testDate.format();
 				var date = realDate;
 				var currentWeek = moment(date).week();
 

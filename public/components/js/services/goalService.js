@@ -123,7 +123,7 @@ angular.module('app').factory('goalService', ['$http', 'Flash', function(http, f
                     "Content-Type": 'application/json'
                 }
             }).then(function successCallback(response) { //successCallback
-                flash.create('success', "Goal Deleted.");
+                flash.create('warning', "Goal Deleted.");
                 callback(response.data);
 
             }, function errorCallback(response) { //errorCallback do something to inform of error
