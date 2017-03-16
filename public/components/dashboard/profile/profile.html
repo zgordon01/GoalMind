@@ -1,15 +1,14 @@
 <div class="row">
   <div class="col-sm-10 col-sm-offset-1 col-lg-8 col-lg-offset-2">
-      	<h1 class="text-center" style="color: #DF691A"><strong>User Profile</strong></h1>
+      	<h1 class="text-center orange-text"><strong>User Profile</strong></h1>
         <hr />
       	<img class="img-circle center-block img-responsive" ng-src="{{authProfile.picture_large ? authProfile.picture_large : authProfile.picture}}" width="165" height="165" />
-     	<h4 class="text-center" style="color: #DF691A"><strong>Name:</strong> {{authProfile.given_name}}</h4>
+     	<h4 class="text-center orange-text"><strong>Hello, {{authProfile.given_name}}</strong></h4>
       <!--	<h4 class="text-center" style="color: #DF691A"><strong>Nickname:</strong> {{authProfile.nickname}}</h4> -->
      	<!-- <h5 class="text-center"><strong><i class="fa fa-fw fa-envelope-o fa-2x"></i>Email:</strong> {{authProfile.email}}</h5> -->
       	<hr><!--Horizontal line-->
-        <h5 class="text-center" style="color: #DF691A"><strong>Total SmartPoints: </strong></h5>
-        <h5 class="text-center" style="color: #DF691A"><strong>Current Level: </strong></h5>
-        <h5 class="text-center" style="color: #DF691A"><strong>Achievements Unlocked: </strong></h5>
+        <h5 class="text-center orange-text"><strong>Points until level {{userProfile.level + 1}}: {{userProfile.pointsToNext}}</strong></h5>
+        <button class="btn btn-danger" ng-click="resetUserObject()">RESET PROGRESS</button>
         <hr />
 
         <h3 class="text-center"><strong>Complete/Inactive Goals</strong></h3>
@@ -33,7 +32,5 @@
           </div>
           <hr />
         </div>
-
-
   	</div>
 </div>

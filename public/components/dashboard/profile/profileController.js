@@ -1,5 +1,4 @@
-angular.module('app').controller('profileController', ['$scope', '$state', 'goalService', function($scope, $state, goalService){
-  $scope.test = "hi";
+angular.module('app').controller('profileController', ['$rootScope', '$scope', '$state', 'goalService', 'userService', 'Flash', function($rootScope, $scope, $state, goalService, userService, flash){
   $scope.readDates = {};
   goalService.getGoalHistory(function(response) {
       $scope.goalList=response;
@@ -16,6 +15,26 @@ angular.module('app').controller('profileController', ['$scope', '$state', 'goal
         console.log("Received user's goals.");
       }
   });
+  $scope.resetUserObject = function(){
+      BootstrapDialog.confirm({
+        title: "WARNING",
+        message: "Reset your points from " + $rootScope.userProfile.points + " to 0 and your level from " + $rootScope.userProfile.level + " to 0?",
+        type: BootstrapDialog.TYPE_DANGER,
+        callback: function(confirmComplete) {
+          //confirmComplete will be true if button was clicked, while it will be false if user closes the dialog directly.
+          if(confirmComplete) {
+              userService.updateUser({points : 0, level : 1, pointsToNext : 10}, function(success){
+                  if(!success){
+                      flash.create('danger', "<strong>OOPS! Something has gone wrong.</strong>");
+                  }
+                  else{
+                      flash.create('info', "<strong>Your progress has been reset!</strong>");
+                  }
+              });
+          }
+        }
+      });
+  }
 
 
 }]);

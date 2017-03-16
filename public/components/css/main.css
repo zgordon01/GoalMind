@@ -69,6 +69,10 @@ a[href], a[ng-click], input[type='submit'], input[type='image'], label[for], sel
 	padding-left: 5px;
 }
 
+.orange-text{
+	color: #DF691A;
+}
+
 /* JAKE ADDED THIS TO MAKE SIDEBAR LINKS MATCH BACKGROUND */
 .side-navbar ul li a {
 	color: #2B3E50;
