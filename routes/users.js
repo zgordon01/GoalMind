@@ -60,11 +60,20 @@ router.points = function(req, res, points, callback){//returns if the user level
 }
 function determineLevel(req, res, points, callback){
     var playerLevel = 1;
+    var lastThreshold = 0;
     var levelThreshold = 10;//level2
-    var levelMultiplier = 1.35;
+    var levelMultiplier = 1.15;
+    var levelConstant = 10;
     while(points > Math.floor(levelThreshold)){
-        levelThreshold *= levelMultiplier;
+        lastThreshold = levelThreshold;
+        //levelConstant = last
+        var nextThreshold = (levelConstant*levelMultiplier);
+        levelThreshold = lastThreshold+nextThreshold;
+        levelMultiplier += 1;
+        levelConstant += 1;
+        console.log("level threshold: "+levelThreshold);
         playerLevel++;
+        console.log("player level: "+playerLevel);
     }
     UserSchema.findOneAndUpdate({user_token : req.get("Authorization")}, {pointsToNext:Math.floor((levelThreshold-points)), level:playerLevel}, {new:false}, function(err, user){
         if(err){
