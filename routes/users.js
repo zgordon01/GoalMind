@@ -66,7 +66,6 @@ function determineLevel(req, res, points, callback){
     var levelConstant = 10;
     while(points > Math.floor(levelThreshold)){
         lastThreshold = levelThreshold;
-        var last = lastThreshold //just for testing
         var nextThreshold = (levelConstant*levelMultiplier);
         levelThreshold = lastThreshold+nextThreshold;
         levelMultiplier += .5;
@@ -74,7 +73,7 @@ function determineLevel(req, res, points, callback){
         playerLevel++;
         console.log("player level: "+playerLevel);
         console.log("level threshold: "+levelThreshold);
-        console.log("increase in difficulty: " + (levelThreshold-last));
+        //console.log("increase in difficulty: " + (levelThreshold-last));
 
     }
     UserSchema.findOneAndUpdate({user_token : req.get("Authorization")}, {pointsToNext:Math.floor((levelThreshold-points)), level:playerLevel}, {new:false}, function(err, user){
