@@ -18,4 +18,14 @@ $(function () {
         //$('.absolute-wrapper').removeClass('slide-in');
 
     });
+
+    //fix for side nav not hiding
+    $(document).click(function(event) {
+        if($(event.target).closest('#main-content').length){
+            $('.navbar-nav').removeClass('slide-in');
+            $('.side-body').removeClass('body-slide-in');
+            console.log("fired");
+        }
+
+    });
 });
