@@ -7,7 +7,7 @@
 
 -----
 
-- [x] 2. __Route:__ ```localhost/smartgoals/```
+- [x] 2. __Route:__ ```/smartgoals/```
 * __Action:__ __POST__ request
 	+ Creates a new SmartGoal object.
 	+ Required Parameters:
@@ -23,7 +23,7 @@
 -----
 
 
-- [x] 3. __Route:__ ```localhost/smartgoals/goal/update```
+- [x] 3. __Route:__ ```/smartgoals/goal/update/```
 * __Action:__ __POST__ request
 	+ Updates an existing SmartGoal object.
 	+ Required Parameters:
@@ -40,7 +40,7 @@
 -----
 
 
-- [x] 4. __Route:__ ```localhost/smartgoals/byuser```
+- [x] 4. __Route:__ ```/smartgoals/byuser/```
 * __Action:__ __POST__ request
 * Returns all SmartGoal objects in the database with user_id matching the given user_id, with variable "complete" set to false
 	+ Required Parameters:
@@ -61,7 +61,7 @@
 
 -----
 
-- [x] 5. __Route:__ ```localhost/smartgoals/byuser/history```
+- [x] 5. __Route:__ ```/smartgoals/byuser/history/```
 * __Action:__ __POST__ request
 * Returns all SmartGoal objects in the database with user_id matching the given user_id, with variable "complete" set to true.
 	+ Required Parameters:
@@ -83,7 +83,7 @@
 -----
 
 
-- [x] 6. __Route:__ ```localhost/smartgoals/complete```
+- [x] 6. __Route:__ ```/smartgoals/complete/```
 * __Action:__ __POST__ request
 	+ Sets a specific SmartGoal object as complete.
 	+ Required Parameters:
@@ -94,7 +94,7 @@
 
 -----
 
-- [x] 7. __Route:__ ```localhost/smartgoals/view```
+- [x] 7. __Route:__ ```/smartgoals/view/```
 * __Action:__ __POST__ request
 	+ Returns only a single SmartGoal object, matching the given id.
 	+ Required Parameters:
@@ -115,11 +115,12 @@
 
 -----
 
-- [x] 8. __Route:__ ```localhost/smartgoals/delete/:goal_id```
+- [x] 8. __Route:__ ```/smartgoals/delete/```
 * __Action:__ __DELETE__ request
 	+ Deletes a single SmartGoal object, with the given goal_id
 	+ Required Parameters:
 		- goal_id: String
+			- Make goal_id="deleteAll" to delete all user's goals even complete/inactive ones
 * Returned values:
 	+ A message giving a success or error response
 
@@ -127,7 +128,7 @@
 -----
 
 
-- [x] 9. __Route:__ ```localhost/users```
+- [x] 9. __Route:__ ```/users/```
 * __Action:__ __POST__ request
 * Creates a user if one with user_id does not exists. Also updates the user_token. Returns the user object
 	+ Parameters Required:
@@ -136,7 +137,7 @@
 
 -----
 
-- [x] 10. __Route:__ ```localhost/users/updateUser```
+- [x] 10. __Route:__ ```/users/updateUser/```
 * __Action:__ __POST__ request
 * Updates a user object with the specified parameters and then returns the updated user object
 	+ Optional Parameters:

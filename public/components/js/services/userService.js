@@ -13,6 +13,7 @@ angular.module('app').factory('userService', ['$http', '$rootScope', 'lock', 'jw
                 }
             }).then(function successCallback(response) {//successCallback
                 localStorage.setItem('userProfile', JSON.stringify(response));
+                functions.sync();
                 callback(true);
             }, function errorCallback(response) {//errorCallback do something to inform of error
                 callback(false)

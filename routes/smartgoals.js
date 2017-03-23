@@ -8,9 +8,9 @@ realDate.format();
 var date = realDate;
 var currentWeek = moment(date).week();
 //Variables to determine when the priority level goals max out their priority, for ordering
-var daysToMaxHigh=7;
-var daysToMaxMedium=10;
-var daysToMaxLow=14;
+var daysToMaxHigh = 7;
+var daysToMaxMedium = 10;
+var daysToMaxLow = 14;
 
 
 router.route('/')
@@ -29,32 +29,30 @@ router.route('/byuser')
         var query = {}
         query.user_id = res.locals.user_id;
 
-		SmartGoal.find(query, function (err, goals) {
-			if (err)
-			{
-				res.status(500).send(err);
-			}
-			else{
-				updateRepeats(goals);
+        SmartGoal.find(query, function(err, goals) {
+            if (err) {
+                res.status(500).send(err);
+            }
+            else {
+                updateRepeats(goals);
 
 
 
-				var query = {}
-				query.user_id = res.locals.user_id;
-				query.complete = false;
-				SmartGoal.find(query, function (err, goals) {
-					if (err)
-					{
-						res.status(500).send(err);
-					}
-					else {
-						//console.log(goals);
-						updatePriorities(goals);
-						res.send(goals);
-					}
-			});
-		}});
-	});
+                var query = {}
+                query.user_id = res.locals.user_id;
+                query.complete = false;
+                SmartGoal.find(query, function(err, goals) {
+                    if (err) {
+                        res.status(500).send(err);
+                    } else {
+                        //console.log(goals);
+                        updatePriorities(goals);
+                        res.send(goals);
+                    }
+                });
+            }
+        });
+    });
 
 router.route('/byuser/history')
     .post(function(req, res) {
@@ -80,15 +78,16 @@ router.route('/complete')
             var UserSchema = require('../models/user.js');
             var users = require('./users.js');
             var response = {
-                levelUp : false,
-                demoted : false
+                levelUp: false,
+                demoted: false
             };
             UserSchema.find({
                 user_token: req.get('Authorization')
             }, function(err, user) {
                 if (err) {
                     res.status(500).send(err.message);
-                } else {
+                }
+                else {
                     userObject = user;
                 }
             });
@@ -129,10 +128,11 @@ router.route('/complete')
                             response.levelUp = isLeveled;
                             response.demoted = isDemoted;
                             response.pointsAdded = pointsAdded;
-                            goal.save(function(err){
+                            goal.save(function(err) {
                                 if (err) {
                                     res.status(500).send(err.message);
-                                } else {
+                                }
+                                else {
                                     res.status(200).json(response);
                                 }
                             });
@@ -155,56 +155,78 @@ router.route('/complete')
                                 response.levelUp = isLeveled;
                                 response.demoted = isDemoted;
                                 response.pointsAdded = pointsAdded;
-                                goal.save(function(err){
+                                goal.save(function(err) {
                                     if (err) {
                                         res.status(500).send(err.message);
-                                    } else {
+                                    }
+                                    else {
                                         res.status(200).json(response);
                                     }
                                 });
                             });
-                        } else {
+                        }
+                        else {
                             goal.complete = false;
-                            goal.save(function(err){
+                            goal.save(function(err) {
                                 if (err) {
                                     res.status(500).send(err.message);
-                                } else {
+                                }
+                                else {
                                     res.status(200).json(response);
                                 }
                             });
                         }
                     }
-                }
-                else{//gets here if goal is already completed or does not exist
+                } else { //gets here if goal is already completed or does not exist
                     res.status(200).send();
                 }
             });
-        }
-        else{//gets here if goal_id is not passed
+        } else { //gets here if goal_id is not passed
             res.status(400).send();
         }
     });
-router.delete('/delete/:goal_id', function(req, res) {
-    SmartGoal.findById(req.params.goal_id)
-        .exec(function(err, doc) {
-            if (err || !doc) {
-                res.statusCode = 404;
-                res.send({});
-            } else {
-                doc.remove(function(err) {
-                    if (err) {
-                        res.statusCode = 403;
-                        res.send(err);
+router.delete('/delete/', function(req, res) {
+    if (req.body.goal_id) {
+        if (req.body.goal_id != "deleteAll") {
+            console.log("in findbyid");
+                SmartGoal.findById(req.body.goal_id)
+                .exec(function(err, doc) {
+                    if (err || !doc) {
+                        res.statusCode = 404;
+                        res.send({});
+                    }
+                    else {
+                        doc.remove(function(err) {
+                            if (err) {
+                                res.statusCode = 403;
+                                res.send(err);
 
-                    } else {
-                        res.statusCode = 200;
-                        res.send({
-                            message: "Goal Deleted"
+                            }
+                            else {
+                                res.statusCode = 200;
+                                res.send({
+                                    message: "Goal Deleted"
+                                });
+                            }
                         });
                     }
-                })
-            }
-        })
+                });
+        }
+        else {
+            console.log("in delete all");
+            SmartGoal.remove({
+                user_id: res.locals.user_id
+            }, function(err) {
+                if (err) {
+                    res.status(500).send();
+                }
+                res.status(200).json({allDeleted : true});
+            });
+        }
+    }
+    else{
+        res.status(400).send();
+    }
 });
 
 router.route('/')
@@ -235,13 +257,15 @@ router.route('/')
             goal.save(function(err) {
                 if (err) {
                     res.status(500).send(err.message);
-                } else {
+                }
+                else {
                     res.json({
                         message: 'Created Goal'
                     });
                 }
             });
-        } else {
+        }
+        else {
             res.status(400).json({
                 message: "Must send required parameters"
             });
@@ -272,7 +296,8 @@ router.route('/update')
             goal.save(function(err) {
                 if (err) {
                     res.status(500).send(err.message);
-                } else {
+                }
+                else {
                     res.json({
                         message: "Goal successfully updated."
                     });
@@ -280,154 +305,133 @@ router.route('/update')
             });
         });
     });
-    router.route('/view')
-        .post(function(req, res) {
-            if (req.body.goal_id) {
-                SmartGoal.findById(req.body.goal_id, function(err, goal) {
-                    if (err) {
-                        res.status(500).send(err);
-                    } else {
+router.route('/view')
+    .post(function(req, res) {
+        if (req.body.goal_id) {
+            SmartGoal.findById(req.body.goal_id, function(err, goal) {
+                if (err) {
+                    res.status(500).send(err);
+                }
+                else {
 
-                      res.json(goal);
-                    }
-                });
+                    res.json(goal);
+                }
+            });
+        }
+        else {
+            res.sendStatus(400);
+        }
+    });
+
+updateRepeats = function(goals) {
+    goals.forEach(function(goal) {
+        var thisWeek = 0;
+        if (goal.goal_type == "REPEAT") {
+            goal.complete = false;
+
+            var realDate = moment();
+            realDate.format();
+            var date = realDate;
+            var currentWeek = moment(date).week();
+
+            goal.completeDates.forEach(function(eachDate) {
+                //console.log(eachDate);
+                if (moment(eachDate).week() == currentWeek) {
+                    thisWeek++;
+                    //console.log("foundone");
+                }
+            });
+            goal.completesThisWeek = thisWeek;
+            if (goal.repeat == thisWeek || goal.repeat < thisWeek) {
+                goal.complete = true;
             } else {
-                res.sendStatus(400);
+                goal.complete = false;
             }
-        });
-
-	updateRepeats = function(goals){
-		goals.forEach(function (goal)
-		{
-			var thisWeek=0;
-			if(goal.goal_type == "REPEAT")
-			{
-				goal.complete=false;
-
-				var realDate = moment();
-				realDate.format();
-				var date = realDate;
-				var currentWeek = moment(date).week();
-
-				goal.completeDates.forEach(function (eachDate)
-				{
-					//console.log(eachDate);
-					if (moment(eachDate).week() == currentWeek)
-					{
-						thisWeek++;
-						//console.log("foundone");
-					}
-				});
-				goal.completesThisWeek=thisWeek;
-				if(goal.repeat == thisWeek || goal.repeat <thisWeek)
-				{
-					goal.complete=true;
-				}
-				else {
-					goal.complete=false;
-				}
-				goal.save(function(err) {
-					if (err)
-					{
-						//res.status(500).send(err.message);
-					}
-					else {
-						//console.log(goal);
-						//res.status(200).json({message: "Goal updated"});
-					}
-				});
-			}
-		});
-	}
-	updatePriorities = function(goals){
-		goals.forEach(function (goal)
-		{
-			if (goal.goal_type == 'SINGLE')
-			{
-				var dueDate=moment(goal.due_date);
-				var date = moment();
-				var daysAway=dueDate.diff(date, 'days');
-				console.log(goal.title+": days til due: "+daysAway);
-				goal.priorityLevel=daysAway;
-				if (daysAway<0)
-				{
-					goal.priorityLevel=-1;
-					goal.overDue=true;
-				}
-				goal.save(function(err) {
-					if (err)
-					{
-						//res.status(500).send(err.message);
-					}
-					else
-					{
-						//console.log(goal);
-						//res.status(200).json({message: "Goal updated"});
-					}
-				});
-			}
-			else if (goal.goal_type == 'OPEN')
-			{
-				var date = moment();
-				var dateMade = moment(goal.date_created, 'days');
-				var daysAgo=date.diff(dateMade, 'days');
-					if (goal.priority=="LOW")
-					{
-						goal.priorityLevel=(daysToMaxLow-daysAgo);
-						if (goal.priorityLevel < 0)
-						{
-							goal.priorityLevel=0;
-						}
-					}
-					else if (goal.priority=="MEDIUM")
-					{
-						goal.priorityLevel=(daysToMaxMedium-daysAgo);
-						if (goal.priorityLevel < 0)
-						{
-							goal.priorityLevel=0;
-						}
-					}
-					else if (goal.priority=="HIGH") //HIGH
-					{
-						goal.priorityLevel=(daysToMaxHigh-daysAgo);
-						if (goal.priorityLevel < 0)
-						{
-							goal.priorityLevel=0;
-						}
-					}
-				goal.save(function(err) {
-					if (err)
-					{
-						//res.status(500).send(err.message);
-					}
-					else {
-						//console.log(goal);
-						//res.status(200).json({message: "Goal updated"});
-					}
-				});
-			}
-				else if (goal.goal_type == 'REPEAT')
-				{
-					var completesRemaining = (goal.repeat-goal.completesThisWeek);
-					var date=moment();
-					var dayOfWeek=date.day();
-					dayOfWeek++;
-					var daysLeft=(7-dayOfWeek);
-					var freeDays = daysLeft-completesRemaining;
-					goal.priorityLevel=freeDays*2;
-					goal.save(function(err) {
-						if (err)
-						{
-							//res.status(500).send(err.message);
-						}
-						else {
-							//console.log(goal);
-							//res.status(200).json({message: "Goal updated"});
-						}
-					});
-				}
-		});
-	}
+            goal.save(function(err) {
+                if (err) {
+                    //res.status(500).send(err.message);
+                }
+                else {
+                    //console.log(goal);
+                    //res.status(200).json({message: "Goal updated"});
+                }
+            });
+        }
+    });
+}
+updatePriorities = function(goals) {
+    goals.forEach(function(goal) {
+        if (goal.goal_type == 'SINGLE') {
+            var dueDate = moment(goal.due_date);
+            var date = moment();
+            var daysAway = dueDate.diff(date, 'days');
+            console.log(goal.title + ": days til due: " + daysAway);
+            goal.priorityLevel = daysAway;
+            if (daysAway < 0) {
+                goal.priorityLevel = -1;
+                goal.overDue = true;
+            }
+            goal.save(function(err) {
+                if (err) {
+                    //res.status(500).send(err.message);
+                }
+                else {
+                    //console.log(goal);
+                    //res.status(200).json({message: "Goal updated"});
+                }
+            });
+        } else if (goal.goal_type == 'OPEN') {
+            var date = moment();
+            var dateMade = moment(goal.date_created, 'days');
+            var daysAgo = date.diff(dateMade, 'days');
+            if (goal.priority == "LOW") {
+                goal.priorityLevel = (daysToMaxLow - daysAgo);
+                if (goal.priorityLevel < 0) {
+                    goal.priorityLevel = 0;
+                }
+            }
+            else if (goal.priority == "MEDIUM") {
+                goal.priorityLevel = (daysToMaxMedium - daysAgo);
+                if (goal.priorityLevel < 0) {
+                    goal.priorityLevel = 0;
+                }
+            }
+            else if (goal.priority == "HIGH") {//HIGH
+                goal.priorityLevel = (daysToMaxHigh - daysAgo);
+                if (goal.priorityLevel < 0) {
+                    goal.priorityLevel = 0;
+                }
+            }
+            goal.save(function(err) {
+                if (err) {
+                    //res.status(500).send(err.message);
+                }
+                else {
+                    //console.log(goal);
+                    //res.status(200).json({message: "Goal updated"});
+                }
+            });
+        }
+        else if (goal.goal_type == 'REPEAT') {
+            var completesRemaining = (goal.repeat - goal.completesThisWeek);
+            var date = moment();
+            var dayOfWeek = date.day();
+            dayOfWeek++;
+            var daysLeft = (7 - dayOfWeek);
+            var freeDays = daysLeft - completesRemaining;
+            goal.priorityLevel = freeDays * 2;
+            goal.save(function(err) {
+                if (err) {
+                    //res.status(500).send(err.message);
+                }
+                else {
+                    //console.log(goal);
+                    //res.status(200).json({message: "Goal updated"});
+                }
+            });
+        }
+    });
+}
 
 
 module.exports = router;

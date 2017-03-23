@@ -113,17 +113,17 @@ angular.module('app').factory('goalService', ['$http', 'Flash', function(http, f
         deleteGoal: function(goal_id, callback) {
             http({
                 method: 'DELETE',
-                url: '/smartgoals/delete/' + goal_id,
+                url: '/smartgoals/delete/',
                 data: {
                     "goal_id": goal_id
-
-
                 },
                 headers: {
                     "Content-Type": 'application/json'
                 }
             }).then(function successCallback(response) { //successCallback
-                flash.create('warning', "Goal Deleted.");
+                if (!response.data.allDeleted) {
+                    flash.create('warning', "Goal Deleted.");
+                }
                 callback(response.data);
 
             }, function errorCallback(response) { //errorCallback do something to inform of error
