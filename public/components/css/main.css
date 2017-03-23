@@ -25,6 +25,9 @@ a[href], a[ng-click], input[type='submit'], input[type='image'], label[for], sel
 .alert{
     font-size:3em;
 }
+.requiredForm{
+	color:red;
+}
 /*NAVBAR STYLES*/
 .side-navbar {
 	position: absolute;

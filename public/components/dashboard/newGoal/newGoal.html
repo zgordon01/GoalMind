@@ -43,7 +43,7 @@
             <form class="form-horizontal panel-body">
 
                 <div class="form-group">
-                    <label for="select" class="col-lg-4 col-md-3 col-sm-2 control-label">Title</label>
+                    <label for="select" class="col-lg-4 col-md-3 col-sm-2 control-label">Title<span class="requiredForm"> (REQUIRED)</span></label>
                     <div class="col-sm-10 col-md-9 col-lg-8">
                         <textarea class="form-control" rows="1" ng-model="newgoal.title"></textarea>
                     </div>
@@ -58,7 +58,7 @@
 
                 <div class="form-group">
                   <div ng-if="isOpen()">
-                    <label for="select" class="col-lg-4 col-md-3 col-sm-2 control-label">Priority</label>
+                    <label for="select" class="col-lg-4 col-md-3 col-sm-2 control-label">Priority<span class="requiredForm"> (REQUIRED)</span></label>
 
                     <select name="select" ng-model="newgoal.priority">
                       <option value="LOW" >Low</option>
@@ -71,7 +71,7 @@
 
                 <div class="form-group">
                   <div ng-if="isSingle()">
-                    <label for="select" class="col-lg-4 col-md-3 col-sm-2 control-label" >Due Date</label>
+                    <label for="select" class="col-lg-4 col-md-3 col-sm-2 control-label" >Due Date<span class="requiredForm"> (REQUIRED)</span></label>
                     <div class="col-sm-10 col-md-9 col-lg-8" >
                         <input type="date" class="form-control" ng-model="newgoal.due_date">
                     </div>
@@ -80,7 +80,7 @@
 
                 <div class="form-group">
                     <div ng-if="isRepeat()">
-                    <label for="select" class="col-lg-4 col-md-3 col-sm-2 control-label" >How many times per week?</label>
+                    <label for="select" class="col-lg-4 col-md-3 col-sm-2 control-label" >How many times per week?<span class="requiredForm"> (REQUIRED)</span></label>
                     <div class="col-sm-10 col-md-9 col-lg-8" >
                         Repeat <input type="number" class="form-control" ng-model="newgoal.repeat">Times Per Week
                     </div>

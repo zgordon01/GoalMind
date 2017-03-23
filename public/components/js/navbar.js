@@ -24,7 +24,6 @@ $(function () {
         if($(event.target).closest('#main-content').length){
             $('.navbar-nav').removeClass('slide-in');
             $('.side-body').removeClass('body-slide-in');
-            console.log("fired");
         }
 
     });
