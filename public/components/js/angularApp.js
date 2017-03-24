@@ -55,15 +55,20 @@
                 templateUrl: './components/dashboard/calendar.html'
 
             })
-            .state('dashboard.graph', {
-                url: '/graph',
-                templateUrl: './components/dashboard/graph.html'
+           // .state('dashboard.graph', {
+                //url: '/graph',
+                //templateUrl: './components/dashboard/graph.html'
 
-            })
-            .state('dashboard.profile',{//   profile/profile ....
+            //})
+            .state('dashboard.profile',{ // State for profile.html and profileController 
                 url: '/profile',
                 templateUrl: './components/dashboard/profile/profile.html',
                 controller: 'profileController'
+            })
+            .state('dashboard.graph',{ // New state for graph.html and graphController
+                url: '/graph',
+                templateUrl:'./components/dashboard/graph/graph.html',
+                controller: 'graphController'
             });
         //$urlRouterProvider.otherwise('/');
         lockProvider.init({
