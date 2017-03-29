@@ -1,8 +1,17 @@
 <div class="row">
     <div class="col-sm-10 col-sm-offset-1 col-lg-8 col-lg-offset-2">
       <div ng-if="!noGoals">
-        <h1>Active Goals</h1>
+        <h1 class="text-align: center">Active Goals</h1>
         <hr />
+        <!--Select how to view your active goals-->
+        <div class="btn-group" role="group" aria-label="...">
+          <center><h3>Show Goals By</h3></center>
+          <button type="button" class="btn btn-default" ng-click="showOpenGoal()">Due Date Goal</button>
+          <button type="button" class="btn btn-default" ng-click="showSingleGoal()">Single Goal</button>     
+          <button type="button" class="btn btn-default" ng-click="showRepeatType()">Repeated Goal</button><br/>
+        </div>
+        <hr />
+        
       </div>
       <div ng-if="noGoals">
         <h3>You don't have any active goals. Set some goals!</h3>
@@ -10,7 +19,12 @@
         <hr />
       </div>
 
-      <div ng-repeat="goal in goalList | orderBy: 'priorityLevel'">
+      <!--Add buttons here use diff. colors for relating to each type of goal, like use blue='SINGLE', yellow='REPEATING', and green='OPEN'-->
+      <div ng-repeat="goal in goalList | orderBy: orderByValue "><!-- priorityLevel goal_type title-->
+
+      <!-- ng-show -->
+      <div ng-show="goal.goal_type== myGoalType "> 
+
 
         <a ui-sref="dashboard.viewGoal({goalId: goal._id})"><h3><span ng-if="goal.overDue==true">**Overdue: </span>{{goal.title}}</h3></a>
         <div class="panel panel-default">
@@ -23,7 +37,7 @@
               <div class="progress progress-striped active">
                 <div class="progress-bar progress-bar-info" ng-style="{ 'width': ( ({{ goal.completesThisWeek }} / {{ goal.repeat }}) * 100 ) + '%' }"></div>
             </div> </span>
-            <div> Priority Level: {{goal.priorityLevel}} </div>
+            <div> Priority Level: {{goal.priorityLevel}} </div><!-- goal_type-->
             <div> Created On: {{goal.created}} </div>
 
 
@@ -33,7 +47,7 @@
           </div>
         </div>
         <hr />
-
+      </div><!--edn of ng-show -->
       </div>
       <br/><br/><br/><br/> <!-- extra space so that the flash alert won't overlap the last goal on the list -->
 

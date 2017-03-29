@@ -1,6 +1,20 @@
-angular.module('app').controller('GoalListController', ['$scope', 'goalService', 'jwtHelper', '$state', 'userService', '$rootScope', 'Flash',function($scope, goalService, jwtHelper, $state, userService, $rootScope, flash){
+angular.module('app').controller('GoalListController', ['$scope', 'goalService', 'jwtHelper', '$state', 'userService', '$rootScope', 'Flash', function($scope, goalService, jwtHelper, $state, userService, $rootScope, flash){
+  
+
+  $scope.myGoalType=" SINGLE "; 
+
+  $scope.showOpenGoal = function() {
+    $scope.myGoalType = 'OPEN';
+  }
+  $scope.showSingleGoal = function() {
+    $scope.myGoalType = 'SINGLE';
+  }
+  $scope.showRepeatType = function() {
+    $scope.myGoalType = 'REPEAT';
+  }
 
   $scope.noGoals=false;
+
   goalService.getGoals(function(response) {
       $scope.goalList=response;
       if($scope.goalList=="")
