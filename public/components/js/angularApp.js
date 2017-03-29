@@ -48,19 +48,7 @@
                 params : { goalId: null, hiddenParam:'YES',},
                 controller: 'ViewGoalController'
 
-            })
-
-            .state('dashboard.calendar', {
-                url: '/calendar',
-                templateUrl: './components/dashboard/calendar.html'
-
-            })
-           // .state('dashboard.graph', {
-                //url: '/graph',
-                //templateUrl: './components/dashboard/graph.html'
-
-            //})
-            .state('dashboard.profile',{ // State for profile.html and profileController 
+            }).state('dashboard.profile',{ // State for profile.html and profileController
                 url: '/profile',
                 templateUrl: './components/dashboard/profile/profile.html',
                 controller: 'profileController'
