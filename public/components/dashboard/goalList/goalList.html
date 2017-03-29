@@ -3,12 +3,20 @@
       <div ng-if="!noGoals">
         <h1 class="text-align: center">Active Goals</h1>
         <hr />
-        <!--Select how to view your active goals-->
+        <!--Select how to VIEW your active goals-->
         <div class="btn-group" role="group" aria-label="...">
-          <center><h3>Show Goals By</h3></center>
-          <button type="button" class="btn btn-default" ng-click="showOpenGoal()">Due Date Goal</button>
-          <button type="button" class="btn btn-default" ng-click="showSingleGoal()">Single Goal</button>     
-          <button type="button" class="btn btn-default" ng-click="showRepeatType()">Repeated Goal</button><br/>
+          <center><h5>Show Goals By: </h5></center>
+          <button type="button" class="btn btn-default" ng-click="showOpenGoal()">Priority</button>
+          <button type="button" class="btn btn-default" ng-click="showSingleGoal()">Due Date </button>     
+          <button type="button" class="btn btn-default" ng-click="showRepeatType()">Repeating</button><br/>
+        </div>
+        <!-- Select how to ORDER your active goals -->
+        <div class="btn-group" role="group" aria-label="...">
+          <center><h5>Order Goals By: </h5></center>
+          <button type="button" class="btn btn-default" ng-click="orderByPriorityLevel()">Priority Level</button>
+          <button type="button" class="btn btn-default" ng-click="orderByTitle()">Title</button>
+          <button type="button" class="btn btn-default" ng-click="orderByDueDate()">Due Date</button>
+          <button type="button" class="btn btn-default" ng-click="orderByDateCreated()">Date Created</button>
         </div>
         <hr />
         
@@ -20,11 +28,8 @@
       </div>
 
       <!--Add buttons here use diff. colors for relating to each type of goal, like use blue='SINGLE', yellow='REPEATING', and green='OPEN'-->
-      <div ng-repeat="goal in goalList | orderBy: orderByValue "><!-- priorityLevel goal_type title-->
-
-      <!-- ng-show -->
+      <div ng-repeat="goal in goalList | orderBy: orderByValue ">
       <div ng-show="goal.goal_type== myGoalType "> 
-
 
         <a ui-sref="dashboard.viewGoal({goalId: goal._id})"><h3><span ng-if="goal.overDue==true">**Overdue: </span>{{goal.title}}</h3></a>
         <div class="panel panel-default">
@@ -37,7 +42,7 @@
               <div class="progress progress-striped active">
                 <div class="progress-bar progress-bar-info" ng-style="{ 'width': ( ({{ goal.completesThisWeek }} / {{ goal.repeat }}) * 100 ) + '%' }"></div>
             </div> </span>
-            <div> Priority Level: {{goal.priorityLevel}} </div><!-- goal_type-->
+            <div> Priority Level: {{goal.priorityLevel}} </div>
             <div> Created On: {{goal.created}} </div>
 
 
@@ -47,8 +52,8 @@
           </div>
         </div>
         <hr />
-      </div><!--edn of ng-show -->
-      </div>
+      </div> <!--end of ng-show -->
+      </div> <!-- end of ng-repeat -->
       <br/><br/><br/><br/> <!-- extra space so that the flash alert won't overlap the last goal on the list -->
 
     </div>

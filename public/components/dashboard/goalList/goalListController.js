@@ -1,7 +1,7 @@
 angular.module('app').controller('GoalListController', ['$scope', 'goalService', 'jwtHelper', '$state', 'userService', '$rootScope', 'Flash', function($scope, goalService, jwtHelper, $state, userService, $rootScope, flash){
   
-
-  $scope.myGoalType=" SINGLE "; 
+/* for showing goals by goal type selected from buttons */
+  $scope.myGoalType=" SINGLE"; //this should default to all goals, currently just single goals will appear at first
 
   $scope.showOpenGoal = function() {
     $scope.myGoalType = 'OPEN';
@@ -13,8 +13,25 @@ angular.module('app').controller('GoalListController', ['$scope', 'goalService',
     $scope.myGoalType = 'REPEAT';
   }
 
-  $scope.noGoals=false;
 
+  /* for ordering by goal type from buttons */
+  $scope.orderByValue = 'priorityLevel'; //defualt to ordering by priority level (num)
+
+  $scope.orderByPriorityLevel = function(){
+    $scope.orderByValue = 'priorityLevel';
+  }
+  $scope.orderByTitle = function(){
+    $scope.orderByValue = 'title';
+  }
+  $scope.orderByDueDate = function(){
+    $scope.orderByValue = 'due_date';
+  }
+  $scope.orderByDateCreated = function(){
+    $scope.orderByValue = 'date_created';
+  }
+
+
+  $scope.noGoals=false;
   goalService.getGoals(function(response) {
       $scope.goalList=response;
       if($scope.goalList=="")
