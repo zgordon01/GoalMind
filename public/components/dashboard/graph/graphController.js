@@ -1,183 +1,196 @@
-angular.module('app').controller('graphController', ['$scope', 'goalService', 'jwtHelper', '$state', 'userService', '$rootScope', 'Flash','ng-fusioncharts',function($scope, goalService, jwtHelper, $state, userService, $rootScope, flash){
+angular.module('app').controller('GraphController', ['$scope', '$state', '$stateParams', 'goalService', 'jwtHelper', '$state',  function($scope, $state, $stateParams, goalService, jwtHelper, $state) {
+  $scope.chartSource = [];
 
-              
+
+  $scope.resetData = function()
+  {
+      console.log('pushed button');
+      goalService.getPointHistory(function(response) {
+          $scope.chartData=[];
+
+          response.forEach(function(item)
+          {
+              var objkeys = (Object.values(item));
+              //console.log(objkeys);
+              objkeys.forEach(function(eachObject)
+              {
+                $scope.chartData.push(eachObject);
+                //console.log($scope.chartData);
+              });
+
+          });
 
 
-     /*         $scope.myDataSource = {
-                chart: {
-                    caption: "Harry's SuperMart",
-                    subCaption: "Top 5 stores in last month by revenue",
-                },
-                data:[{
-                    label: "Bakersfield Central",
-                    value: "880000"
-                },
-                {
-                    label: "Garden Groove harbour",
-                    value: "730000"
-                },
-                {
-                    label: "Los Angeles Topanga",
-                    value: "590000"
-                },
-                {
-                    label: "Compton-Rancho Dom",
-                    value: "520000"
-                },
-                {
-                    label: "Daly City Serramonte",
-                    value: "330000"
-                }]
-            };*/
 
-	$scope.myDataSource = {
-		chart: {
-			caption: "SmartGoals Daily Achieved Points",
-			subCaption: "Based On Your Entered Data",
-		},
-		data:[{
-        	label: "Sunday",
-        	value: "totalPoints"
-    	},
-    	{
-        	label: "Monday",
-        	value: "totalPoints"
-    	},
-    	{
-        	label: "Tuesday",
-        	value: "totalPoints"
-    	},
-    	{
-        	label: "Wednesday",
-        	value: "totalPoints"
-    	},
-    	{
-        	label: "Thursday",
-        	value: "totalPoints"
-    	},
-    	{
-        	label: "Friday",
-        	value: "totalPoints"
-    	},
-    	{
-        	label: "Saturday",
-        	value: "totalPoints"
-    	}]
-	};
-}]); //end of controller
+          //alert("HI");
+          //alert($scope.chartData.length);
+          for(i=0; i<$scope.chartData.length; i+=2)
+          {
+            //console.log("chartdata[i]: "+$scope.chartData[i]);
 
-/*
-Total points for the day sudo code:
+            $scope.chartSource.push({"label":"$scope.chartData[i]", "value":"$scope.chartData[i+1]"});
+            //console.log("{label:"+$scope.chartData[i]+", value:"+$scope.chartData[i+1]+"}");
+          };
+          console.log($scope.chartSource);
+          console.log(JSON.stringify($scope.chartSource, ['label', 'value']));
+          console.log($scope.chartSource);
+      });
+  };
+  $scope.resetData();
+  $scope.updateView=function()
+  {
+    console.log("button");
+    $scope.resetData();
+  };
+  console.log($scope.chartSource);
 
-if you accomplished one goal on Sunday 
-you get 10 points
-add 10 points to SUNDAY
+    var salesChartTest = new FusionCharts({
+    type: 'bar3d',
+    renderAt: 'chart-container3',
+    width: '400',
+    height: '300',
+    dataFormat: 'json',
+    dataSource: {
+        "chart": {
+            "caption": "Top 5 Stores by Sales",
+            "subCaption": "Last month",
+            "xAxisName": "Stores",
+            "yAxisName": "Sales (in USD)",
+            "numberPrefix": "$",
+            "alignCaptionWithCanvas": "0",
+            "canvasBgAlpha": "0",
+            //Theme
+            "theme" : "fint"
+        },
+        "data": [
+            {
+                "label": "Bakersfield Central",
+                "value": "880000"
+            },
+            {
+                "label": "Garden Groove harbour",
+                "value": "730000"
+            },
+            {
+                "label": "Los Angeles Topanga",
+                "value": "590000"
+            },
+            {
+                "label": "Compton-Rancho Dom",
+                "value": "520000"
+            },
+            {
+                "label": "Daly City Serramonte",
+                "value": "330000"
+            }
+        ]
+    }
+}).render();
 
-Check if user has a daily goal
-if yes check if user accomplished the goal for the day:
-if you did a daily goal on Sunday 
-yoe get 5 points
-add 5 points on SUNDAY
+var apiChartData=$scope.chartSource;
+console.log(apiChartData);
+console.log(JSON.stringify($scope.chartSource, ['label', 'value']));
+var apiChartData2 = [
+  {
+    "label": "Feb 4 2015",
+    "value": "62.01"
+  },
+  {
+    "label": "Mar 1, 2015",
+    "value": "66.18"
+  },
+  {
+    "label": "April 2, 2015",
+    "value": "66.05"
+  },
+  {
+    "label": "May 1, 2015",
+    "value": "69.5"
+  },
+  {
+    "label": "Jun 16, 2015",
+    "value": "72.94"
+  },
+  {
+    "label": "Jul 1, 2015",
+    "value": "73.38"
+  }
+];
+var apiChartProperties = {
+  "caption": "Price of Petrol in Bangalore",
+  "subCaption": "In the last 6 months",
+  "xAxisName": "Petrol Price Change Date",
+  "yAxisName": "Petrol Price",
+  "numberPrefix": "Rs ",
+  "rotatevalues": "1",
+  "theme": "zune"
+};
+var apiChart = new FusionCharts({
+  type: 'column2d',
+  renderAt: 'api-chart-container',
+  width: '550',
+  height: '350',
+  dataFormat: 'json',
+  dataSource: {
+    "chart": apiChartProperties,
+    "data": apiChartData2
+  }
+});
+FusionCharts.ready(function () {
+  apiChart.render();
+});
 
-//xml
-<chart caption="Total footfall in Bakersfield Central" subcaption="Last week" xaxisname="Day" yaxisname="No. of Footfalls" linethickness="2" palettecolors="#008ee4,#6baa01" basefontcolor="#333333" basefont="Helvetica Neue,Arial" captionfontsize="14" subcaptionfontsize="14" subcaptionfontbold="0" showborder="0" showvalues="0" bgcolor="#ffffff" showshadow="0" canvasbgcolor="#ffffff" canvasborderalpha="0" divlinealpha="100" divlinecolor="#999999" divlinethickness="1" divlinedashed="1" divlinedashlen="1" showxaxisline="1" xaxislinethickness="1" xaxislinecolor="#999999" showalternatehgridcolor="0">
-    <set label="Mon" value="15123" />
-    <set label="Tue" value="14233" />
-    <set label="Wed" value="25507" />
-    <vline lineposition="0" color="#6baa01" labelhalign="left" label="National holiday" />
-    <set label="Thu" value="9110" />
-    <set label="Fri" value="15529" />
-    <set label="Sat" value="20803" />
-    <set label="Sun" value="19202" />
-</chart>
-
-//JSON
-{
-    "chart": {
-        "caption": "Total footfall in Bakersfield Central",
-        "subCaption": "Last week",
-        "xAxisName": "Day",
-        "yAxisName": "No. of Footfalls",
-        "lineThickness": "2",
-        "paletteColors": "#008ee4,#6baa01",
-        "baseFontColor": "#333333",
-        "baseFont": "Helvetica Neue,Arial",
-        "captionFontSize": "14",
-        "subcaptionFontSize": "14",
-        "subcaptionFontBold": "0",
-        "showBorder": "0",
-        "showValues": "0",
-        "bgColor": "#ffffff",
-        "showShadow": "0",
-        "canvasBgColor": "#ffffff",
-        "canvasBorderAlpha": "0",
-        "divlineAlpha": "100",
-        "divlineColor": "#999999",
-        "divlineThickness": "1",
-        "divLineDashed": "1",
-        "divLineDashLen": "1",
-        "showXAxisLine": "1",
-        "xAxisLineThickness": "1",
-        "xAxisLineColor": "#999999",
-        "showAlternateHGridColor": "0"
+$scope.dataSource = {
+    chart: {
+        caption: "Harry's SuperMart",
+        subCaption: "Top 5 stores in last month by revenue",
+        numberPrefix: "$",
+        theme: "ocean"
     },
-    "data": [
-        {
-            "label": "Mon",
-            "value": "15123"
-        },
-        {
-            "label": "Tue",
-            "value": "14233"
-        },
-        {
-            "label": "Wed",
-            "value": "25507"
-        },
-        {
-            "vline": "true",
-            "lineposition": "0",
-            "color": "#6baa01",
-            "labelHAlign": "left",
-            "label": "National holiday"
-        },
-        {
-            "label": "Thu",
-            "value": "9110"
-        },
-        {
-            "label": "Fri",
-            "value": "15529"
-        },
-        {
-            "label": "Sat",
-            "value": "20803"
-        },
-        {
-            "label": "Sun",
-            "value": "19202"
-        }
-    ]
-}
+    data:[{
+        label: "Bakersfield Central",
+        value: "880000"
+    },
+    {
+        label: "Garden Groove harbour",
+        value: "730000"
+    },
+    {
+        label: "Los Angeles Topanga",
+        value: "590000"
+    },
+    {
+        label: "Compton-Rancho Dom",
+        value: "520000"
+    },
+    {
+        label: "Daly City Serramonte",
+        value: "330000"
+    }]
+};
 
+$scope.updateMyChartData = function () {
 
-*/
+  /*
+    $scope.dataSource.data[2].label = "This Label is Updated";
+    $scope.dataSource.data[2].value = "420000";
 
+    $scope.dataSource.data[3].label = "This is updated as well";
+    $scope.dataSource.data[3].value = "210000"; */
 
+    for(i=0; i<$scope.chartData.length; i=(i+2))
+    {
+      //console.log("chartdata[i]: "+$scope.chartData[i]);
 
+      $scope.dataSource.data[i].label = $scope.chartData[i];
+      $scope.dataSource.data[i].value = $scope.chartData[i+1];
 
+      //console.log("{label:"+$scope.chartData[i]+", value:"+$scope.chartData[i+1]+"}");
+    };
+};
+$scope.updateMyChartData();
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
+}]);

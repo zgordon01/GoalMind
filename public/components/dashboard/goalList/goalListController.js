@@ -1,34 +1,62 @@
 angular.module('app').controller('GoalListController', ['$scope', 'goalService', 'jwtHelper', '$state', 'userService', '$rootScope', 'Flash', function($scope, goalService, jwtHelper, $state, userService, $rootScope, flash){
-  
+
 /* for showing goals by goal type selected from buttons */
-  $scope.myGoalType=" SINGLE"; //this should default to all goals, currently just single goals will appear at first
+  //$scope.myGoalType="ALL"; //this should default to all goals, currently just DUEDATE goals will appear at first
+//  $scope.myOrderBy="urgency_level"
+//  $scope.sortItems=false;
 
-  $scope.showOpenGoal = function() {
-    $scope.myGoalType = 'OPEN';
-  }
-  $scope.showSingleGoal = function() {
-    $scope.myGoalType = 'SINGLE';
-  }
-  $scope.showRepeatType = function() {
-    $scope.myGoalType = 'REPEAT';
-  }
+  /*
+  $scope.myGoalType="ALL"; //this should default to all goals, currently just DUEDATE goals will appear at first
+  $scope.myOrderBy="OFF"
+  $scope.orderMyGoals=false;
+  $scope.sortItems=false;
+
+  */
 
 
-  /* for ordering by goal type from buttons */
-  $scope.orderByValue = 'priorityLevel'; //defualt to ordering by priority level (num)
+  $scope.sortItems=false;
+  $scope.myGoalType="REPEAT";
+  $scope.myOrderBy="urgency_level"
 
-  $scope.orderByPriorityLevel = function(){
-    $scope.orderByValue = 'priorityLevel';
-  }
-  $scope.orderByTitle = function(){
-    $scope.orderByValue = 'title';
-  }
-  $scope.orderByDueDate = function(){
-    $scope.orderByValue = 'due_date';
-  }
-  $scope.orderByDateCreated = function(){
-    $scope.orderByValue = 'date_created';
-  }
+  $scope.showThisGoalType = function(chosenType){
+    if(chosenType=="ALL")
+    {
+      $scope.myGoalType="ALL"
+      $scope.sortItems =true;
+    }
+    else
+    {
+      $scope.myGoalType=chosenType;
+      $scope.sortItems=false;
+    }
+  };
+
+
+  $scope.orderByValue = function(chosenValue){
+    if(chosenValue=="OFF")
+    {
+      $scope.myOrderBy="urgency_level";
+    }
+    else
+    {
+      $scope.myOrderBy=chosenValue;
+    }
+  };
+
+  /*
+  $scope.showThisGoalType($scope.myGoalType);
+  alert($scope.myGoalType);
+  $scope.orderByValue($scope.myOrderBy);
+  alert($scope.myOrderBy);
+
+  $scope.sortItems=false;
+  $scope.myGoalType="REPEAT";
+*/
+
+
+
+
+
 
 
   $scope.noGoals=false;
@@ -43,7 +71,7 @@ angular.module('app').controller('GoalListController', ['$scope', 'goalService',
         console.log("Received user's goals.");
         response.forEach(function (goal) {
           goal.duedate = moment(goal.due_date).format('ddd MM/DD/YY');
-          goal.created = moment(goal.created_on).format('ddd MM/DD/YY');
+          goal.created = moment(goal.date_created).format('ddd MM/DD/YY');
         });
       }
   });

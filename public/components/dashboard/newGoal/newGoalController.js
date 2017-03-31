@@ -1,9 +1,13 @@
 angular.module('app').controller('NewGoalController', ['$scope', '$state', 'goalService', 'jwtHelper', '$state', function($scope, $state, goalService, jwtHelper, $state){
 
+
+
+
+
   $scope.selection;
   $scope.newgoal={};
   $scope.buttonPressed = function(){
-      goalService.newGoal($scope.newgoal.title, $scope.newgoal.notes, $scope.newgoal.priority, $scope.newgoal.goal_type, $scope.newgoal.due_date, $scope.newgoal.repeat, function(response){
+      goalService.newGoal($scope.newgoal.title, $scope.newgoal.notes, $scope.newgoal.user_priority, $scope.newgoal.goal_type, $scope.newgoal.due_date, $scope.newgoal.repeat_times, function(response){
       //console.log(response);
       if (response.message=="Created Goal")
       {
@@ -12,6 +16,7 @@ angular.module('app').controller('NewGoalController', ['$scope', '$state', 'goal
       else {
         //alert("error making goal");
         console.log("error");
+        alert(response.message);
       }
 
 
@@ -25,8 +30,8 @@ angular.module('app').controller('NewGoalController', ['$scope', '$state', 'goal
     $scope.selection=sel;
     $scope.newgoal.goal_type=sel;
   }
-  $scope.isOpen=function(){
-    if ($scope.selection=="OPEN")
+  $scope.isPriority=function(){
+    if ($scope.selection=="PRIORITY")
     {
       return true;
     }
@@ -34,8 +39,8 @@ angular.module('app').controller('NewGoalController', ['$scope', '$state', 'goal
       return false;
     }
   }
-  $scope.isSingle=function(){
-    if ($scope.selection=="SINGLE")
+  $scope.isDueDate=function(){
+    if ($scope.selection=="DUEDATE")
     {
       return true;
     }
@@ -52,6 +57,7 @@ angular.module('app').controller('NewGoalController', ['$scope', '$state', 'goal
       return false;
     }
   }
+  /*
   $scope.isProject=function(){
     if ($scope.selection=="PROJECT")
     {
@@ -60,7 +66,7 @@ angular.module('app').controller('NewGoalController', ['$scope', '$state', 'goal
     else {
       return false;
     }
-  }
+  } */
   $scope.clearSelection=function(){
     $scope.selection="";
   }

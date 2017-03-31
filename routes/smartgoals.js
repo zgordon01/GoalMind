@@ -8,9 +8,11 @@ realDate.format();
 var date = realDate;
 var currentWeek = moment(date).week();
 //Variables to determine when the priority level goals max out their priority, for ordering
+var daysToMaxMax = 3;
 var daysToMaxHigh = 7;
 var daysToMaxMedium = 10;
 var daysToMaxLow = 14;
+var daysToMaxBurner = 28;
 
 
 router.route('/')
@@ -18,6 +20,7 @@ router.route('/')
     .get(function(req, res) {
         SmartGoal.find(function(err, goals) {
             if (err) {
+                console.log("ERROR IN .get ROUTE OF SMARTGOALS l23");
                 res.status(500).send(err);
             }
             res.json(goals);
@@ -31,6 +34,9 @@ router.route('/byuser')
 
         SmartGoal.find(query, function(err, goals) {
             if (err) {
+                console.log(
+                  "ERROR FINDING SGOAL L 38"
+                );
                 res.status(500).send(err);
             }
             else {
@@ -40,9 +46,10 @@ router.route('/byuser')
 
                 var query = {}
                 query.user_id = res.locals.user_id;
-                query.complete = false;
+                query.is_complete = false;
                 SmartGoal.find(query, function(err, goals) {
                     if (err) {
+                        console.log("ERROR FINDING SGOAL L52");
                         res.status(500).send(err);
                     } else {
                         //console.log(goals);
@@ -58,17 +65,79 @@ router.route('/byuser/history')
     .post(function(req, res) {
         var query = {}
         query.user_id = res.locals.user_id;
-        query.complete = true;
+        query.is_complete = true;
 
         SmartGoal.find(query, function(err, goals) {
             if (err) {
                 res.status(500).send(err);
+                console.log("l73");
             }
             res.json(goals);
         });
 
 
     });
+    router.route('/byuser/pointshistory')
+        .post(function(req, res) {
+            var query = {}
+            query.user_id = res.locals.user_id;
+            query.is_complete = true;
+            var dates = {};
+
+
+
+            SmartGoal.find(query, function(err, goals) {
+                if (err) {efds
+                    res.status(500).send(err);
+                }
+                else {
+                //  goals.forEach(function(g)
+                //  {
+                //    console.log("reading this goal:");
+                //    console.log(g)
+                //  });
+                  goals.forEach(function(thisgoal) {
+                    var newGoal=0;
+                      if(thisgoal.completed_at)
+                      {
+                        thisgoal.completed_at.forEach(function(getDates)
+                        {
+                          newGoal++;
+                  //        console.log("complete# " + newGoal);
+                  //        console.log("GETDATES" + getDates);
+                          shortDate = moment(getDates).format('YYYY/MM/DD');
+
+                          if(dates[shortDate])
+                          {
+                    //          console.log(dates)
+                    //          console.log("match");
+                      //        console.log("matching value");
+                        //      console.log("before");
+                          //    console.log(dates.label);
+                              dates[shortDate]++;
+                        //      console.log(dates.label);
+                            }
+                            else
+                            {
+                      //          console.log("nomatch");
+                                dates[shortDate]=1;
+                    //            console.log("pushing to array");
+
+                                console.log("array: " +dates[shortDate]);
+                                console.log(dates.findIndex)
+
+                              };
+                            });//if dates[0]
+                        }; //completed_at foreach
+                    }); //l94
+                  }; //goals.foreach l92
+
+                  res.json(dates);
+              });//else l86
+            }); //smartgoal.find l82
+
+
+
 
 router.route('/complete')
     .post(function(req, res) {
@@ -95,17 +164,17 @@ router.route('/complete')
                 if (err) {
                     res.status(500).send(err);
                 }
-                if (goal && !goal.complete) {
+                if (goal && !goal.is_complete) {
                     var realDate = moment();
                     realDate.format();
                     var date = realDate;
                     var currentWeek = moment(date).week();
-                    goal.completeDates.addToSet(date.format());
+                    goal.completed_at.addToSet(date.format());
                     var pointsBuffer = Math.floor((Math.random() * (10 - 5)) + 5); //default, starting point value
                     if (goal.goal_type !== "REPEAT") {
                         //console.log("pointsbuffer starting with " + pointsBuffer);
-                        if (goal.priority) {
-                            switch (goal.priority) {
+                        if (goal.user_priority) {
+                            switch (goal.user_priority) {
                                 case 'LOW':
                                     pointsBuffer += Math.floor((Math.random() * (3 - 1)) + 1);
                                     break;
@@ -122,7 +191,7 @@ router.route('/complete')
                         if (goal.due_date) {
                             pointsBuffer += moment(goal.due_date).startOf('day').diff(moment().startOf('day')) >= 0 ? Math.floor((Math.random() * (7 - 4)) + 4) : -Math.floor((Math.random() * (5 - 1)) + 5);
                         }
-                        goal.complete = true;
+                        goal.is_complete = true;
                         //console.log("after the calcs pointsBuffer is " + pointsBuffer);
                         users.points(req, res, Math.floor(pointsBuffer), function(isLeveled, isDemoted, pointsAdded) {
                             response.levelUp = isLeveled;
@@ -140,15 +209,15 @@ router.route('/complete')
                     } else {
                         var thisWeek = 0;
 
-                        goal.completeDates.forEach(function(eachDate) {
+                        goal.completed_at.forEach(function(eachDate) {
 
                             if (moment(eachDate).week() == currentWeek) {
                                 thisWeek++;
                             }
                         });
-                        goal.completesThisWeek = thisWeek;
+                        goal.times_this_week = thisWeek;
                         if (goal.repeat == thisWeek || goal.repeat < thisWeek) {
-                            goal.complete = true;
+                            goal.is_complete = true;
                             pointsBuffer += Math.floor((Math.random() * (5 - 2)) + 2);
                             //console.log("after the calcs pointsBuffer is " + pointsBuffer);
                             users.points(req, res, Math.floor(pointsBuffer), function(isLeveled, isDemoted, pointsAdded) {
@@ -166,7 +235,7 @@ router.route('/complete')
                             });
                         }
                         else {
-                            goal.complete = false;
+                            goal.is_complete = false;
                             goal.save(function(err) {
                                 if (err) {
                                     res.status(500).send(err.message);
@@ -237,8 +306,8 @@ router.route('/')
             if (req.body.notes) {
                 goal.notes = req.body.notes;
             }
-            if (req.body.repeat) {
-                goal.repeat = req.body.repeat;
+            if (req.body.repeat_times) {
+                goal.repeat_times = req.body.repeat_times;
             }
             if (req.body.due_date) {
                 goal.due_date = req.body.due_date;
@@ -246,17 +315,20 @@ router.route('/')
             goal.title = req.body.title;
             goal.goal_type = req.body.goal_type;
 
-            if (req.body.priority) {
-                goal.priority = req.body.priority;
+            if (req.body.user_priority) {
+                goal.user_priority = req.body.user_priority;
             }
 
-            goal.complete = false;
-            goal.completesThisWeek = 0;
+            goal.is_complete = false;
+            goal.times_this_week = 0;
+            goal.times_todays= 0;
 
             goal.user_id = res.locals.user_id;
             goal.save(function(err) {
                 if (err) {
+                    console.log("ERR LINE 323");
                     res.status(500).send(err.message);
+                    console.log(err.message);
                 }
                 else {
                     res.json({
@@ -280,16 +352,16 @@ router.route('/update')
             }
             if (req.body.title)
                 goal.title = req.body.title;
-            if (req.body.description)
-                goal.description = req.body.description;
-            if (req.body.difficulty)
-                goal.difficulty = req.body.difficulty;
+            if (req.body.notes)
+                goal.notes = req.body.notes;
+            if (req.body.user_priority)
+                goal.user_priority = req.body.user_priority;
             if (req.body.goal_type)
                 goal.goal_type = req.body.goal_type;
             if (req.body.due_date)
                 goal.due_date = req.body.due_date;
-            if (req.body.repeat)
-                goal.repeat = req.body.repeat;
+            if (req.body.repeat_times)
+                goal.repeat_times = req.body.repeat_times;
 
             goal.user_id = res.locals.user_id;
 
@@ -334,18 +406,18 @@ updateRepeats = function(goals) {
             var date = realDate;
             var currentWeek = moment(date).week();
 
-            goal.completeDates.forEach(function(eachDate) {
+            goal.completed_at.forEach(function(eachDate) {
                 //console.log(eachDate);
                 if (moment(eachDate).week() == currentWeek) {
                     thisWeek++;
                     //console.log("foundone");
                 }
             });
-            goal.completesThisWeek = thisWeek;
+            goal.times_this_week = thisWeek;
             if (goal.repeat == thisWeek || goal.repeat < thisWeek) {
                 goal.complete = true;
             } else {
-                goal.complete = false;
+                goal.is_complete = false;
             }
             goal.save(function(err) {
                 if (err) {
@@ -361,15 +433,15 @@ updateRepeats = function(goals) {
 }
 updatePriorities = function(goals) {
     goals.forEach(function(goal) {
-        if (goal.goal_type == 'SINGLE') {
+        if (goal.goal_type == 'DUEDATE') {
             var dueDate = moment(goal.due_date);
             var date = moment();
             var daysAway = dueDate.diff(date, 'days');
             console.log(goal.title + ": days til due: " + daysAway);
-            goal.priorityLevel = daysAway;
+            goal.urgency_level = daysAway;
             if (daysAway < 0) {
-                goal.priorityLevel = -1;
-                goal.overDue = true;
+                goal.urgency_level = -1;
+                goal.over_due = true;
             }
             goal.save(function(err) {
                 if (err) {
@@ -380,26 +452,38 @@ updatePriorities = function(goals) {
                     //res.status(200).json({message: "Goal updated"});
                 }
             });
-        } else if (goal.goal_type == 'OPEN') {
+        } else if (goal.goal_type == 'PRIORITY') {
             var date = moment();
             var dateMade = moment(goal.date_created, 'days');
             var daysAgo = date.diff(dateMade, 'days');
-            if (goal.priority == "LOW") {
-                goal.priorityLevel = (daysToMaxLow - daysAgo);
-                if (goal.priorityLevel < 0) {
-                    goal.priorityLevel = 0;
+            if (goal.user_priority == "BURN") {
+                goal.urgency_level = (daysToMaxBurner - daysAgo);
+                if (goal.urgency_level < 0) {
+                    goal.urgency_level = 0;
                 }
             }
-            else if (goal.priority == "MEDIUM") {
-                goal.priorityLevel = (daysToMaxMedium - daysAgo);
-                if (goal.priorityLevel < 0) {
-                    goal.priorityLevel = 0;
+            else if (goal.user_priority == "LOW") {
+                goal.urgency_level = (daysToMaxLow - daysAgo);
+                if (goal.urgency_level < 0) {
+                    goal.urgency_level = 0;
                 }
             }
-            else if (goal.priority == "HIGH") {//HIGH
-                goal.priorityLevel = (daysToMaxHigh - daysAgo);
-                if (goal.priorityLevel < 0) {
-                    goal.priorityLevel = 0;
+            else if (goal.user_priority == "MEDIUM") {
+                goal.urgency_level = (daysToMaxMedium - daysAgo);
+                if (goal.urgency_level < 0) {
+                    goal.urgency_level = 0;
+                }
+            }
+            else if (goal.user_priority == "HIGH") {//HIGH
+                goal.urgency_level = (daysToMaxHigh - daysAgo);
+                if (goal.urgency_level < 0) {
+                    goal.urgency_level = 0;
+                }
+            }
+            if (goal.user_priority == "MAX") {
+                goal.urgency_level = (daysToMaxLow - daysAgo);
+                if (goal.urgency_level < 0) {
+                    goal.urgency_level = 0;
                 }
             }
             goal.save(function(err) {
@@ -413,13 +497,13 @@ updatePriorities = function(goals) {
             });
         }
         else if (goal.goal_type == 'REPEAT') {
-            var completesRemaining = (goal.repeat - goal.completesThisWeek);
+            var completesRemaining = (goal.repeat - goal.times_this_week);
             var date = moment();
             var dayOfWeek = date.day();
             dayOfWeek++;
             var daysLeft = (7 - dayOfWeek);
             var freeDays = daysLeft - completesRemaining;
-            goal.priorityLevel = freeDays * 2;
+            goal.urgency_level = freeDays * 2;
             goal.save(function(err) {
                 if (err) {
                     //res.status(500).send(err.message);

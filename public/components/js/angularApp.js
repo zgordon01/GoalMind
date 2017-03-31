@@ -3,7 +3,7 @@
     'use strict';
 
     angular
-        .module('app', ['auth0.lock', 'angular-jwt', 'ui.router', 'ngFlash'])
+        .module('app', ['auth0.lock', 'angular-jwt', 'ui.router', 'ngFlash', 'ng-fusioncharts'])
         .config(config);
 
     config.$inject = ['$stateProvider', 'lockProvider', 'jwtOptionsProvider', '$locationProvider', '$urlRouterProvider', '$httpProvider', 'FlashProvider'];
@@ -56,9 +56,9 @@
             .state('dashboard.graph',{ // New state for graph.html and graphController
                 url: '/graph',
                 templateUrl:'./components/dashboard/graph/graph.html',
-                controller: 'graphController'
+                controller: 'GraphController'
             });
-        //$urlRouterProvider.otherwise('/');
+        $urlRouterProvider.otherwise('/#/');
         lockProvider.init({
             clientID: 'GkzbEfm3t2d2DNUgAYkUZnR7X9pLcpn5',
             domain: 'zgordon01.auth0.com',

@@ -43,7 +43,7 @@ app.use('/fusioncharts', express.static(__dirname + '/node_modules/fusioncharts'
 //middleware to ensure user_token and user_id match for ALL PATHS BUT /users. Also extracts the user_id and ties it to res.locals.user_id
 app.use(function(req, res, next) {
     res.setHeader('Content-Type', 'application/json');
-    if (req.path !== '/users/' && req.path !== '/users') {
+    if (req.path !== '/users/' && req.path !== '/users' && !req.path.startsWith('width')) {
         if (req.get("Authorization") === null || req.get("Authorization") === undefined) {
             res.sendStatus(401);
         } else {

@@ -1,20 +1,16 @@
-<div class="row" >
-    <div class="col-xs-8 col-offset-xs-2" >
-    	<h4>New graph placeholder4</h4>
 
-    	<!--Fusioncharts directive is used as an attribute of the <div> tag-->
-       <div ng-controller="graphController">
 
-        <fc-chart
-       			width="600"
-       			height="400"
-       			type="column2d"
-       			dataSource= "{{myDataSource}}">
-            </fc-chart><!-- Add db points data here -->
-        </div>
-  
-    </div>
-</div>
-<!--<script type="text/javascript" src="/ /fusioncharts.js"></script>
-<script type="text/javascript" src="/ /angular.js"></script>
-<script type="text/javascript" src="/ /angular-fusioncharts.js"></script>-->
+<div id="chart-container3">FusionCharts will render here</div>
+<div id="chart-container4">FusionCharts will render here</div>
+
+ <div id="api-chart-container">API API</div>
+<button class="btn btn-primary" ng-click="updateView()">GetPoints</button>
+
+
+
+  <div fusioncharts
+    width="600"
+    height="400"
+    type="column2d"
+    datasource="{{dataSource}}"
+    ></div>

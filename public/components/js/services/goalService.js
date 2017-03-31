@@ -42,6 +42,32 @@ angular.module('app').factory('goalService', ['$http', 'Flash', function(http, f
 
             });
         },
+        getPointHistory: function(callback) {
+            http({
+                method: 'POST',
+                url: '/smartgoals/byuser/pointshistory',
+                data: {
+
+                },
+                headers: {
+                    "Content-Type": 'application/json'
+                }
+            }).then(function successCallback(response) { //successCallback
+               var datesArray=[];
+                var objkeys = (Object.keys(response.data));
+                objkeys.forEach(function(key)
+                {
+                  var entry = {label: key, value:response.data[key]};
+                  datesArray.push(entry);
+                });
+                callback(datesArray);
+
+            }, function errorCallback(response) { //errorCallback do something to inform of error
+
+                flash.create('danger', "OOPS! There was an issue on our end. Try again!");
+
+            });
+        },
         newGoal: function(title, notes, priority, goal_type, due_date, repeat, callback) {
             http({
                 method: 'POST',
@@ -49,10 +75,10 @@ angular.module('app').factory('goalService', ['$http', 'Flash', function(http, f
                 data: {
                     "title": title,
                     "notes": notes,
-                    "priority": priority,
+                    "user_priority": priority,
                     "goal_type": goal_type,
                     "due_date": due_date,
-                    "repeat": repeat
+                    "repeat_times": repeat
 
                 },
                 headers: {

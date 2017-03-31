@@ -5,7 +5,7 @@
 
       <h1>New Goal</h1>
       <hr />
-      <h3><a ng-click="setSelection('OPEN')">Basic Goal, Priority Level</a></h3>
+      <h3><a ng-click="setSelection('PRIORITY')">Basic Goal, Priority Level</a></h3>
         <div class="panel panel-default">
           <div class="panel-body">
             <div>
@@ -14,7 +14,7 @@
           </div>
         </div>
 
-      <a ng-click="setSelection('SINGLE')"><h3>Basic Goal, Due Date</h3></a>
+      <a ng-click="setSelection('DUEDATE')"><h3>Basic Goal, Due Date</h3></a>
       <div class="panel panel-default">
         <div class="panel-body">
           <div>
@@ -27,7 +27,7 @@
       <div class="panel panel-default">
         <div class="panel-body">
           <div>
-            For an activity you would like to accomplish a set number of times per week or per month.
+            For an activity you would like to accomplish a set number of times per week.
           </div>
         </div>
       </div>
@@ -57,20 +57,23 @@
                 </div>
 
                 <div class="form-group">
-                  <div ng-if="isOpen()">
+                  <div ng-if="isPriority()">
                     <label for="select" class="col-lg-4 col-md-3 col-sm-2 control-label">Priority<span class="requiredForm"> (REQUIRED)</span></label>
 
-                    <select name="select" ng-model="newgoal.priority">
-                      <option value="LOW" >Low</option>
+                    <select name="select" ng-model="newgoal.user_priority">
+                      <option value="BURN">Back Burner - Lowest</option>
+                      <option value="LOW">Low</option>
                       <option value="MEDIUM">Medium</option>
                       <option value="HIGH">High</option>
+                      <option value="MAX">Maximum - Highest</option>
+
                     </select>
 
                   </div>
                 </div>
 
                 <div class="form-group">
-                  <div ng-if="isSingle()">
+                  <div ng-if="isDueDate()">
                     <label for="select" class="col-lg-4 col-md-3 col-sm-2 control-label" >Due Date<span class="requiredForm"> (REQUIRED)</span></label>
                     <div class="col-sm-10 col-md-9 col-lg-8" >
                         <input type="date" class="form-control" ng-model="newgoal.due_date">
@@ -80,9 +83,9 @@
 
                 <div class="form-group">
                     <div ng-if="isRepeat()">
-                    <label for="select" class="col-lg-4 col-md-3 col-sm-2 control-label" >How many times per week?<span class="requiredForm"> (REQUIRED)</span></label>
+                    <labefel for="select" class="col-lg-4 col-md-3 col-sm-2 control-label" >How many times per week?<span class="requiredForm"> (REQUIRED)</span></label>
                     <div class="col-sm-10 col-md-9 col-lg-8" >
-                        Repeat <input type="number" class="form-control" ng-model="newgoal.repeat">Times Per Week
+                        Repeat <input type="number" class="form-control" ng-model="newgoal.repeat_times" min="0" max-"7">Times Per Week
                     </div>
                   </div>
                 </div>
