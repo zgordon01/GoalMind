@@ -15,32 +15,30 @@ angular.module('app').controller('GoalListController', ['$scope', 'goalService',
 
 
   $scope.sortItems=false;
-  $scope.myGoalType="REPEAT";
-  $scope.myOrderBy="urgency_level"
+  $scope.myOrderBy="urgency_level";
+
+  $scope.myGoalType="ALL";
+
+//  $scope.myGoalType=true;
 
   $scope.showThisGoalType = function(chosenType){
     if(chosenType=="ALL")
     {
       $scope.myGoalType="ALL"
-      $scope.sortItems =true;
+      $scope.sortItems =false;
     }
     else
     {
       $scope.myGoalType=chosenType;
-      $scope.sortItems=false;
+      $scope.sortItems=true;
     }
   };
 
 
   $scope.orderByValue = function(chosenValue){
-    if(chosenValue=="OFF")
-    {
-      $scope.myOrderBy="urgency_level";
-    }
-    else
-    {
+
       $scope.myOrderBy=chosenValue;
-    }
+    
   };
 
   /*
@@ -88,7 +86,7 @@ angular.module('app').controller('GoalListController', ['$scope', 'goalService',
             console.log("User's goals refreshed.");
             response.forEach(function (goal) {
               goal.duedate = moment(goal.due_date).format('ddd MM/DD/YY');
-              goal.created = moment(goal.created_on).format('ddd MM/DD/YY');
+              goal.created = moment(goal.date_created).format('ddd MM/DD/YY');
               //console.log(moment(goal.completeDates[0]).format('ddd MM/DD/YY'));
             });
           }

@@ -6,6 +6,10 @@ angular.module('app').controller('NewGoalController', ['$scope', '$state', 'goal
 
   $scope.selection;
   $scope.newgoal={};
+  $scope.newgoal.notes;
+  $scope.newgoal.user_priority;
+  $scope.newgoal.due_date;
+  $scope.newgoal.repeat_times;
   $scope.buttonPressed = function(){
       goalService.newGoal($scope.newgoal.title, $scope.newgoal.notes, $scope.newgoal.user_priority, $scope.newgoal.goal_type, $scope.newgoal.due_date, $scope.newgoal.repeat_times, function(response){
       //console.log(response);
@@ -24,7 +28,7 @@ angular.module('app').controller('NewGoalController', ['$scope', '$state', 'goal
 
   goalService.getGoals(function(response) {
       $scope.goalList=response;
-      //console.log(response);
+      console.log(response);
   });
   $scope.setSelection = function(sel){
     $scope.selection=sel;

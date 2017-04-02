@@ -166,10 +166,12 @@ router.route('/complete')
                 }
                 if (goal && !goal.is_complete) {
                     var realDate = moment();
-                    realDate.format();
-                    var date = realDate;
+                    var date = realDate.format();
                     var currentWeek = moment(date).week();
-                    goal.completed_at.addToSet(date.format());
+
+
+                    goal.completed_at.addToSet(date);
+
                     var pointsBuffer = Math.floor((Math.random() * (10 - 5)) + 5); //default, starting point value
                     if (goal.goal_type !== "REPEAT") {
                         //console.log("pointsbuffer starting with " + pointsBuffer);
@@ -197,6 +199,7 @@ router.route('/complete')
                             response.levelUp = isLeveled;
                             response.demoted = isDemoted;
                             response.pointsAdded = pointsAdded;
+                            users.
                             goal.save(function(err) {
                                 if (err) {
                                     res.status(500).send(err.message);
@@ -206,7 +209,12 @@ router.route('/complete')
                                 }
                             });
                         });
-                    } else {
+                        }
+                        //END OF IF NOT A REPEAT
+
+
+
+                    else {
                         var thisWeek = 0;
 
                         goal.completed_at.forEach(function(eachDate) {
@@ -216,7 +224,7 @@ router.route('/complete')
                             }
                         });
                         goal.times_this_week = thisWeek;
-                        if (goal.repeat == thisWeek || goal.repeat < thisWeek) {
+                        if (goal.repeat_times == thisWeek || goal.repeat_times < thisWeek) {
                             goal.is_complete = true;
                             pointsBuffer += Math.floor((Math.random() * (5 - 2)) + 2);
                             //console.log("after the calcs pointsBuffer is " + pointsBuffer);
@@ -300,6 +308,9 @@ router.delete('/delete/', function(req, res) {
 
 router.route('/')
 
+
+
+
     .post(function(req, res) {
         var goal = new SmartGoal();
         if (req.body.title && req.body.goal_type) {
@@ -321,12 +332,15 @@ router.route('/')
 
             goal.is_complete = false;
             goal.times_this_week = 0;
-            goal.times_todays= 0;
+            goal.times_today= 0;
+            goal.over_due=false;
+            goal.urgency_level=0;
+
 
             goal.user_id = res.locals.user_id;
             goal.save(function(err) {
                 if (err) {
-                    console.log("ERR LINE 323");
+                    console.log("ERR LINE 323 saving goal");
                     res.status(500).send(err.message);
                     console.log(err.message);
                 }
@@ -399,7 +413,7 @@ updateRepeats = function(goals) {
     goals.forEach(function(goal) {
         var thisWeek = 0;
         if (goal.goal_type == "REPEAT") {
-            goal.complete = false;
+            goal.is_complete = false;
 
             var realDate = moment();
             realDate.format();
@@ -414,8 +428,8 @@ updateRepeats = function(goals) {
                 }
             });
             goal.times_this_week = thisWeek;
-            if (goal.repeat == thisWeek || goal.repeat < thisWeek) {
-                goal.complete = true;
+            if (goal.repeat_times == thisWeek || goal.repeat_times < thisWeek) {
+                goal.is_complete = true;
             } else {
                 goal.is_complete = false;
             }
@@ -481,7 +495,7 @@ updatePriorities = function(goals) {
                 }
             }
             if (goal.user_priority == "MAX") {
-                goal.urgency_level = (daysToMaxLow - daysAgo);
+                goal.urgency_level = (daysToMaxMax - daysAgo);
                 if (goal.urgency_level < 0) {
                     goal.urgency_level = 0;
                 }
@@ -497,13 +511,16 @@ updatePriorities = function(goals) {
             });
         }
         else if (goal.goal_type == 'REPEAT') {
-            var completesRemaining = (goal.repeat - goal.times_this_week);
+            var completesRemaining = (goal.repeat_times - goal.times_this_week);
             var date = moment();
             var dayOfWeek = date.day();
-            dayOfWeek++;
-            var daysLeft = (7 - dayOfWeek);
+            var daysLeft = (6 - dayOfWeek);
             var freeDays = daysLeft - completesRemaining;
             goal.urgency_level = freeDays * 2;
+            if (goal.urgency_level<0)
+            {
+              goal.urgency_level=-1;
+            }
             goal.save(function(err) {
                 if (err) {
                     //res.status(500).send(err.message);
