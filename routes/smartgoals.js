@@ -468,8 +468,8 @@ updatePriorities = function(goals) {
             });
         } else if (goal.goal_type == 'PRIORITY') {
             var date = moment();
-            var dateMade = moment(goal.date_created, 'days');
-            var daysAgo = date.diff(dateMade, 'days');
+            var dateMade = moment(goal.date_created);
+            var daysAgo = dateMade.diff(date, 'days');
             if (goal.user_priority == "BURN") {
                 goal.urgency_level = (daysToMaxBurner - daysAgo);
                 if (goal.urgency_level < 0) {
