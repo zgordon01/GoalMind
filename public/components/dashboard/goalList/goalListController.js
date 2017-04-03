@@ -38,7 +38,7 @@ angular.module('app').controller('GoalListController', ['$scope', 'goalService',
   $scope.orderByValue = function(chosenValue){
 
       $scope.myOrderBy=chosenValue;
-    
+
   };
 
   /*
@@ -111,17 +111,18 @@ angular.module('app').controller('GoalListController', ['$scope', 'goalService',
                         flash.create('danger', "<strong>OOPS! Something has gone wrong.</strong>");
                     }
                     else{
+                        var flashMessage="";
+                        if(response.pointsAdded){
+                            flashMessage+="Goal Completed. You earned " + response.pointsAdded + " points.";
+                        }
                         if(response.levelUp){
-                            flash.create('success', response.pointsAdded + " points. <strong>You are now level " + $rootScope.userProfile.level+"!</strong>");
+                            flashMessage+="\nYou also leveled up! New level: " + $rootScope.userProfile.level;
                         }
-                        else if(response.demoted){
-                            flash.create('warning', response.pointsAdded + " points. <strong>Goal Complete, but you have been demoted to level" + $rootScope.userProfile.level + "</strong>:(");
-                        }
-                        else if(response.points){
-                            flash.create('success', response.pointsAdded + " points. <strong>Goal Complete.</strong>");
+                        if(response.demoted){
+                            flash.create('warning', response.pointsAdded + " points earned. <strong>Goal Complete, but you have been demoted to level" + $rootScope.userProfile.level + "</strong>:(");
                         }
                         else{
-                            flash.create('success', "<strong>Goal Marked Complete.</strong>");
+                            flash.create('success', flashMessage);
                         }
                         $scope.refreshGoals();
                     }

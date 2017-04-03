@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var UserSchema = require('../models/user.js');
+var moment = require('moment');
+
 
 router.post('/', function(req, res, next) {//the only query that directly uses the auth0 user_id
     //this route will create a new user if it does not exist and returns the data about the user if the user exists. Also updates the user_token. Requires a user_id and user_token
@@ -41,7 +43,8 @@ router.points = function(req, res, points, callback){//returns if the user level
     if(points){
         var query = {user_token : req.get("Authorization")};
         pointsBuffer = parseInt(points, 10);
-        UserSchema.findOneAndUpdate(query, {$inc:{points:pointsBuffer}}, {new:true}, function(err, user){
+        date = moment();
+        UserSchema.findOneAndUpdate(query, {$inc:{points:pointsBuffer}},  {new:true}, function(err, user){
             if(err){
                 callback(false);
             }
@@ -52,12 +55,13 @@ router.points = function(req, res, points, callback){//returns if the user level
                 });
             }
         });
+      }
 
-    }
     else{
-        callback(false);
+      callback(false);
     }
-}
+};
+
 function determineLevel(req, res, points, callback){
     var playerLevel = 1;
     var lastThreshold = 0;
@@ -71,8 +75,8 @@ function determineLevel(req, res, points, callback){
         levelMultiplier += .5;
         levelConstant += .5;
         playerLevel++;
-        console.log("player level: "+playerLevel);
-        console.log("level threshold: "+levelThreshold);
+        //console.log("player level: "+playerLevel);
+        //console.log("level threshold: "+levelThreshold);
         //console.log("increase in difficulty: " + (levelThreshold-last));
 
     }
@@ -82,8 +86,9 @@ function determineLevel(req, res, points, callback){
         }
         else{
             callback(playerLevel > user.level, playerLevel < user.level);
+            console.log("level determined");
         }
     });
-}
+};
 
 module.exports = router;

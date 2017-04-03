@@ -2,17 +2,32 @@ var express = require('express');
 var router = express.Router();
 var moment = require('moment');
 var SmartGoal = require('../models/smartgoal.js');
+var UserSchema = require('../models/user.js');
+var users = require('./users.js');
+//var UserHistory = require('../models/user.js');
 var realDate = moment();
 realDate.format();
 
 var date = realDate;
 var currentWeek = moment(date).week();
+
 //Variables to determine when the priority level goals max out their priority, for ordering
 var daysToMaxMax = 3;
 var daysToMaxHigh = 7;
 var daysToMaxMedium = 10;
 var daysToMaxLow = 14;
 var daysToMaxBurner = 28;
+//Max and min point values for priority goal settings
+var maxPointsMax = 12;
+var minPointsMax = 9
+var maxPointsHigh = 10
+var minPointsHigh = 7
+var maxPointsMed = 8
+var minPointsMed = 4
+var maxPointsLow = 5
+var minPointsLow = 2
+var maxPointsBurn = 3
+var minPointsBurn = 1;
 
 
 router.route('/')
@@ -20,7 +35,6 @@ router.route('/')
     .get(function(req, res) {
         SmartGoal.find(function(err, goals) {
             if (err) {
-                console.log("ERROR IN .get ROUTE OF SMARTGOALS l23");
                 res.status(500).send(err);
             }
             res.json(goals);
@@ -34,25 +48,19 @@ router.route('/byuser')
 
         SmartGoal.find(query, function(err, goals) {
             if (err) {
-                console.log(
-                  "ERROR FINDING SGOAL L 38"
-                );
                 res.status(500).send(err);
             }
             else {
                 updateRepeats(goals);
 
-
-
                 var query = {}
                 query.user_id = res.locals.user_id;
                 query.is_complete = false;
+
                 SmartGoal.find(query, function(err, goals) {
                     if (err) {
-                        console.log("ERROR FINDING SGOAL L52");
                         res.status(500).send(err);
                     } else {
-                        //console.log(goals);
                         updatePriorities(goals);
                         res.send(goals);
                     }
@@ -70,7 +78,6 @@ router.route('/byuser/history')
         SmartGoal.find(query, function(err, goals) {
             if (err) {
                 res.status(500).send(err);
-                console.log("l73");
             }
             res.json(goals);
         });
@@ -84,68 +91,46 @@ router.route('/byuser/history')
             query.is_complete = true;
             var dates = {};
 
-
-
             SmartGoal.find(query, function(err, goals) {
                 if (err) {efds
                     res.status(500).send(err);
                 }
                 else {
-                //  goals.forEach(function(g)
-                //  {
-                //    console.log("reading this goal:");
-                //    console.log(g)
-                //  });
                   goals.forEach(function(thisgoal) {
                     var newGoal=0;
                       if(thisgoal.completed_at)
                       {
                         thisgoal.completed_at.forEach(function(getDates)
                         {
-                          newGoal++;
-                  //        console.log("complete# " + newGoal);
-                  //        console.log("GETDATES" + getDates);
-                          shortDate = moment(getDates).format('YYYY/MM/DD');
+                              newGoal++;
+                              shortDate = moment(getDates).format('YYYY/MM/DD');
 
-                          if(dates[shortDate])
-                          {
-                    //          console.log(dates)
-                    //          console.log("match");
-                      //        console.log("matching value");
-                        //      console.log("before");
-                          //    console.log(dates.label);
-                              dates[shortDate]++;
-                        //      console.log(dates.label);
-                            }
-                            else
-                            {
-                      //          console.log("nomatch");
-                                dates[shortDate]=1;
-                    //            console.log("pushing to array");
-
-                                console.log("array: " +dates[shortDate]);
-                                console.log(dates.findIndex)
-
+                              if(dates[shortDate])
+                              {
+                                dates[shortDate]++;
+                              }
+                              else
+                              {
+                                  dates[shortDate]=1;
+                                  console.log("array: " +dates[shortDate]);
+                                  console.log(dates.findIndex)
                               };
-                            });//if dates[0]
-                        }; //completed_at foreach
-                    }); //l94
-                  }; //goals.foreach l92
+                          });
+                        };
+                    });
+                  }; //closes else
 
                   res.json(dates);
-              });//else l86
-            }); //smartgoal.find l82
-
-
-
+              });
+            });
 
 router.route('/complete')
-    .post(function(req, res) {
-        if (req.body.goal_id) {
+    .post(function(req, res, callback) {
+
+        if(req.body.goal_id) {
             console.log("starting complete");
             var userObject;
-            var UserSchema = require('../models/user.js');
-            var users = require('./users.js');
+
             var response = {
                 levelUp: false,
                 demoted: false
@@ -169,37 +154,47 @@ router.route('/complete')
                     var date = realDate.format();
                     var currentWeek = moment(date).week();
 
-
                     goal.completed_at.addToSet(date);
 
                     var pointsBuffer = Math.floor((Math.random() * (10 - 5)) + 5); //default, starting point value
                     if (goal.goal_type !== "REPEAT") {
                         //console.log("pointsbuffer starting with " + pointsBuffer);
-                        if (goal.user_priority) {
+                        if (goal.goal_type == "PRIORITY") {
                             switch (goal.user_priority) {
+                                case 'BURN':
+                                    pointsBuffer += Math.floor((Math.random() * (maxPointsBurn - minPointsBurn + 1))) + minPointsBurn;
+                                    break;
                                 case 'LOW':
-                                    pointsBuffer += Math.floor((Math.random() * (3 - 1)) + 1);
+                                    pointsBuffer += Math.floor((Math.random() * (maxPointsLow - minPointsLow + 1))) + minPointsLow;
                                     break;
                                 case 'MEDIUM':
-                                    pointsBuffer += Math.floor((Math.random() * (5 - 2)) + 2);
+                                    pointsBuffer += Math.floor((Math.random() * (maxPointsMed - minPointsMed + 1))) + minPointsMed;
                                     break;
                                 case 'HIGH':
-                                    pointsBuffer += Math.floor((Math.random() * (7 - 4)) + 4);
+                                    pointsBuffer += Math.floor((Math.random() * (maxPointsHigh - minPointsHigh + 1))) + minPointsHigh;
+                                    break;
+                                case 'MAX':
+                                    pointsBuffer += Math.floor((Math.random() * (maxPointsMax - minPointsMax + 1))) + minPointsMax;
                                     break;
                                 default:
                                     pointsBuffer = 5;
                             }
                         }
-                        if (goal.due_date) {
+                        else if (goal.goal_type="DUEDATE") {
                             pointsBuffer += moment(goal.due_date).startOf('day').diff(moment().startOf('day')) >= 0 ? Math.floor((Math.random() * (7 - 4)) + 4) : -Math.floor((Math.random() * (5 - 1)) + 5);
                         }
+                        //Set goal to complete
                         goal.is_complete = true;
+
                         //console.log("after the calcs pointsBuffer is " + pointsBuffer);
+
+
                         users.points(req, res, Math.floor(pointsBuffer), function(isLeveled, isDemoted, pointsAdded) {
+
                             response.levelUp = isLeveled;
                             response.demoted = isDemoted;
                             response.pointsAdded = pointsAdded;
-                            users.
+
                             goal.save(function(err) {
                                 if (err) {
                                     res.status(500).send(err.message);
@@ -209,63 +204,66 @@ router.route('/complete')
                                 }
                             });
                         });
-                        }
                         //END OF IF NOT A REPEAT
-
-
-
-                    else {
-                        var thisWeek = 0;
-
-                        goal.completed_at.forEach(function(eachDate) {
-
-                            if (moment(eachDate).week() == currentWeek) {
-                                thisWeek++;
-                            }
-                        });
-                        goal.times_this_week = thisWeek;
-                        if (goal.repeat_times == thisWeek || goal.repeat_times < thisWeek) {
-                            goal.is_complete = true;
-                            pointsBuffer += Math.floor((Math.random() * (5 - 2)) + 2);
-                            //console.log("after the calcs pointsBuffer is " + pointsBuffer);
-                            users.points(req, res, Math.floor(pointsBuffer), function(isLeveled, isDemoted, pointsAdded) {
-                                response.levelUp = isLeveled;
-                                response.demoted = isDemoted;
-                                response.pointsAdded = pointsAdded;
-                                goal.save(function(err) {
-                                    if (err) {
-                                        res.status(500).send(err.message);
-                                    }
-                                    else {
-                                        res.status(200).json(response);
-                                    }
-                                });
-                            });
-                        }
-                        else {
-                            goal.is_complete = false;
-                            goal.save(function(err) {
-                                if (err) {
-                                    res.status(500).send(err.message);
-                                }
-                                else {
-                                    res.status(200).json(response);
-                                }
-                            });
-                        }
                     }
-                } else { //gets here if goal is already completed or does not exist
-                    res.status(200).send();
+                    else {
+                            var thisWeek = 0;
+
+                            goal.completed_at.forEach(function(eachDate) {
+                                if (moment(eachDate).week() == currentWeek) {
+                                    thisWeek++;
+                                }
+                            });
+
+                            goal.times_this_week = thisWeek;
+
+                            if (goal.repeat_times == thisWeek || goal.repeat_times < thisWeek) {
+                                goal.is_complete = true;
+                                pointsBuffer += Math.floor((Math.random() * (5 - 2)) + 2);
+                                //console.log("after the calcs pointsBuffer is " + pointsBuffer);
+                                users.points(req, res, Math.floor(pointsBuffer), function(isLeveled, isDemoted, pointsAdded) {
+                                    response.levelUp = isLeveled;
+                                    response.demoted = isDemoted;
+                                    response.pointsAdded = pointsAdded;
+                                    goal.save(function(err) {
+                                        if (err) {
+                                            res.status(500).send(err.message);
+                                        }
+                                        else {
+                                            res.status(200).json(response);
+                                        }
+                                    });
+                                });
+                              }
+
+                              else {
+                                  goal.is_complete = false;
+                                  goal.save(function(err) {
+                                      if (err) {
+                                          res.status(500).send(err.message);
+                                      }
+                                      else {
+                                          res.status(200).json(response);
+                                      }
+                                  });
+                                }
+                      }
+                }//ends if goal is already complete
+                else
+                { //gets here if goal is already completed or does not exist
+                  res.status(200).send();
                 }
             });
-        } else { //gets here if goal_id is not passed
-            res.status(400).send();
         }
+        else {
+          res.status(400).send(); //goal id not passed
+        }
+
     });
 router.delete('/delete/', function(req, res) {
     if (req.body.goal_id) {
         if (req.body.goal_id != "deleteAll") {
-            console.log("in findbyid");
+            //console.log("in findbyid");
                 SmartGoal.findById(req.body.goal_id)
                 .exec(function(err, doc) {
                     if (err || !doc) {
@@ -290,7 +288,7 @@ router.delete('/delete/', function(req, res) {
                 });
         }
         else {
-            console.log("in delete all");
+            //console.log("in delete all");
             SmartGoal.remove({
                 user_id: res.locals.user_id
             }, function(err) {
@@ -340,9 +338,9 @@ router.route('/')
             goal.user_id = res.locals.user_id;
             goal.save(function(err) {
                 if (err) {
-                    console.log("ERR LINE 323 saving goal");
+                    //console.log("ERR LINE 323 saving goal");
                     res.status(500).send(err.message);
-                    console.log(err.message);
+                    //console.log(err.message);
                 }
                 else {
                     res.json({
@@ -451,7 +449,7 @@ updatePriorities = function(goals) {
             var dueDate = moment(goal.due_date);
             var date = moment();
             var daysAway = dueDate.diff(date, 'days');
-            console.log(goal.title + ": days til due: " + daysAway);
+            //console.log(goal.title + ": days til due: " + daysAway);
             goal.urgency_level = daysAway;
             if (daysAway < 0) {
                 goal.urgency_level = -1;

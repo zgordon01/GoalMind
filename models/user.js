@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var UserHistory = new Schema({date_earned: Date, points_earned: Number});
 
 var UserSchema = new Schema({
   user_id: {type: String, required: true},
@@ -7,19 +8,13 @@ var UserSchema = new Schema({
   points: {type: Number, default: 0},
   level: {type: Number, default: 1},
   pointsToNext: {type: Number, default: 0},
-  points_history:
-  [
-    {date_earned: Date, points_earned: Number}
-  ]
+  //points_history: [{type:Date, type:Number}]
+  points_history: [Date]
+  //points_history: [UserHistory]
 //  Achievements: {Achievements here?},
 });
 
-UserSchema.methods.get_points_history = function() {
-  return this.points_history;
-};
-UserSchema.methods.push_points_history = function() {
 
-}
 
 
 module.exports = mongoose.model('UserObject', UserSchema);
