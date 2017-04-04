@@ -64,7 +64,7 @@
             domain: 'zgordon01.auth0.com',
             options: {
                 languageDictionary: {
-                    title: "SmartGoals"
+                    title: "GoalMind"
                 },
                 rememberLastLogin: false,
                 theme : {
