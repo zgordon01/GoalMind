@@ -107,24 +107,33 @@ angular.module('app').controller('GoalListController', ['$scope', 'goalService',
 
             goalService.setAsComplete(goalId, function(response) {
                 userService.updateUser({}, function(success){
-                    if(!success){
-                        flash.create('danger', "<strong>OOPS! Something has gone wrong.</strong>");
-                    }
-                    else{
-                        var flashMessage="";
-                        if(response.pointsAdded){
-                            flashMessage+="Goal Completed. You earned " + response.pointsAdded + " points.";
+
+                    $scope.refreshGoals();
+                        if(!success){
+                            flash.create('danger', "<strong>OOPS! Something has gone wrong.</strong>");
                         }
-                        if(response.levelUp){
-                            flashMessage+="\nYou also leveled up! New level: " + $rootScope.userProfile.level;
-                        }
-                        if(response.demoted){
-                            flash.create('warning', response.pointsAdded + " points earned. <strong>Goal Complete, but you have been demoted to level" + $rootScope.userProfile.level + "</strong>:(");
-                        }
+
                         else{
-                            flash.create('success', flashMessage);
-                        }
-                        $scope.refreshGoals();
+                            var flashMessage="";
+                            if(response.data){
+
+                                flashMessage+="Goal Completed. ";
+                                if(response.data.pointsAdded)
+                                {
+                                  flashMessage+=" You earned " + response.data.pointsAdded + " points.";
+                                }
+                                if(response.data.levelUp){
+                                    flashMessage+="\nYou also leveled up! New level: " + $rootScope.userProfile.level;
+                                }
+                                flash.create('success', flashMessage);
+
+
+                            }
+
+                            else if(response.data.demoted){
+                                flash.create('warning', response.pointsAdded + " points earned. <strong>Goal Complete, but you have been demoted to level" + $rootScope.userProfile.level + "</strong>:(");
+                            }
+
                     }
                 });
             });

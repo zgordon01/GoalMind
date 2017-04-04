@@ -1,6 +1,13 @@
 <div class="container-fluid" >
   <div class="row">
     <div class="col-xs-10 col-xs-offset-1 ">
+      <div ng-if="noGoals">
+          <h3>You don't have any active goals. Set some goals!</h3>
+          <button class="btn btn-primary" ng-click="goToNewGoal()">Create Goal</button>
+          <hr />
+      </div>
+      <div ng-if="!noGoals">
+
           <div class="row">
               <h1 class="text-align: center">Active Goals</h1>
               <hr />
@@ -33,13 +40,10 @@
           </div>
 
       <hr />
-
-
-    <div ng-if="noGoals">
-        <h3>You don't have any active goals. Set some goals!</h3>
-        <button class="btn btn-primary" ng-click="goToNewGoal()">Create Goal</button>
-        <hr />
     </div>
+
+
+
 
 </div>
 </div>
