@@ -1,52 +1,164 @@
-<div class="row">
-<div class="col-sm-10 col-sm-offset-1 col-lg-8 col-lg-offset-2">
 
-  <h1 >{{goal.title}}</h1>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-10 col-xs-offset-1 ">
+<form>
+
+  <div class="form-group">
+    <legend>Title</legend>
+    <input ng-if="edit.title" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" ng-model="goal.title">
+    <div ng-if="!edit.title"><h3>{{goal.title}}</h3></div>
+    <div class="form-check">
+        <label class="form-check-label">
+          <input type="checkbox" class="form-check-input" ng-model="edit.title" ng-true-value="true" ng-false-value="false" ng-click="resetValues()">
+          Edit?
+          <small id="fileHelp" class="form-text " ng-if="edit.title">Leave box checked if you want to edit this value.</small>
+
+        </label>
+    </div>
+  </div>
 
 
+    <div class="form-group">
+      <h4>Notes</h4>
+      <input ng-if="edit.notes" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" ng-model="goal.notes">
+      <div ng-if="!edit.notes"><div ng-if="goal.notes">{{goal.notes}}</div></div>
+      <div ng-if="!edit.notes"><div ng-if="!goal.notes">No Notes Set</div></div>
 
-      <div ng-if="goal.goal_type=='OPEN'"><h3>Priority:</h3>
-        <div class="panel panel-default" >
-          <div class="panel-body">
-            <h4>{{ goal.priority }} </h4>
-          </div>
-        </div>
-      </div>
+      <div class="form-check">
+          <label class="form-check-label">
+            <input type="checkbox" class="form-check-input" ng-model="edit.notes" ng-true-value="true" ng-false-value="false" ng-click="resetValues()">
+            Edit?
 
-      <div ng-if="goal.goal_type=='SINGLE'"><h3>Due Date:</h3>
-        <div class="panel panel-default" >
-          <div class="panel-body">
-            <h4>{{ goal.due_date }} </h4>
-          </div>
-        </div>
-      </div>
-
-      <div ng-if="goal.notes"><h3>Notes:</h3>
-        <div class="panel panel-default" >
-          <div class="panel-body">
-            <h4>{{ goal.notes }} </h4>
-          </div>
-        </div>
-      </div>
-
-      <div ng-if="goal.goal_type=='REPEAT'"><h3>Repeat:</h3>
-        <div class="panel panel-default" >
-          <div class="panel-body">
-            <h4>{{ goal.repeat }}</h4>
-          </div>
-        </div>
-      </div>
-
-    <div class="panel panel-default" >
-      <div class="panel-body">
-        <button class="btn btn-primary" ng-click="setAsComplete()" ng-if="goal.complete == false">Complete!<br /></button>
-        <h4 ng-if="goal.complete == true">Already Complete.</h4>  <hr />
-
-        <button class="btn btn-danger" ng-click="deleteGoal()">Delete Goal</button>
+        <small id="fileHelp" class="form-text " ng-if="edit.notes">Leave box checked if you want to edit this value.</small>
+        </label>
       </div>
     </div>
 
-  <!--Add buttons for editing, deleting, marking goal as complete -->
+    <div ng-if="goal.goal_type=='PRIORITY'" class="form-group">
+      <h4>Priority Level</h4>
+      <input ng-if="edit.user_priority" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" ng-model="goal.user_priority">
+      <div ng-if="!edit.user_priority"><div ng-if="goal.user_priority">{{goal.user_priority}}</div></div>
 
+      <div class="form-check">
+          <label class="form-check-label">
+            <input type="checkbox" class="form-check-input" ng-model="edit.user_priority" ng-true-value="true" ng-false-value="false" ng-click="resetValues()">
+            Edit?
+
+        <small id="fileHelp" class="form-text " ng-if="edit.user_priority">Leave box checked if you want to edit this value.</small>
+        </label>
+      </div>
+    </div>
+
+
+    <div ng-if="goal.goal_type=='DUEDATE'" class="form-group">
+      <h4>Due Date</h4>
+      <input ng-if="edit.due_date" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" ng-model="goal.due_date">
+      <div ng-if="!edit.due_date">{{goal.due_date}}</div>
+
+      <div class="form-check">
+          <label class="form-check-label">
+            <input type="checkbox" class="form-check-input" ng-model="edit.due_date" ng-true-value="true" ng-false-value="false" ng-click="resetValues()">
+            Edit?
+
+        <small id="fileHelp" class="form-text " ng-if="edit.due_date">Leave box checked if you want to edit this value.</small>
+        </label>
+      </div>
+    </div>
+
+    <div ng-if="goal.goal_type=='REPEAT'" class="form-group">
+      <h4>Repeat - Times Per Week</h4>
+      <input ng-if="edit.repeat_times" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" ng-model="goal.repeat_times">
+      <div ng-if="!edit.repeat_times">{{goal.repeat_times}}</div>
+
+      <div class="form-check">
+          <label class="form-check-label">
+            <input type="checkbox" class="form-check-input" ng-model="edit.repeat_times" ng-true-value="true" ng-false-value="false" ng-click="resetValues()">
+            Edit?
+
+        <small id="fileHelp" class="form-text " ng-if="edit.repeat_times">Leave box checked if you want to edit this value.</small>
+        </label>
+      </div>
+      <hr />
+    </div>
+
+
+<!-- LEAVING THIS temporarily FOR EXAMPLE CODE, WANT TO UPDATE THIS FORM A BIT -->
+
+
+<!--
+
+  <div class="form-group">
+    <label for="exampleInputPassword1">Password</label>
+    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+  </div>
+  <div class="form-group">
+    <label for="exampleSelect1">Example select</label>
+    <select class="form-control" id="exampleSelect1">
+      <option>1</option>
+      <option>2</option>
+      <option>3</option>
+      <option>4</option>
+      <option>5</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="exampleSelect2">Example multiple select</label>
+    <select multiple class="form-control" id="exampleSelect2">
+      <option>1</option>
+      <option>2</option>
+      <option>3</option>
+      <option>4</option>
+      <option>5</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="exampleTextarea">Example textarea</label>
+    <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
+  </div>
+  <div class="form-group">
+    <label for="exampleInputFile">File input</label>
+    <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp">
+    <small id="fileHelp" class="form-text text-muted">This is some placeholder block-level help text for the above input. It's a bit lighter and easily wraps to a new line.</small>
+  </div>
+  <fieldset class="form-group">
+    <legend>Radio buttons</legend>
+    <div class="form-check">
+      <label class="form-check-label">
+        <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+        Option one is this and that&mdash;be sure to include why it's great
+      </label>
+    </div>
+    <div class="form-check">
+    <label class="form-check-label">
+        <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2" value="option2">
+        Option two can be something else and selecting it will deselect option one
+      </label>
+    </div>
+    <div class="form-check disabled">
+    <label class="form-check-label">
+        <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios3" value="option3" disabled>
+        Option three is disabled
+      </label>
+    </div>
+  </fieldset>
+  <div class="form-check">
+    <label class="form-check-label">
+      <input type="checkbox" class="form-check-input">
+      Check me out
+    </label>
+  </div>  -->
+  <div ng-if="edit.title || edit.notes || edit.user_priority || edit.due_date || edit.repeat_times">
+  <button class="btn btn-primary col-xs-5 " ng-click="editGoal()">Update Goal</button>
+  <br /><br /><br /><br /></div>
+  <div class="col-xs-12">
+  <button class="btn btn-primary col-sm-8 col-sm-offset-2 " ng-click="setAsComplete()">Complete</button> <br /> </div>
+  <div class="col-xs-12">
+
+  <button class="btn btn-danger col-xs-4 col-xs-offset-4" ng-click="deleteGoal()">Delete Goal</button> </div>
+
+
+</form>
+</div>
 </div>
 </div>

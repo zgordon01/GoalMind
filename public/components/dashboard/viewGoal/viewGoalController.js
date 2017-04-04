@@ -1,8 +1,35 @@
 angular.module('app').controller('ViewGoalController', ['$scope', '$state', '$stateParams', 'goalService', 'jwtHelper', '$state', function($scope, $state, $stateParams, goalService, jwtHelper, $state) {
+    $scope.goal;
+  $scope.edit;
 
     if ($stateParams.goalId) {
         goalService.getSingleGoal($stateParams.goalId, function(response) {
-            $scope.goal = response;
+            //$scope.goal = JSON.stringify(response.data);
+            console.log(response);
+            console.log(JSON.stringify(response));
+            $scope.goal=response;
+            $scope.originalValues=angular.copy($scope.goal);
+            $scope.edit=angular.copy($scope.goal);
+            //var keys=Object.keys($scope.edit);
+            Object.getOwnPropertyNames($scope.edit).forEach(
+              function (val, idx, array) {
+                console.log(val + ' -> ' + $scope.edit[val]);
+                $scope.edit[val]=false;
+                console.log(val + ' -> ' + $scope.edit[val]);
+              }
+            );
+
+
+            console.log($scope.edit);
+            console.log($scope.goal);
+            console.log($scope.originalValues);
+            //console.log(JSON.stringify(response.data));
+            //alert(response.data.title);
+            //console.log($scope.goal);
+
+
+
+
             //console.log(response);
         });
     }
@@ -12,6 +39,22 @@ angular.module('app').controller('ViewGoalController', ['$scope', '$state', '$st
         console.log("No state params, sending to goalList");
         $state.transitionTo("dashboard.goals");
     }
+
+//  $scope.edit.title=false;
+  $scope.resetValues = function() {
+    Object.getOwnPropertyNames($scope.goal).forEach(
+      function (val, idx, array) {
+        if(!$scope.edit[val])
+        {
+          $scope.goal[val]=$scope.originalValues[val];
+        };
+
+      }
+    );
+  };
+  $scope.setVal =function(value) {
+    console.log(value);
+  }
 
   $scope.setAsComplete = function() {
 
@@ -27,7 +70,7 @@ angular.module('app').controller('ViewGoalController', ['$scope', '$state', '$st
 
           goalService.setAsComplete($stateParams.goalId, function(response) {
             console.log(response);
-            if(response.points){
+            if(response){
               //alert(response.message);
               $state.transitionTo("dashboard.goals");
             }
@@ -41,7 +84,18 @@ angular.module('app').controller('ViewGoalController', ['$scope', '$state', '$st
   }
 
 
+  $scope.editGoal = function() {
+    console.log("UPDATE");
+    goalService.editGoal($stateParams.goalId, $scope.goal.title, $scope.goal.notes, $scope.goal.user_priority, $scope.goal.goal_type, $scope.goal.due_date, $scope.goal.repeat_times, function(response){
 
+      console.log(response);
+      if(response.message){
+        //alert(response.message);
+        $state.transitionTo("dashboard.goals");
+      }
+    });
+
+  }
   $scope.deleteGoal = function() {
 
     BootstrapDialog.confirm({
@@ -56,7 +110,7 @@ angular.module('app').controller('ViewGoalController', ['$scope', '$state', '$st
 
           goalService.deleteGoal($stateParams.goalId, function(response) {
 
-            if(response.message == "Goal Deleted"){
+            if(response.message){
 
               //console.log(response);
               //alert(response.message);

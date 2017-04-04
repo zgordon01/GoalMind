@@ -19,6 +19,7 @@ var SmartGoalSchema = new Schema({
   completed_at: [Date], //Only repeats will get multiple entries.  But all goals have this array with one entry when complete.
   urgency_level: Number, //For ordering algorithm
   over_due: Boolean, //over_due may not happen on priority but I'm thinkinb about a way to do it
+  date_created: {type: Date, default: moment()},
   //END BASIC ATTRIBUTES
 
   //DUEDATE Goals = Basic Attributes + these

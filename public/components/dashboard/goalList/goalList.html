@@ -1,6 +1,6 @@
-
-
-  <div class="container">
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-10 col-xs-offset-1 ">
           <div class="row">
               <h1 class="text-align: center">Active Goals</h1>
               <hr />
@@ -41,17 +41,18 @@
         <hr />
     </div>
 
-  </div>
+</div>
+</div>
+<div class="row">
+  <div class="col-xs-10 col-xs-offset-1 ">
 
 
-  <div class="container">
-    <div class="row">
-      <div class="col-xs-12 ">
+
 
 
       <!--Add buttons here use diff. colors for relating to each type of goal, like use blue='SINGLE', yellow='REPEATING', and green='PRIORITY'-->
       <div ng-repeat="goal in goalList | orderBy: myOrderBy ">
-    
+
       <div ng-if="sortItems" ng-show="goal.goal_type== myGoalType ">
 
 
@@ -108,5 +109,6 @@
 
         </div>
       </div> <!-- row -->
-  </div> <!-- container -->
+  </div>
+</div><!-- container -->
       <br/><br/><br/><br/> <!-- extra space so that the flash alert won't overlap the last goal on the list -->

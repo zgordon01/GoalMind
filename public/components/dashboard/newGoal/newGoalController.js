@@ -10,6 +10,7 @@ angular.module('app').controller('NewGoalController', ['$scope', '$state', 'goal
   $scope.newgoal.user_priority;
   $scope.newgoal.due_date;
   $scope.newgoal.repeat_times;
+  
   $scope.buttonPressed = function(){
       goalService.newGoal($scope.newgoal.title, $scope.newgoal.notes, $scope.newgoal.user_priority, $scope.newgoal.goal_type, $scope.newgoal.due_date, $scope.newgoal.repeat_times, function(response){
       //console.log(response);

@@ -391,20 +391,22 @@ router.route('/update')
     });
 router.route('/view')
     .post(function(req, res) {
-        if (req.body.goal_id) {
-            SmartGoal.findById(req.body.goal_id, function(err, goal) {
-                if (err) {
-                    res.status(500).send(err);
-                }
-                else {
+      var query = {}
+      query.user_id = res.locals.user_id;
+      query._id = req.body.goal_id;
 
-                    res.json(goal);
-                }
-            });
-        }
-        else {
-            res.sendStatus(400);
-        }
+      SmartGoal.find(query, function(err, goal) {
+          if (err) {
+            console.log("ERROR");
+              res.status(500).send(err);
+          }
+          else {
+            console.log(goal[0]);
+              res.send(goal[0]);
+
+
+          }
+      });
     });
 
 updateRepeats = function(goals) {
