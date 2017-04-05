@@ -87,7 +87,7 @@
 
         //setup angular-flash messages
         FlashProvider.setTimeout(4000);
-        FlashProvider.setShowClose(false);
+        FlashProvider.setShowClose(true);
         FlashProvider.setAutoDismiss(true);
         FlashProvider.setTemplate(`
         <div style="text-align:center; margin-bottom:0px;" role="alert" id="{{flash.config.id}}" class="alert {{flash.config.class}} alert-{{flash.type}} alert-dismissible alertIn alertOut">
