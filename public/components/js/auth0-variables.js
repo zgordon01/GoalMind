@@ -1,3 +1,3 @@
-var AUTH0_CLIENT_ID='GkzbEfm3t2d2DNUgAYkUZnR7X9pLcpn5'; 
-var AUTH0_DOMAIN='zgordon01.auth0.com'; 
+var AUTH0_CLIENT_ID='v4RQR5pnZwIh6v3jBFlME2x6gFF6ye7q';
+var AUTH0_DOMAIN='goalmind.auth0.com';
 var AUTH0_CALLBACK_URL='YOUR_CALLBACK_URL';

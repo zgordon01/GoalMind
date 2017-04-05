@@ -60,8 +60,8 @@
             });
         $urlRouterProvider.otherwise('/#/');
         lockProvider.init({
-            clientID: 'GkzbEfm3t2d2DNUgAYkUZnR7X9pLcpn5',
-            domain: 'zgordon01.auth0.com',
+            clientID: 'v4RQR5pnZwIh6v3jBFlME2x6gFF6ye7q',
+            domain: 'goalmind.auth0.com',
             options: {
                 languageDictionary: {
                     title: "GoalMind"
