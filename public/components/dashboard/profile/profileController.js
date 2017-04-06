@@ -52,8 +52,8 @@ angular.module('app').controller('profileController', ['$rootScope', '$scope', '
         goalService.getGoalHistory(function(response) {
             $scope.goalList = response;
             response.forEach(function(goal) {
-                goal.readableDate = moment(goal.completeDates[0]).format('ddd MM/DD/YY');
-                console.log(moment(goal.completeDates[0]).format('ddd MM/DD/YY'));
+                goal.readableDate = moment(goal.completed_at[0]).format('ddd MM/DD/YY');
+                console.log(moment(goal.completed_at[0]).format('ddd MM/DD/YY'));
             });
             if ($scope.goalList == "") {
                 console.log("User has no completed/inactive goals.");

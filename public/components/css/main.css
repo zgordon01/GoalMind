@@ -23,7 +23,7 @@ a[href], a[ng-click], input[type='submit'], input[type='image'], label[for], sel
     padding-left: 0px;
 }
 .alert{
-    font-size:3em;
+    font-size:1.5em;
 }
 .requiredForm{
 	color:red;
@@ -100,10 +100,17 @@ a[href], a[ng-click], input[type='submit'], input[type='image'], label[for], sel
 		font-size: 1em;
 	}
 
+
+
 }
 /* Desktop version*/
 @media screen and (min-width: 767px) {
 
+
+
+	.alert{
+			font-size:2.5em;
+	}
 	.side-navbar ul li span:nth-child(2) {
 		display: inline;
 	}

@@ -37,7 +37,13 @@ angular.module('app').controller('GoalListController', ['$scope', 'goalService',
 
   $scope.orderByValue = function(chosenValue){
 
-      $scope.myOrderBy=chosenValue;
+      if ($scope.myOrderBy == chosenValue)
+      {
+        $scope.myOrderBy = "-"+chosenValue;
+      }
+      else {
+        $scope.myOrderBy = chosenValue;
+      }
 
   };
 
@@ -104,7 +110,6 @@ angular.module('app').controller('GoalListController', ['$scope', 'goalService',
         callback: function(confirmComplete) {
           //confirmComplete will be true if button was clicked, while it will be false if user closes the dialog directly.
           if(confirmComplete) {
-
             goalService.setAsComplete(goalId, function(response) {
                 userService.updateUser({}, function(success){
 
@@ -113,33 +118,54 @@ angular.module('app').controller('GoalListController', ['$scope', 'goalService',
                             flash.create('danger', "<strong>OOPS! Something has gone wrong.</strong>");
                         }
 
-                        else{
-                            var flashMessage="";
-                            if(response.data){
+                        else
+                        {
+                          var flashMessage="";
+                          if(response.data)
+                          {
+                            flashMessage+="Goal Completed. ";
+                          }
 
-                                flashMessage+="Goal Completed. ";
-                                if(response.data.pointsAdded)
-                                {
-                                  flashMessage+=" You earned " + response.data.pointsAdded + " points.";
-                                }
-                                if(response.data.levelUp){
-                                    flashMessage+="\nYou also leveled up! New level: " + $rootScope.userProfile.level;
-                                }
-                                flash.create('success', flashMessage);
+                          if(response.data.pointsAdded)
+                          {
+                            flashMessage+=" You earned " + response.data.pointsAdded + " points.";
+
+                          }
+                          flash.create('success', flashMessage);
 
 
-                            }
+                            if(response.data.levelUp){
+                              BootstrapDialog.show({
+                                type: BootstrapDialog.TYPE_PRIMARY,
+                                message: function(dialog) {
+                                    var $message = $('<div>Congratulations, you are now at level ' + $rootScope.userProfile.level +'.  Please continue using GoalMind to mind your goals.</div>');
+                                    dialog.setTitle('Level UP!');
+                                    dialog.setSize(BootstrapDialog.SIZE_LARGE);
+                                    return $message;
+                                },
+                                buttons: [{
+                                  label: 'Close',
+                                   action: function(dialogItself){
+                                       dialogItself.close();
+                                   }
+                                }]
+                            });
+                          }
+                              if(response.data.demoted){
+                                  flash.create('warning', response.pointsAdded + " points earned. <strong>Goal Complete, but you have been demoted to level" + $rootScope.userProfile.level + "</strong>:(");
+                              };
 
-                            else if(response.data.demoted){
-                                flash.create('warning', response.pointsAdded + " points earned. <strong>Goal Complete, but you have been demoted to level" + $rootScope.userProfile.level + "</strong>:(");
-                            }
+                            }});
 
-                    }
-                });
-            });
+
+
+
+                    });
+                //});
+            }
           }
-        }
-      });
-  }
+        });
+      } //end of setAsComplete
+
 
 }]); //end of controller

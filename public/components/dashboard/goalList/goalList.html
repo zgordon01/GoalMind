@@ -61,7 +61,8 @@
       <div ng-if="sortItems" ng-show="goal.goal_type== myGoalType ">
 
 
-              <a ui-sref="dashboard.viewGoal({goalId: goal._id})"><h3><span ng-if="goal.over_due==true">**Overdue: <br /></span>{{goal.title}}</h3></a>
+              <a ui-sref="dashboard.viewGoal({goalId: goal._id})"><h3><span ng-if="goal.over_due==true" class="label label-danger">Over Due</span>
+                  {{goal.title}}</h3></a>
               <div class="panel panel-default">
                 <div class="panel-body">
                   <span ng-if="goal.goal_type=='PRIORITY' ">Priority: {{ goal.user_priority }} <br/> </span>
