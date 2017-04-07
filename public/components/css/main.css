@@ -2,26 +2,39 @@
 a[href], a[ng-click], input[type='submit'], input[type='image'], label[for], select, button, .pointer {
 	cursor: pointer;
 }
+h1, h2, h3, h4, a {
+	color: #393A35;
+}
 
 /*style for progress bar, gives a darker background so it is visible against the light blue background*/
 .progress {
 	background-color: #485563;
 }
 
+.container-fluid .bodycontainer{
+	margin-right: 5px;
+	padding-left:0px;
+	margin-left:0px;
+	padding-right: 0px;
+	padding-top:5px;
+}
 /*customized a brighter shade of the 'text-muted' class/color for paragraphs for visiblity*/
 .text-grey {
 	color: #87939e;
 }
 
-.viewGoalPanel{
-	padding-top: 50px;
-	padding-bottom: 50px;
+.container-fluid{
+	margin: 0px;
+	padding: 0px;
+
+
 }
 
-.container-fluid{
-    padding-right: 0px;
-    padding-left: 0px;
+.container{
+	padding: 0px;
+	margin: 0px;
 }
+
 .alert{
     font-size:1.5em;
 }
@@ -75,6 +88,7 @@ a[href], a[ng-click], input[type='submit'], input[type='image'], label[for], sel
 /* JAKE ADDED THIS TO MAKE SIDEBAR LINKS MATCH BACKGROUND */
 .side-navbar ul li a {
 	color: #2B3E50;
+	font-size: 1em;
 }
 /* END OF JAKES ADD */
 
@@ -87,7 +101,7 @@ a[href], a[ng-click], input[type='submit'], input[type='image'], label[for], sel
 }
 
 /* Mobile version*/
-@media screen and (min-width: 300px) {
+@media screen and (min-width: 500px) {
 	.side-navbar ul li {
 		text-align: center;
 	}
@@ -96,15 +110,45 @@ a[href], a[ng-click], input[type='submit'], input[type='image'], label[for], sel
 		display: block;
 	}
 
-	.side-navbar ul li i {
-		font-size: 1em;
-	}
+
 
 
 
 }
 /* Desktop version*/
 @media screen and (min-width: 767px) {
+	.side-navbar ul li {
+		text-align: center;
+	}
+
+	.side-navbar ul li span:nth-child(2) {
+		display: block;
+	}
+
+	#flashmsg {
+		position:fixed;
+		left:200px;
+		bottom:0px;
+		width:100%;
+	}
+
+	.container-fluid:{
+		margin:0px;
+		padding:0px;
+	}
+	.container-fluid .bodycontainer{
+		margin-right: 5px;
+		padding-left:0px;
+		margin-left:5px;
+		padding-right: 0px;
+		padding-top:5px;
+	}
+	.bodycontainer
+	{
+		margin:0px;
+		padding:0px;
+	}
+
 
 
 

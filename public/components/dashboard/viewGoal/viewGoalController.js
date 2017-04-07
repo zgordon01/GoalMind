@@ -18,19 +18,6 @@ angular.module('app').controller('ViewGoalController', ['$scope', '$state', '$st
                 console.log(val + ' -> ' + $scope.edit[val]);
               }
             );
-
-
-            console.log($scope.edit);
-            console.log($scope.goal);
-            console.log($scope.originalValues);
-            //console.log(JSON.stringify(response.data));
-            //alert(response.data.title);
-            //console.log($scope.goal);
-
-
-
-
-            //console.log(response);
         });
     }
     else{
@@ -48,13 +35,9 @@ angular.module('app').controller('ViewGoalController', ['$scope', '$state', '$st
         {
           $scope.goal[val]=$scope.originalValues[val];
         };
-
       }
     );
   };
-  $scope.setVal =function(value) {
-    console.log(value);
-  }
 
   $scope.setAsComplete = function() {
 

@@ -514,9 +514,9 @@ updatePriorities = function(goals) {
             var completesRemaining = (goal.repeat_times - goal.times_this_week);
             var date = moment();
             var dayOfWeek = date.day();
-            var daysLeft = (6 - dayOfWeek);
+            var daysLeft = (7 - dayOfWeek);
             var freeDays = daysLeft - completesRemaining;
-            goal.urgency_level = freeDays * 2;
+            goal.urgency_level = freeDays * 1.5;
             if (goal.urgency_level<0)
             {
               goal.urgency_level=-1;
