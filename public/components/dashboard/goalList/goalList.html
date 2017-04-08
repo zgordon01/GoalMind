@@ -1,19 +1,23 @@
 <div class="container-fluid bodycontainer">
 
   <div class="row">
+  <!-- If NO GOALS created yet -->
+    <div class="emptyGoals">
       <div ng-if="noGoals">
-          <h3 >You don't have any active goals. Set some goals!</h3>
-          <button class="btn btn-primary" ng-click="goToNewGoal()">Create Goal</button>
+            <h3 align="center">My Goals</h3>
           <hr />
+          <div class="well col-sm-8 col-sm-offset-2">
+            <h4 align="center" class="text-muted">You don't have any active goals :( <br/><br/> Click the button <strong> below </strong> to <br/>become more mindful of your tasks!</h4>
+            <div align="center"><button class="btn btn-success" ng-click="goToNewGoal()">Create A Goal!</button></div>
+          </div>
       </div>
+  <!-- If GOALS are present -->
       <div ng-if="!noGoals" class="row">
-          <h3 class="col-xs-12" style="text-align:center">Active Goals</h3>
+          <h3 align="center">My Goals</h3>
           <hr />
       </div>
+    </div>
   </div>
-
-
-
           <!-- SORT & SHOW controls -->
           <div class="well well-sm" style="background-color:#93C54B; font-color:white;">
 
