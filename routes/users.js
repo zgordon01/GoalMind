@@ -35,10 +35,6 @@ router.post('/updateUser', function(req, res, next) {
     });
 });
 
-router.post('/achievements', function(req, res, next) {//make function?
-    //this route will add achievements. requires achievement_id
-});
-
 router.points = function(req, res, points, callback){//returns if the user leveled up or not (boolean)
     if(points){
         var query = {user_token : req.get("Authorization")};

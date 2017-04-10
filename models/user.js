@@ -7,11 +7,7 @@ var UserSchema = new Schema({
   user_token: {type: String, required: true},
   points: {type: Number, default: 0},
   level: {type: Number, default: 1},
-  pointsToNext: {type: Number, default: 0},
-  //points_history: [{type:Date, type:Number}]
-  points_history: [Date]
-  //points_history: [UserHistory]
-//  Achievements: {Achievements here?},
+  pointsToNext: {type: Number, default: 0}
 });
 
 

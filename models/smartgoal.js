@@ -29,7 +29,8 @@ var SmartGoalSchema = new Schema({
   //REPEAT Goals = Basic Attributes + these
   repeat_times: Number,
   times_this_week: 0,
-  times_today: 0
+  times_today: 0,
+  points_history: [{date: Date, points : Number}]
 
 });
 
