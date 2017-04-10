@@ -49,8 +49,7 @@ router.route('/byuser')
         SmartGoal.find(query, function(err, goals) {
             if (err) {
                 res.status(500).send(err);
-            }
-            else {
+            } else {
                 updateRepeats(goals);
 
                 var query = {}
@@ -84,50 +83,45 @@ router.route('/byuser/history')
 
 
     });
-    router.route('/byuser/pointshistory')
-        .post(function(req, res) {
-            var query = {}
-            query.user_id = res.locals.user_id;
-            query.is_complete = true;
-            var dates = {};
+router.route('/byuser/pointshistory')
+    .post(function(req, res) {
+        var query = {}
+        query.user_id = res.locals.user_id;
+        query.is_complete = true;
+        var dates = {};
 
-            SmartGoal.find(query, function(err, goals) {
-                if (err) {efds
-                    res.status(500).send(err);
-                }
-                else {
-                  goals.forEach(function(thisgoal) {
-                    var newGoal=0;
-                      if(thisgoal.completed_at)
-                      {
-                        thisgoal.completed_at.forEach(function(getDates)
-                        {
-                              newGoal++;
-                              shortDate = moment(getDates).format('YYYY/MM/DD');
+        SmartGoal.find(query, function(err, goals) {
+            if (err) {
+                efds
+                res.status(500).send(err);
+            } else {
+                goals.forEach(function(thisgoal) {
+                    var newGoal = 0;
+                    if (thisgoal.completed_at) {
+                        thisgoal.completed_at.forEach(function(getDates) {
+                            newGoal++;
+                            shortDate = moment(getDates).format('YYYY/MM/DD');
 
-                              if(dates[shortDate])
-                              {
+                            if (dates[shortDate]) {
                                 dates[shortDate]++;
-                              }
-                              else
-                              {
-                                  dates[shortDate]=1;
-                                  console.log("array: " +dates[shortDate]);
-                                  console.log(dates.findIndex)
-                              };
-                          });
-                        };
-                    });
-                  }; //closes else
+                            } else {
+                                dates[shortDate] = 1;
+                                console.log("array: " + dates[shortDate]);
+                                console.log(dates.findIndex)
+                            };
+                        });
+                    };
+                });
+            }; //closes else
 
-                  res.json(dates);
-              });
-            });
+            res.json(dates);
+        });
+    });
 
 router.route('/complete')
     .post(function(req, res, callback) {
 
-        if(req.body.goal_id) {
+        if (req.body.goal_id) {
             console.log("starting complete");
             var userObject;
 
@@ -140,8 +134,7 @@ router.route('/complete')
             }, function(err, user) {
                 if (err) {
                     res.status(500).send(err.message);
-                }
-                else {
+                } else {
                     userObject = user;
                 }
             });
@@ -179,8 +172,7 @@ router.route('/complete')
                                 default:
                                     pointsBuffer = 5;
                             }
-                        }
-                        else if (goal.goal_type="DUEDATE") {
+                        } else if (goal.goal_type = "DUEDATE") {
                             pointsBuffer += moment(goal.due_date).startOf('day').diff(moment().startOf('day')) >= 0 ? Math.floor((Math.random() * (7 - 4)) + 4) : -Math.floor((Math.random() * (5 - 1)) + 5);
                         }
                         //Set goal to complete
@@ -198,65 +190,57 @@ router.route('/complete')
                             goal.save(function(err) {
                                 if (err) {
                                     res.status(500).send(err.message);
-                                }
-                                else {
+                                } else {
                                     res.status(200).json(response);
                                 }
                             });
                         });
                         //END OF IF NOT A REPEAT
-                    }
-                    else {
-                            var thisWeek = 0;
+                    } else {
+                        var thisWeek = 0;
 
-                            goal.completed_at.forEach(function(eachDate) {
-                                if (moment(eachDate).week() == currentWeek) {
-                                    thisWeek++;
+                        goal.completed_at.forEach(function(eachDate) {
+                            if (moment(eachDate).week() == currentWeek) {
+                                thisWeek++;
+                            }
+                        });
+
+                        goal.times_this_week = thisWeek;
+
+                        if (goal.repeat_times == thisWeek || goal.repeat_times < thisWeek) {
+                            goal.is_complete = true;
+                            pointsBuffer += Math.floor((Math.random() * (5 - 2)) + 2);
+                            //console.log("after the calcs pointsBuffer is " + pointsBuffer);
+                            users.points(req, res, Math.floor(pointsBuffer), function(isLeveled, isDemoted, pointsAdded) {
+                                response.levelUp = isLeveled;
+                                response.demoted = isDemoted;
+                                response.pointsAdded = pointsAdded;
+                                goal.save(function(err) {
+                                    if (err) {
+                                        res.status(500).send(err.message);
+                                    } else {
+                                        res.status(200).json(response);
+                                    }
+                                });
+                            });
+                        } else {
+                            goal.is_complete = false;
+                            goal.save(function(err) {
+                                if (err) {
+                                    res.status(500).send(err.message);
+                                } else {
+                                    res.status(200).json(response);
                                 }
                             });
-
-                            goal.times_this_week = thisWeek;
-
-                            if (goal.repeat_times == thisWeek || goal.repeat_times < thisWeek) {
-                                goal.is_complete = true;
-                                pointsBuffer += Math.floor((Math.random() * (5 - 2)) + 2);
-                                //console.log("after the calcs pointsBuffer is " + pointsBuffer);
-                                users.points(req, res, Math.floor(pointsBuffer), function(isLeveled, isDemoted, pointsAdded) {
-                                    response.levelUp = isLeveled;
-                                    response.demoted = isDemoted;
-                                    response.pointsAdded = pointsAdded;
-                                    goal.save(function(err) {
-                                        if (err) {
-                                            res.status(500).send(err.message);
-                                        }
-                                        else {
-                                            res.status(200).json(response);
-                                        }
-                                    });
-                                });
-                              }
-
-                              else {
-                                  goal.is_complete = false;
-                                  goal.save(function(err) {
-                                      if (err) {
-                                          res.status(500).send(err.message);
-                                      }
-                                      else {
-                                          res.status(200).json(response);
-                                      }
-                                  });
-                                }
-                      }
-                }//ends if goal is already complete
-                else
-                { //gets here if goal is already completed or does not exist
-                  res.status(200).send();
+                        }
+                    }
+                } //ends if goal is already complete
+                else { //gets here if goal is already completed or does not exist
+                    res.status(200).send();
                 }
             });
-        }
-        else {
-          res.status(400).send(); //goal id not passed
+        } else {
+            res.status(400).send(); //goal id not passed
         }
 
     });
@@ -264,20 +248,18 @@ router.delete('/delete/', function(req, res) {
     if (req.body.goal_id) {
         if (req.body.goal_id != "deleteAll") {
             //console.log("in findbyid");
-                SmartGoal.findById(req.body.goal_id)
+            SmartGoal.findById(req.body.goal_id)
                 .exec(function(err, doc) {
                     if (err || !doc) {
                         res.statusCode = 404;
                         res.send({});
-                    }
-                    else {
+                    } else {
                         doc.remove(function(err) {
                             if (err) {
                                 res.statusCode = 403;
                                 res.send(err);
 
-                            }
-                            else {
+                            } else {
                                 res.statusCode = 200;
                                 res.send({
                                     message: "Goal Deleted"
@@ -286,8 +268,7 @@ router.delete('/delete/', function(req, res) {
                         });
                     }
                 });
-        }
-        else {
+        } else {
             //console.log("in delete all");
             SmartGoal.remove({
                 user_id: res.locals.user_id
@@ -295,11 +276,12 @@ router.delete('/delete/', function(req, res) {
                 if (err) {
                     res.status(500).send();
                 }
-                res.status(200).json({allDeleted : true});
+                res.status(200).json({
+                    allDeleted: true
+                });
             });
         }
-    }
-    else{
+    } else {
         res.status(400).send();
     }
 });
@@ -330,9 +312,9 @@ router.route('/')
 
             goal.is_complete = false;
             goal.times_this_week = 0;
-            goal.times_today= 0;
-            goal.over_due=false;
-            goal.urgency_level=0;
+            goal.times_today = 0;
+            goal.over_due = false;
+            goal.urgency_level = 0;
 
 
             goal.user_id = res.locals.user_id;
@@ -341,15 +323,13 @@ router.route('/')
                     //console.log("ERR LINE 323 saving goal");
                     res.status(500).send(err.message);
                     //console.log(err.message);
-                }
-                else {
+                } else {
                     res.json({
                         message: 'Created Goal'
                     });
                 }
             });
-        }
-        else {
+        } else {
             res.status(400).json({
                 message: "Must send required parameters"
             });
@@ -380,8 +360,7 @@ router.route('/update')
             goal.save(function(err) {
                 if (err) {
                     res.status(500).send(err.message);
-                }
-                else {
+                } else {
                     res.json({
                         message: "Goal successfully updated."
                     });
@@ -391,22 +370,21 @@ router.route('/update')
     });
 router.route('/view')
     .post(function(req, res) {
-      var query = {}
-      query.user_id = res.locals.user_id;
-      query._id = req.body.goal_id;
+        var query = {}
+        query.user_id = res.locals.user_id;
+        query._id = req.body.goal_id;
 
-      SmartGoal.find(query, function(err, goal) {
-          if (err) {
-            console.log("ERROR");
-              res.status(500).send(err);
-          }
-          else {
-            console.log(goal[0]);
-              res.send(goal[0]);
+        SmartGoal.find(query, function(err, goal) {
+            if (err) {
+                console.log("ERROR");
+                res.status(500).send(err);
+            } else {
+                console.log(goal[0]);
+                res.send(goal[0]);
 
 
-          }
-      });
+            }
+        });
     });
 
 updateRepeats = function(goals) {
@@ -436,8 +414,7 @@ updateRepeats = function(goals) {
             goal.save(function(err) {
                 if (err) {
                     //res.status(500).send(err.message);
-                }
-                else {
+                } else {
                     //console.log(goal);
                     //res.status(200).json({message: "Goal updated"});
                 }
@@ -460,8 +437,7 @@ updatePriorities = function(goals) {
             goal.save(function(err) {
                 if (err) {
                     //res.status(500).send(err.message);
-                }
-                else {
+                } else {
                     //console.log(goal);
                     //res.status(200).json({message: "Goal updated"});
                 }
@@ -475,20 +451,17 @@ updatePriorities = function(goals) {
                 if (goal.urgency_level < 0) {
                     goal.urgency_level = 0;
                 }
-            }
-            else if (goal.user_priority == "LOW") {
+            } else if (goal.user_priority == "LOW") {
                 goal.urgency_level = (daysToMaxLow - daysAgo);
                 if (goal.urgency_level < 0) {
                     goal.urgency_level = 0;
                 }
-            }
-            else if (goal.user_priority == "MEDIUM") {
+            } else if (goal.user_priority == "MEDIUM") {
                 goal.urgency_level = (daysToMaxMedium - daysAgo);
                 if (goal.urgency_level < 0) {
                     goal.urgency_level = 0;
                 }
-            }
-            else if (goal.user_priority == "HIGH") {//HIGH
+            } else if (goal.user_priority == "HIGH") { //HIGH
                 goal.urgency_level = (daysToMaxHigh - daysAgo);
                 if (goal.urgency_level < 0) {
                     goal.urgency_level = 0;
@@ -503,29 +476,25 @@ updatePriorities = function(goals) {
             goal.save(function(err) {
                 if (err) {
                     //res.status(500).send(err.message);
-                }
-                else {
+                } else {
                     //console.log(goal);
                     //res.status(200).json({message: "Goal updated"});
                 }
             });
-        }
-        else if (goal.goal_type == 'REPEAT') {
+        } else if (goal.goal_type == 'REPEAT') {
             var completesRemaining = (goal.repeat_times - goal.times_this_week);
             var date = moment();
             var dayOfWeek = date.day();
             var daysLeft = (7 - dayOfWeek);
             var freeDays = daysLeft - completesRemaining;
             goal.urgency_level = freeDays * 1.5;
-            if (goal.urgency_level<0)
-            {
-              goal.urgency_level=-1;
+            if (goal.urgency_level < 0) {
+                goal.urgency_level = -1;
             }
             goal.save(function(err) {
                 if (err) {
                     //res.status(500).send(err.message);
-                }
-                else {
+                } else {
                     //console.log(goal);
                     //res.status(200).json({message: "Goal updated"});
                 }

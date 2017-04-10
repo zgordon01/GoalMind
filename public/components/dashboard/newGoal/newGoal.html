@@ -65,14 +65,11 @@
                   <div ng-if="isPriority()">
                     <label for="select" class="col-lg-4 col-md-3 col-sm-2 control-label">Priority<span class="requiredForm"> (REQUIRED)</span></label>
 
-                    <select name="select" ng-model="newgoal.user_priority">
-                      <option value="BURN">Back Burner - Lowest</option>
-                      <option value="LOW">Low</option>
-                      <option value="MEDIUM">Medium</option>
-                      <option value="HIGH">High</option>
-                      <option value="MAX">Maximum - Highest</option>
 
-                    </select>
+                    <div class="col-sm-10 col-md-9 col-lg-8" >
+                    <label for="points">Points: {{priorityNumToStr(priorityNumber)}}</label>
+                      <input type="range" name="points" id="Priority" value="1" min="1" max="5" ng-model="priorityNumber" ng-change="priorityNumToStr()">
+                    </div>
 
                   </div>
                 </div>

@@ -10,7 +10,37 @@ angular.module('app').controller('NewGoalController', ['$scope', '$state', 'goal
   $scope.newgoal.user_priority;
   $scope.newgoal.due_date;
   $scope.newgoal.repeat_times;
-  
+  $scope.priorityNumber;
+  $scope.priorityNumToStr = function(num)
+  {
+    if(num==1)
+    {
+      var returnStr = 'Backburner - Lowest Priority';
+      return returnStr;
+    }
+    else if(num==2)
+
+    {
+      returnStr = 'Low Priority';
+      return returnStr;
+    }
+    else if(num==3)
+    {
+      returnStr = 'Medium Priority';
+      return returnStr;
+    }
+    else if(num==4)
+    {
+      returnStr = 'High Priority';
+      return returnStr;
+    }
+    else if(num==5)
+    {
+      returnStr = 'Max Priority';
+      return returnStr;
+    }
+  }
+
   $scope.buttonPressed = function(){
       goalService.newGoal($scope.newgoal.title, $scope.newgoal.notes, $scope.newgoal.user_priority, $scope.newgoal.goal_type, $scope.newgoal.due_date, $scope.newgoal.repeat_times, function(response){
       //console.log(response);
