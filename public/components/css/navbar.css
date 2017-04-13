@@ -31,16 +31,16 @@
     border-right: 1px solid #e7e7e7;
 }*/
 
-/*Made all borders #2B3E50 which is the main blue color */
+/*Made all borders #98978B which is a light grey color */
 
 .side-menu {
   position: fixed;
   width: 200px;
   height: 100%;
-   background-color: #4E5D6C; /*ADDED THIS, this is the "accent" background color from the theme. For sidebar background */
-  border-right: 1px solid #2B3E50;
+  background-color: #3E3F3A; /*ADDED THIS, this is the "accent" background color from the theme. For sidebar background */
+  border-right: 1px solid #98978B;
   font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
- color: #ebebeb;
+  color: #ebebeb;
 
 }
 .side-menu .navbar {
@@ -48,17 +48,17 @@
 }
 .side-menu .navbar-header {
   width: 100%;
-  border-bottom: 1px solid #2B3E50;
+  border-bottom: 1px solid #98978B;
 }
 .side-menu .navbar-nav .active a {
   /* background-color: transparent; */
   margin-right: -1px;
-  border-right: 5px solid #2B3E50;
+  border-right: 5px solid #98978B;
 }
 .side-menu .navbar-nav li {
   display: block;
   width: 100%;
-  border-bottom: 1px solid #2B3E50;
+  border-bottom: 1px solid #98978B;
 }
 .side-menu .navbar-nav li a {
   padding: 15px;
@@ -81,7 +81,7 @@
   float: right;
 }
 .side-menu #dropdown > a {
-  border-bottom: 1px solid #2B3E50;
+  border-bottom: 1px solid #98978B;
 }
 .side-menu #dropdown .panel-body {
   padding: 0;
@@ -92,7 +92,7 @@
 }
 .side-menu #dropdown .panel-body .navbar-nav li {
   padding-left: 15px;
-  border-bottom: 1px solid #2B3E50;
+  border-bottom: 1px solid #98978B;
 }
 .side-menu #dropdown .panel-body .navbar-nav li:last-child {
   border-bottom: none;
@@ -108,7 +108,7 @@
   padding-left: 30px;
 }
 .side-menu #dropdown .panel-body .panel-body li:last-child {
-  border-bottom: 1px solid #2B3E50;
+  border-bottom: 1px solid #98978B;
 }
 .side-menu #search-trigger {
 /*  background-color: #f3f3f3; */
@@ -138,7 +138,7 @@
   width: 100%;
   margin: 0;
   position: relative;
-  border-top: 1px solid #2B3E50;
+  border-top: 1px solid #98978B;
 }
 .side-menu #search .panel-body .navbar-form .form-group {
   width: 100%;
@@ -171,7 +171,7 @@
     width: 100%;
     height: 0;
     border-right: 0;
-    border-bottom: 1px solid #2B3E50;
+    border-bottom: 1px solid #98978B;
   }
   .side-menu .brand-name-wrapper .navbar-brand {
     display: inline-block;
@@ -242,8 +242,8 @@
     width: 200px;
     top: 43px;
     height: 100%;
-    border-right: 1px solid #2B3E50;
-    background-color: #546575;  /*background color of the collapsed sidebar, made main gray color from theme */
+    border-right: 1px solid #98978B;
+    background-color: #3E3F3A;  /*background color of the collapsed sidebar, made main gray color from theme */
     -moz-animation: slideout 300ms forwards;
     -o-animation: slideout 300ms forwards;
     -webkit-animation: slideout 300ms forwards;
@@ -349,7 +349,7 @@
     /* this is probably redundant */
     position: fixed;
     z-index: 3;
-     background-color: #485563;  /*background color for top nav bar, made darker gray color from theme */
+    background-color: #3E3F3A;  /*background color for top nav bar, made darker gray color from theme */
   }
   /* Dropdown tweek */
   #dropdown .panel-body .navbar-nav {
