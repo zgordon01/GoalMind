@@ -346,8 +346,9 @@ router.route('/update')
             }
             if (req.body.title)
                 goal.title = req.body.title;
-            if (req.body.notes)
-                goal.notes = req.body.notes;
+            
+            goal.notes = req.body.notes;
+
             if (req.body.user_priority)
                 goal.user_priority = req.body.user_priority;
             if (req.body.goal_type)
