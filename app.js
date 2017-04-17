@@ -38,6 +38,7 @@ app.use('/ang-flash', express.static(__dirname + '/node_modules/angular-flash-al
 app.use('/moment', express.static(__dirname + '/node_modules/moment/'));
 app.use('/bootstrap3-dialog', express.static(__dirname + '/node_modules/bootstrap3-dialog/dist/'));
 app.use('/fusioncharts', express.static(__dirname + '/node_modules/fusioncharts'));
+app.use('/angularjs-datepicker', express.static(__dirname + '/node_modules/angularjs-datepicker'));
 
 
 //middleware to ensure user_token and user_id match for ALL PATHS BUT /users. Also extracts the user_id and ties it to res.locals.user_id

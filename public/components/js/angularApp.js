@@ -3,7 +3,7 @@
     'use strict';
 
     angular
-        .module('app', ['auth0.lock', 'angular-jwt', 'ui.router', 'ngFlash', 'ng-fusioncharts'])
+        .module('app', ['auth0.lock', 'angular-jwt', 'ui.router', 'ngFlash', 'ng-fusioncharts', '720kb.datepicker'])
         .config(config);
 
     config.$inject = ['$stateProvider', 'lockProvider', 'jwtOptionsProvider', '$locationProvider', '$urlRouterProvider', '$httpProvider', 'FlashProvider'];
