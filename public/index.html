@@ -23,17 +23,13 @@
     <!-- Styles -->
     <link href="/bootstrap3-dialog/css/bootstrap-dialog.min.css" />
     <link href="/ang-flash/angular-flash.min.css" rel="stylesheet" />
-
     <link href="./components/css/navbar.css" rel="stylesheet" />
     <link href="./components/css/bootstrap/bootstrap.min.css" rel="stylesheet" />
     <link href="./components/css/main.css" rel="stylesheet" />
-    <script type="text/javascript" src="/fusioncharts/fusioncharts.js"></script>
-    <script type="text/javascript" src="/fusioncharts/fusioncharts.charts.js"></script>
     <link href="/angularjs-datepicker/src/css/angular-datepicker.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <div ng-app="app">
-
         <div class="container-fluid">
             <div class="side-menu" ng-show="isAuthenticated">
                 <nav class="navbar navbar-default" role="navigation">
@@ -71,7 +67,6 @@
                             </li>
                             <li><a ui-sref="dashboard.goals" class="toggle"><span class="fa fa-tasks" style="font-size: 40px; padding-right:15px;"></span><span style="font-size: 18px; font-weight: 400;">Goals</span></a></li>
                             <li><a ui-sref="dashboard.newGoal" class="toggle"><span class="fa fa-edit" style="font-size: 40px; padding-right:15px;"></span><span style="font-size: 18px; font-weight: 400;">New Goal</span></a></li>
-                            <li><a ui-sref="dashboard.graph" class="toggle"><span class="fa fa-bar-chart" style="font-size: 40px; padding-right:15px;"></span><span style="font-size: 18px; font-weight: 400;">Graphs</span></a></li>
                             <li ng-if="isAuthenticated"><a ui-sref="home" class="toggle" ng-click="authService.logout()"><span class="fa fa-sign-out" style="font-size: 40px; padding-right:15px;"></span><span style="font-size: 18px; font-weight: 400;">LogOut</span></a></li>
 
                         </ul>
@@ -121,17 +116,8 @@
     <script type="text/javascript" src="./components/dashboard/newGoal/newGoalController.js"></script>
     <script type="text/javascript" src="./components/dashboard/viewGoal/viewGoalController.js"></script>
     <script type="text/javascript" src="./components/dashboard/profile/profileController.js"></script>
-    <script type="text/javascript" src="/fusioncharts/fusioncharts.js"></script>
-    <script type="text/javascript" src="/fusioncharts/fusioncharts.charts.js"></script>
-    <script type="text/javascript" src="/angularjs-datepicker/src/js/angular-datepicker.js"></script>
-    <!--NEW GRAPH CONTROLLER-->
     <script type="text/javascript" src="./components/dashboard/profile/profileController.js"></script>
-    <script type="text/javascript" src="./components/dashboard/graph/graphController.js"></script>
-    <!-- angular-fusioncharts.js script tags -->
-
-    <!--
-    <script type="text/javascript" src="/fusioncharts/angular.js"></script> -->
-    <script type="text/javascript" src="./components/js/angular-fusioncharts.js"></script>
+    <script type="text/javascript" src="/angularjs-datepicker/src/js/angular-datepicker.js"></script>
 
 </body>
 </html>

@@ -3,7 +3,7 @@
     'use strict';
 
     angular
-        .module('app', ['auth0.lock', 'angular-jwt', 'ui.router', 'ngFlash', 'ng-fusioncharts', '720kb.datepicker'])
+        .module('app', ['auth0.lock', 'angular-jwt', 'ui.router', 'ngFlash', '720kb.datepicker'])
         .config(config);
 
     config.$inject = ['$stateProvider', 'lockProvider', 'jwtOptionsProvider', '$locationProvider', '$urlRouterProvider', '$httpProvider', 'FlashProvider'];
@@ -52,12 +52,7 @@
                 url: '/profile',
                 templateUrl: './components/dashboard/profile/profile.html',
                 controller: 'profileController'
-            })
-            .state('dashboard.graph',{ // New state for graph.html and graphController
-                url: '/graph',
-                templateUrl:'./components/dashboard/graph/graph.html',
-                controller: 'GraphController'
-            });
+            });   
         $urlRouterProvider.otherwise('/#/');
         lockProvider.init({
             clientID: 'v4RQR5pnZwIh6v3jBFlME2x6gFF6ye7q',
@@ -100,6 +95,4 @@
     `);
 
     }
-
-
 })();

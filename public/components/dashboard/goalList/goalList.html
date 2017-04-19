@@ -1,161 +1,141 @@
 <!-- FIRST container -->
 <div class="container-fluid bodycontainer">
 
-    <div class="row">
-        <div class="col-xs-10 col-xs-offset-1 ">
-            <!-- If NO GOALS created yet -->
-            <div class="emptyGoals">
-                <div ng-if="noGoals">
-                    <h3 align="center">My Goals</h3>
-                    <hr />
-                    <div class="well col-sm-8 col-sm-offset-2">
-                        <h4 align="center" class="text-muted">You don't have any active goals :( <br/><br/> Click the button <strong> below </strong> to <br/>become more mindful of your tasks!</h4>
-                        <div align="center"><button class="btn btn-success" ng-click="goToNewGoal()">Create A Goal!</button></div>
-                    </div>
-                </div>
-                <!-- If GOALS are present -->
-                <div ng-if="!noGoals" class="row">
-                    <h3 align="center">My Goals</h3>
-                    <hr />
-                </div>
-            </div>
-        </div>
+  <div class="row">
+  <!-- If NO GOALS created yet -->
+    <div class="emptyGoals">
+      <div ng-if="noGoals">
+            <h3 align="center">My Goals</h3>
+          <hr />
+          <div class="well col-sm-8 col-sm-offset-2">
+            <h4 align="center" class="text-muted">You don't have any active goals :( <br/><br/> Click the button <strong> below </strong> to <br/>become more mindful of your tasks!</h4>
+            <div align="center"><button class="btn btn-success" ng-click="goToNewGoal()">Create A Goal!</button></div>
+          </div>
+      </div>
+  <!-- If GOALS are present -->
+      <div ng-if="!noGoals" class="row">
+          <h3 align="center">My Goals</h3>
+          <hr />
+      </div>
     </div>
-
-    <!-- SORT & SHOW controls -->
+  </div>
+  <!-- SORT & SHOW controls -->
     <div class="well well-sm" style="background-color:#93C54B; font-color:white;">
-        <div ng-if="!noGoals" class="row">
+      <div ng-if="!noGoals" class="row">
 
-            <div class="col-xs-6 ">
-                <ul class="nav nav-pills" style="color:white; text-align:right">
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="color:white">
+        <div class="col-xs-6 ">
+          <ul class="nav nav-pills" style="color:white; text-align:right">
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="color:white">
                 {{myGoalType}} <span class="caret"></span>
               </a>
-                        <ul class="dropdown-menu" style="color:white">
-                            <li><a ng-click="showThisGoalType('ALL')">All Goals</a></li>
-                            <li><a ng-click="showThisGoalType('PRIORITY')">Priority Goals</a></li>
-                            <li><a ng-click="showThisGoalType('DUEDATE')">Due Date Goals</a></li>
-                            <li><a ng-click="showThisGoalType('REPEAT')">Repeat Goals</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                <!--End first drop down -->
-            </div>
-            <!-- end of col xs 6 -->
+              <ul class="dropdown-menu" style="color:white">
+                <li><a ng-click="showThisGoalType('ALL')">All Goals</a></li>
+                <li><a ng-click="showThisGoalType('PRIORITY')">Priority Goals</a></li>
+                <li><a ng-click="showThisGoalType('DUEDATE')">Due Date Goals</a></li>
+                <li><a ng-click="showThisGoalType('REPEAT')">Repeat Goals</a></li>
+              </ul>
+            </li>
+          </ul> <!--End first drop down -->
+        </div> <!-- end of col xs 6 -->
 
-            <div class="col-xs-6 ">
-                <ul class="nav nav-pills" style="color:white">
-                    <!-- Start second drop down -->
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="color:white">
+        <div class="col-xs-6 ">
+          <ul class="nav nav-pills" style="color:white"> <!-- Start second drop down -->
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="color:white">
                 {{myOrderBy}} <span class="caret"></span>
               </a>
-                        <ul class="dropdown-menu" style="color:white">
-                            <li><a ng-click="orderByValue('urgency_level')">Urgency</a></li>
-                            <li><a ng-click="orderByValue('title')">Title</a></li>
-                            <li><a ng-click="orderByValue('date_created')">Date Created</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                <!--end the nav-pills-->
-            </div>
-            <!-- end of col xs 6 -->
+              <ul class="dropdown-menu" style="color:white">
+                <li><a ng-click="orderByValue('urgency_level')">Urgency</a></li>
+                <li><a ng-click="orderByValue('title')">Title</a></li>
+                <li><a ng-click="orderByValue('date_created')">Date Created</a></li>
+              </ul>
+            </li>
+          </ul> <!--end the nav-pills-->
+        </div> <!-- end of col xs 6 -->
 
-        </div>
-        <!-- end row -->
-    </div>
-    <!-- end well -->
-
-</div>
-<!-- end of first container -->
-
+      </div> <!-- end row -->
+    </div> <!-- end well -->
+</div> <!-- end of first container -->
 <!-- SECOND container -->
 <div class="container-fluid bodycontainer">
-    <div class="row">
-        <!--Add buttons here use diff. colors for relating to each type of goal, like use blue='SINGLE', yellow='REPEATING', and green='PRIORITY'-->
-        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" ng-repeat="goal in goalList | orderBy: myOrderBy ">
-            <div ng-if="sortItems" ng-show="goal.goal_type== myGoalType ">
-                <a ui-sref="dashboard.viewGoal({goalId: goal._id})">
-                    <h4>{{goal.title}}</h4>
-                </a>
-                <!-- Labels attached to goals -->
-                <label ng-if="goal.over_due==true" class="label label-danger">Overdue</label>
-                <label ng-if="goal.urgency_level==0" class="label label-primary">Due Today</label>
-                <label ng-if="goal.urgency_level>0 && goal.goal_type !== 'REPEAT'" class="label label-success">Due In {{goal.urgency_level}} Days</label>
-                <label ng-if="goal.urgency_level>0 && goal.goal_type == 'REPEAT'" class="label label-success">You Have {{goal.urgency_level/1.5}} Free Days</label>
+  <div class="row">
+    <!--Add buttons here use diff. colors for relating to each type of goal, like use blue='SINGLE', yellow='REPEATING', and green='PRIORITY'-->
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" ng-repeat="goal in goalList | orderBy: myOrderBy ">
+      <div ng-if="sortItems" ng-show="goal.goal_type== myGoalType ">
+        <a ui-sref="dashboard.viewGoal({goalId: goal._id})">
+          <h4>{{goal.title}}</h4>
+        </a>
+        <!-- Labels attached to goals -->
+        <label ng-if="goal.over_due==true" class="label label-danger">Overdue</label>
+        <label ng-if="goal.urgency_level==0" class="label label-primary">Due Today</label>
+        <label ng-if="goal.urgency_level>0 && goal.goal_type !== 'REPEAT'" class="label label-success">Due In {{goal.urgency_level}} Days</label>
+        <label ng-if="goal.urgency_level>0 && goal.goal_type == 'REPEAT'" class="label label-success">You Have {{goal.urgency_level/1.5}} Free Days</label>
 
-                <div class="panel panel-primary">
-                    <div class="panel-body">
+        <div class="panel panel-primary">
+          <div class="panel-body">
 
-                        <span ng-if="goal.goal_type=='PRIORITY' "><span class="fa fa-exclamation">: {{ goal.user_priority }}</span><br/> </span>
-                        <span ng-if="goal.goal_type=='DUEDATE' "><span class="fa fa-calendar-check-o">: {{goal.duedate}}</span><br /></span>
-                        <span ng-if="goal.notes">Notes: {{ goal.notes }}<br /></span>
-
-                        <div ng-if="goal.goal_type=='REPEAT'"><span class="fa fa-check">: {{ goal.times_this_week }} / {{ goal.repeat_times }}</span>
-                            <div class="progress progress-striped active">
-                                <div class="progress-bar progress-bar-info" ng-style="{     'width': (     (   goal.times_this_week / goal.repeat_times     ) * 100       )    + '%'      }">
-                                </div>
-                            </div>
-                        </div>
-
-                        <span ng-if="goal.goal_type !== 'REPEAT'" class="fa fa-calendar-plus-o"><small>: {{goal.duedate}}</small></span>
-
-                    </div>
-                    <!-- end of panel body -->
-
-                    <!-- footer -->
-                    <div class="panel-footer">
-                        <button class="btn btn-primary" ng-click="setAsComplete(goal._id, goal.title)">Complete!</button>
-                    </div>
-
+            <span ng-if="goal.goal_type=='PRIORITY' "><span class="fa fa-exclamation">: {{ goal.user_priority }}</span><br/> </span>
+            <span ng-if="goal.goal_type=='DUEDATE' "><span class="fa fa-calendar-check-o">: {{goal.duedate}}</span><br /></span> 
+            <span ng-if="goal.notes">Notes: {{ goal.notes }}<br /></span>
+            
+            <div ng-if="goal.goal_type=='REPEAT'"><span class="fa fa-check">: {{ goal.times_this_week }} / {{ goal.repeat_times }}</span>
+              <div class="progress progress-striped active">
+                <div class="progress-bar progress-bar-info" ng-style="{     'width': (     (   goal.times_this_week / goal.repeat_times     ) * 100       )    + '%'      }">
                 </div>
-                <!-- end of panel-primary -->
+              </div> 
             </div>
-            <!-- end of ng-if sortItems -->
+            
+            <span ng-if="goal.goal_type !== 'REPEAT'" class="fa fa-calendar-plus-o"><small>: {{goal.duedate}}</small></span>
 
-            <div ng-if="!sortItems">
-                <a ui-sref="dashboard.viewGoal({goalId: goal._id})">
-                    <h4>{{goal.title}}  </h4>
-                </a>
-                <!-- Labels attached to goals -->
-                <label ng-if="goal.urgency_level<0" class="label label-danger">Overdue</label>
-                <label ng-if="goal.urgency_level==0" class="label label-primary">Due Today</label>
-                <label ng-if="goal.urgency_level>0 && goal.goal_type !== 'REPEAT'" class="label label-success">Due In {{goal.urgency_level}} Days</label>
-                <label ng-if="goal.urgency_level>0 && goal.goal_type == 'REPEAT'" class="label label-success">You Have {{goal.urgency_level/1.5}} Free Days</label>
+          </div> <!-- end of panel body -->
+          
+          <!-- footer -->
+          <div class="panel-footer">
+            <button class="btn btn-primary" ng-click="setAsComplete(goal._id, goal.title)">Complete!</button>
+          </div>
 
-                <div class="panel panel-primary">
-                    <div class="panel-body">
-                        <span ng-if="goal.goal_type=='PRIORITY' "><span class="fa fa-exclamation">: {{ goal.user_priority }}</span> <br/> </span>
-                        <span ng-if="goal.goal_type=='DUEDATE' "><span class="fa fa-calendar-check-o">: {{goal.duedate}}</span><br /></span>
-                        <span ng-if="goal.notes">Notes: {{ goal.notes }}<br /></span>
+        </div> <!-- end of panel-primary -->
+      </div> <!-- end of ng-if sortItems -->
 
-                        <div ng-if="goal.goal_type=='REPEAT'"><span class="fa fa-check">: {{ goal.times_this_week }} / {{ goal.repeat_times }}</span>
-                            <!-- progres bar animation -->
-                            <div class="progress progress-striped active">
-                                <div class="progress-bar progress-bar-info" ng-style="{ 'width': ( ( goal.times_this_week / goal.repeat_times ) * 100 )  + '%' }">
-                                </div>
-                            </div>
-                        </div>
-                        <span ng-if="goal.goal_type !== 'REPEAT'" class="fa fa-calendar-plus-o"><small>: {{goal.duedate}}</small></span>
-                    </div>
+      <div ng-if="!sortItems">
+        <a ui-sref="dashboard.viewGoal({goalId: goal._id})">
+          <h4>{{goal.title}}  </h4>
+        </a>
+          <!-- Labels attached to goals -->
+          <label ng-if="goal.urgency_level<0" class="label label-danger">Overdue</label>
+          <label ng-if="goal.urgency_level==0" class="label label-primary">Due Today</label>
+          <label ng-if="goal.urgency_level>0 && goal.goal_type !== 'REPEAT'" class="label label-success">Due In {{goal.urgency_level}} Days</label>
+          <label ng-if="goal.urgency_level>0 && goal.goal_type == 'REPEAT'" class="label label-success">You Have {{goal.urgency_level/1.5}} Free Days</label>
 
-                    <!-- footer -->
-                    <div class="panel-footer">
-                        <button class="btn btn-primary" ng-click="setAsComplete(goal._id, goal.title)">Complete!</button>
-                    </div>
-
+        <div class="panel panel-primary">
+          <div class="panel-body">
+            <span ng-if="goal.goal_type=='PRIORITY' "><span class="fa fa-exclamation">: {{ goal.user_priority }}</span> <br/> </span>
+            <span ng-if="goal.goal_type=='DUEDATE' "><span class="fa fa-calendar-check-o">: {{goal.duedate}}</span><br /></span>
+            <span ng-if="goal.notes">Notes: {{ goal.notes }}<br /></span>
+            
+            <div ng-if="goal.goal_type=='REPEAT'"><span class="fa fa-check">: {{ goal.times_this_week }} / {{ goal.repeat_times }}</span>
+              <!-- progres bar animation -->
+              <div class="progress progress-striped active">
+                <div class="progress-bar progress-bar-info" ng-style="{ 'width': ( ( goal.times_this_week / goal.repeat_times ) * 100 )  + '%' }">
                 </div>
-                <!-- end of panel-primary -->
+              </div> 
             </div>
-            <!-- end of ng-if !sortItems -->
+            <span ng-if="goal.goal_type !== 'REPEAT'" class="fa fa-calendar-plus-o"><small>: {{goal.duedate}}</small></span>
+          </div>
 
-        </div>
-        <!-- ng repeat -->
-    </div>
-    <!-- end of row -->
-</div>
-<!-- end of second container -->
+          <!-- footer -->
+          <div class="panel-footer">
+            <button class="btn btn-primary" ng-click="setAsComplete(goal._id, goal.title)">Complete!</button>
+          </div>
 
-<br/><br/><br/><br/>
-<!-- extra space so that the flash alert won't overlap the last goal on the list -->
+        </div> <!-- end of panel-primary -->
+      </div> <!-- end of ng-if !sortItems -->
+
+    </div> <!-- ng repeat -->
+  </div> <!-- end of row -->
+</div> <!-- end of second container -->
+
+<br/><br/><br/><br/> <!-- extra space so that the flash alert won't overlap the last goal on the list -->
+
+
