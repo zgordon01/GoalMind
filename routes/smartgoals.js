@@ -295,7 +295,10 @@ router.delete('/delete/', function(req, res) {
 
 router.route('/').post(function(req, res) {
     var goal = new SmartGoal();
-    if (req.body.title && req.body.goal_type) {
+    if (req.body.title) {
+
+        goal.title = req.body.title;
+
         if (req.body.notes) {
             goal.notes = req.body.notes;
         }
@@ -305,18 +308,20 @@ router.route('/').post(function(req, res) {
         if (req.body.due_date) {
             goal.due_date = req.body.due_date;
         }
-        goal.title = req.body.title;
         goal.goal_type = req.body.goal_type;
 
         if (req.body.user_priority) {
             goal.user_priority = req.body.user_priority;
+        }
+        if (req.body.repeat_goal) {
+          goal.repeat_goal= req.body.repeat_goal;
         }
 
         goal.is_complete = false;
         goal.times_this_week = 0;
         goal.times_today = 0;
         goal.over_due = false;
-        goal.urgency_level = 0;
+        goal.date_created = date;
 
 
         goal.user_id = res.locals.user_id;
@@ -346,8 +351,9 @@ router.route('/update')
             }
             if (req.body.title)
                 goal.title = req.body.title;
-            if (req.body.notes)
-                goal.notes = req.body.notes;
+
+            goal.notes = req.body.notes;
+
             if (req.body.user_priority)
                 goal.user_priority = req.body.user_priority;
             if (req.body.goal_type)
@@ -431,7 +437,7 @@ updatePriorities = function(goals) {
             var date = moment();
             var daysAway = dueDate.diff(date, 'days');
             //console.log(goal.title + ": days til due: " + daysAway);
-            goal.urgency_level = daysAway;
+            goal.urgency_level = daysAway + 1;
             if (daysAway < 0) {
                 goal.urgency_level = -1;
                 goal.over_due = true;
