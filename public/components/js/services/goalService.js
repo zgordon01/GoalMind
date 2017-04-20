@@ -69,6 +69,7 @@ angular.module('app').factory('goalService', ['$http', 'Flash', function(http, f
             });
         },
         newGoal: function(title, notes, user_priority, goal_type, due_date, repeat_times, callback) {
+            console.log(title + notes + user_priority + goal_type + due_date + repeat_times);
             http({
                 method: 'POST',
                 url: '/smartgoals',

@@ -31,7 +31,7 @@
               </a>
               <ul class="dropdown-menu" style="color:white">
                 <li><a ng-click="showThisGoalType('ALL')">All Goals</a></li>
-                <li><a ng-click="showThisGoalType('PRIORITY')">Priority Goals</a></li>
+                <!-- <li><a ng-click="showThisGoalType('PRIORITY')">Priority Goals</a></li> -->
                 <li><a ng-click="showThisGoalType('DUEDATE')">Due Date Goals</a></li>
                 <li><a ng-click="showThisGoalType('REPEAT')">Repeat Goals</a></li>
               </ul>
@@ -59,12 +59,13 @@
 </div> <!-- end of first container -->
 <!-- SECOND container -->
 <div class="container-fluid bodycontainer">
-  <div class="row">
+   <div class="row">
     <!--Add buttons here use diff. colors for relating to each type of goal, like use blue='SINGLE', yellow='REPEATING', and green='PRIORITY'-->
     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" ng-repeat="goal in goalList | orderBy: myOrderBy ">
       <div ng-if="sortItems" ng-show="goal.goal_type== myGoalType ">
         <a ui-sref="dashboard.viewGoal({goalId: goal._id})">
           <h4>{{goal.title}}</h4>
+
         </a>
         <!-- Labels attached to goals -->
         <label ng-if="goal.over_due==true" class="label label-danger">Overdue</label>
@@ -76,20 +77,20 @@
           <div class="panel-body">
 
             <span ng-if="goal.goal_type=='PRIORITY' "><span class="fa fa-exclamation">: {{ goal.user_priority }}</span><br/> </span>
-            <span ng-if="goal.goal_type=='DUEDATE' "><span class="fa fa-calendar-check-o">: {{goal.duedate}}</span><br /></span> 
+            <span ng-if="goal.goal_type=='DUEDATE' "><span class="fa fa-calendar-check-o">: {{goal.created}}</span><br /></span>
             <span ng-if="goal.notes">Notes: {{ goal.notes }}<br /></span>
-            
+
             <div ng-if="goal.goal_type=='REPEAT'"><span class="fa fa-check">: {{ goal.times_this_week }} / {{ goal.repeat_times }}</span>
               <div class="progress progress-striped active">
                 <div class="progress-bar progress-bar-info" ng-style="{     'width': (     (   goal.times_this_week / goal.repeat_times     ) * 100       )    + '%'      }">
                 </div>
-              </div> 
+              </div>
             </div>
-            
+
             <span ng-if="goal.goal_type !== 'REPEAT'" class="fa fa-calendar-plus-o"><small>: {{goal.duedate}}</small></span>
 
           </div> <!-- end of panel body -->
-          
+
           <!-- footer -->
           <div class="panel-footer">
             <button class="btn btn-primary" ng-click="setAsComplete(goal._id, goal.title)">Complete!</button>
@@ -101,6 +102,7 @@
       <div ng-if="!sortItems">
         <a ui-sref="dashboard.viewGoal({goalId: goal._id})">
           <h4>{{goal.title}}  </h4>
+
         </a>
           <!-- Labels attached to goals -->
           <label ng-if="goal.urgency_level<0" class="label label-danger">Overdue</label>
@@ -113,15 +115,15 @@
             <span ng-if="goal.goal_type=='PRIORITY' "><span class="fa fa-exclamation">: {{ goal.user_priority }}</span> <br/> </span>
             <span ng-if="goal.goal_type=='DUEDATE' "><span class="fa fa-calendar-check-o">: {{goal.duedate}}</span><br /></span>
             <span ng-if="goal.notes">Notes: {{ goal.notes }}<br /></span>
-            
+
             <div ng-if="goal.goal_type=='REPEAT'"><span class="fa fa-check">: {{ goal.times_this_week }} / {{ goal.repeat_times }}</span>
               <!-- progres bar animation -->
               <div class="progress progress-striped active">
                 <div class="progress-bar progress-bar-info" ng-style="{ 'width': ( ( goal.times_this_week / goal.repeat_times ) * 100 )  + '%' }">
                 </div>
-              </div> 
+              </div>
             </div>
-            <span ng-if="goal.goal_type !== 'REPEAT'" class="fa fa-calendar-plus-o"><small>: {{goal.duedate}}</small></span>
+            <span ng-if="goal.goal_type !== 'REPEAT'" class="fa fa-calendar-plus-o"><small>: {{goal.created}}</small></span>
           </div>
 
           <!-- footer -->
@@ -133,9 +135,7 @@
       </div> <!-- end of ng-if !sortItems -->
 
     </div> <!-- ng repeat -->
-  </div> <!-- end of row -->
+ </div> <!-- end of row -->
 </div> <!-- end of second container -->
 
 <br/><br/><br/><br/> <!-- extra space so that the flash alert won't overlap the last goal on the list -->
-
-
