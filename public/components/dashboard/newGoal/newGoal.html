@@ -2,10 +2,10 @@
   <div class="row">
     <div class="col-xs-10 col-xs-offset-1 ">
 
-      <div class="row">
-        <div ng-if="!selection" class="col-sm-10 col-sm-offset-1 col-lg-8 col-lg-offset-2">
+    <!--  <div class="row">
+        <div ng-if="!selection" class="col-sm-10 col-sm-offset-1 col-lg-8 col-lg-offset-2"> -->
 
-<div class="row">
+<!--div class="row">
     <!--
     <div ng-if="!selection" class="col-sm-10 col-sm-offset-1 col-lg-8 col-lg-offset-2">
 
@@ -21,13 +21,14 @@
           </div>
 
           <!-- new due date goal -->
-          <h3><a ng-click="setSelection('DUEDATE')">Basic Goal, Due Date</a></h3>
+
+        <!--  <h3><a ng-click="setSelection('DUEDATE')">Basic Goal, Due Date</a></h3>
           <div class="well well-lg">
             For simple, one-time tasks or activities that you have to accomplish by a certian date.
           </div>
 
           <!-- new repeating goal -->
-          <h3><a ng-click="setSelection('REPEAT')">Repeating Goal</a></h3>
+    <!--      <h3><a ng-click="setSelection('REPEAT')">Repeating Goal</a></h3>
           <div class="well well-lg">
             For an activity you would like to accomplish a set number of times per week.
           </div>
@@ -58,13 +59,17 @@
               <h3>One Time Or Repeat?</h3>
 
               <h4>One Time - Set Due Date</h4>
+
               <div class="radio">
-                <label><input type="radio" name="optradio" ng-click="setSetDate()">One Time</label>
+                <label><input type="radio" name="optradio" ng-click="setSetDate()">Specific Date</label>
               </div>
               <div class="form-group">
                   <label for="select" class="col-lg-4 col-md-3 col-sm-2 control-label" >Due Date<span class="requiredForm"> (REQUIRED)</span></label>
                   <div class="col-sm-10 col-md-9 col-lg-8" >
-                      <input type="date" class="form-control" ng-model="newgoal.due_date" ng-disabled="!isSetDate()">
+                    <datepicker>
+
+                            <input ng-model="newgoal.due_date"  class="form-control" type="text" ng-disabled="!isSetDate()"/>
+                      </datepicker>
                   </div>
               </div>
 
