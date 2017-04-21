@@ -3,3 +3,6 @@
 node_modules/
 
 public/components/dashboard/profile/profile.html
+
+*.html
+public/components/dashboard/profile/profile.html

@@ -13,6 +13,7 @@ h1, h2, h3, h4, a {
 	padding-right: 0px;
 	padding-top:5px;
 }
+
 /*customized a brighter shade of the 'text-muted' class/color for paragraphs for visiblity*/
 .text-grey {
 	color: #87939e;
@@ -23,7 +24,7 @@ h1, h2, h3, h4, a {
 	padding: 0px;
 }
 
-.container{
+.container {
 	padding: 0px;
 	margin: 0px;
 }
@@ -45,7 +46,8 @@ h1, h2, h3, h4, a {
 	border-right: 1px solid lightgrey;
 }
 .navbar-toggle{
-	float: left;
+	float: right;
+	margin-right: 30px;
 }
 
 /* Get rid of bullet points*/
@@ -93,8 +95,108 @@ h1, h2, h3, h4, a {
 	width:100%;
 }
 
+/*-----------HOME PAGE CSS ----*/
+
+#myCarousel {
+	padding-top: 55px;
+}
+
+/* special containers for home page */
+.contents-holder {
+	min-height: 30px;
+	padding: 75px 40px 75px 40px;
+	background-color: #dbccb3; /* sandstone color */
+	color: #393A35; /*dark grey*/
+	font-family: 'Roboto', sans-serif;
+}
+.contents-holder2 {
+	min-height: 30px;
+	padding: 75px 40px 75px 40px;
+	background-color: #828380; /*light grey color */
+	color: white;
+	font-family: 'Roboto', sans-serif;
+}
+
+/* for the headers */
+* {
+ 	box-sizing: border-box;
+}
+
+.headline {
+  font-family: 'Lobster Two', cursive;
+  line-height: 1.5em;
+  color: black;
+  position: relative;
+  position: relative;
+  padding-bottom: 5px;
+}
+
+.headline:after {
+  content:' ';
+  position: absolute;
+  top:100%;
+  left:50%;
+  width: 150px;
+  border:2px solid #d0d0d0;
+  border-radius:4px;
+  box-shadow:inset 0 1px 1px rgba(0, 0, 0, .05);
+  transform:translateX(-50%);
+
+}
+
+/* Remove the navbar's default margin-bottom and rounded borders */ 
+.navbar {
+  margin-bottom: 0;
+  border-radius: 0;
+}
+
+/* Add a gray background color and some padding to the footer */
+#home-footer {
+  background-color: #3E3F3A;
+  color: white;
+  padding: 25px;
+}
+
+.carousel-inner img {
+  width: 100%; /* Set width to 100% */
+  min-height: 200px;
+}
+
+/* for mobile: adds space for the navbar brand so it is not stuck to the left side*/
+.navbar-brand {
+	float: left;
+	margin-left: 20px;
+	font-family: 'Lobster', cursive;
+	font-size: 24pt;
+	color: #F8F5F0;
+}
+
+/*for desktop:  adds space for the navbar brand so it is not stuck to the left side*/
+@media (min-width: 768px) {
+  .navbar > .container .navbar-brand,
+  .navbar > .container-fluid .navbar-brand {
+    margin-left: 15px;
+  }
+}
+
+/* Hide the carousel text when the screen is less than 600 pixels wide */
+@media (max-width: 600px) {
+  .carousel-caption {
+  	display: none; 
+  }
+}
+
+/*----------END HOME CSS -----*/
+
+/* give space to links when in mobile*/
+.navbar-collapse {
+	padding-left: 25px;
+	padding-right: 35px;
+}
+
 /* Mobile version*/
 @media screen and (min-width: 500px) {
+
 	.side-navbar ul li {
 		text-align: center;
 	}
@@ -103,13 +205,15 @@ h1, h2, h3, h4, a {
 		display: block;
 	}
 
-
-
-
-
 }
 /* Desktop version*/
 @media screen and (min-width: 767px) {
+
+	/*home navigation; space to the right for log-in link */
+	#bs-example-navbar-collapse-1 {
+		padding-right: 15px;
+	}
+
 	.side-navbar ul li {
 		text-align: center;
 	}
@@ -119,7 +223,6 @@ h1, h2, h3, h4, a {
 	}
 
 	#flashmsg {
-		position:fixed;
 		left:200px;
 		bottom:0px;
 		width:100%;
@@ -137,9 +240,6 @@ h1, h2, h3, h4, a {
 		margin:0px;
 		padding:0px;
 	}
-
-
-
 
 	.alert{
 			font-size:2.5em;
