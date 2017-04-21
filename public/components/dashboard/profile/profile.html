@@ -4,7 +4,7 @@
         <hr />
       	<img class="img-circle center-block img-responsive" ng-src="{{authProfile.picture_large ? authProfile.picture_large : authProfile.picture}}" width="165" height="165" />
      	  <h3 class="text-center"><strong>Hello, {{authProfile.given_name}}</strong></h3>
-    	 <!-- <h4 class="text-center" style="color: #DF691A"><strong>Nickname:</strong> {{authProfile.nickname}}</h4> -->
+    	  <h4 class="text-center" ><strong>Nickname:</strong> {{authProfile.nickname}}</h4> 
      	  <h4 ng-if="authProfile.email && authProfile.email_verified" class="text-center"><strong><i class="fa fa-fw fa-envelope-o fa-2x"></i>Email:</strong> {{authProfile.email}}</h5>
       	<hr><!--Horizontal line-->
         <h4 class="text-center"><strong>Points until level {{userProfile.level + 1}}: {{userProfile.pointsToNext}}</strong></h5>
