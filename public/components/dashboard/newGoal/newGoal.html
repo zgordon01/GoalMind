@@ -2,30 +2,33 @@
   <div class="row">
     <div class="col-xs-10 col-xs-offset-1 ">
       <h1>New Goal</h1>
-      <div class="panel panel-info">
           <div class="row">
-            <form class="form-horizontal panel-body">
+            <form class="form-horizontal ">
 
-
-              <h1>Step 1</h1>
+              <div class="well" id="stepOne" style="border: 2px solid #3E3F3A">
+              <h3>Step 1</h3>
 
                 <div class="form-group">
-                    <label for="select" class="col-lg-4 col-md-3 col-sm-2 control-label">Title<span class="requiredForm"> (REQUIRED)</span></label>
+                    <label for="select" class="col-lg-4 col-md-3 col-sm-2 control-label">Title</label>
                     <div class="col-sm-10 col-md-9 col-lg-8">
                         <textarea class="form-control" rows="1" ng-model="newgoal.title"></textarea>
                     </div>
                 </div>
+                </div>
+              <div class="well" id="stepTwo" ng-show="newgoal.title" style="border: 2px solid #3E3F3A">
 
-              <h1>Step 2</h1>
-              <h3>One Time Or Repeat?</h3>
+              <h3>Step 2</h3>
+              <h4>One Time Or Repeat?</h4>
 
+              <div class="panel panel-default" style="border: 1px solid #3E3F3A; padding: 10px;">
               <h4>One Time - Set Due Date</h4>
 
               <div class="radio">
                 <label><input type="radio" name="optradio" ng-click="setSetDate()">Specific Date</label>
               </div>
+
               <div class="form-group">
-                  <label for="select" class="col-lg-4 col-md-3 col-sm-2 control-label" >Due Date<span class="requiredForm"> (REQUIRED)</span></label>
+                  <label for="select" class="col-lg-4 col-md-3 col-sm-2 control-label" >Due Date</label>
                   <div class="col-sm-10 col-md-9 col-lg-8" >
                     <datepicker>
 
@@ -38,7 +41,7 @@
                 <label><input type="radio" name="optradio" ng-click="setQuickSet()">QuickSet Date</label>
               </div>
                 <div class="form-group">
-                    <label for="select" class="col-lg-4 col-md-3 col-sm-2 control-label">Priority<span class="requiredForm"> (REQUIRED)</span></label>
+                    <label for="select" class="col-lg-4 col-md-3 col-sm-2 control-label">Priority</label>
 
 
                     <div class="col-sm-10 col-md-9 col-lg-8" >
@@ -48,27 +51,42 @@
                     </div>
 
                 </div>
-
+              </div>
+              <div class="panel panel-default" style="border: 1px solid #3E3F3A; padding: 10px;">
               <h4>Repeat - How Many Repeats?</h4>
               <div class="radio">
                 <label><input type="radio" name="optradio" ng-click="setRepeatGoal()">Repeat</label>
               </div>
+              <div class="form-group">
+                  <label for="select" class="col-lg-4 col-md-3 col-sm-2 control-label" >Times Per Week<span class="requiredForm"> (REQUIRED)</span></label>
+                  <div class="col-sm-10 col-md-9 col-lg-8" >
+                  <label for="points">{{repeatNumber}} Times Per Week</label>
+                    <input type="range" name="points" id="Priority"  min="1" max="7" step="1" value="1" ng-model="repeatNumber"  ng-disabled="!isRepeat()">
 
-                <div class="form-group">
-                    <labefel for="select" class="col-lg-4 col-md-3 col-sm-2 control-label" >How many times per week?<span class="requiredForm"> (REQUIRED)</span></label>
-                    <div class="col-sm-10 col-md-9 col-lg-8" >
-                        Repeat <input type="number" class="form-control" ng-model="newgoal.repeat_times" ng-disabled="!isRepeat()" min="0" max="7">Times Per Week
-                    </div>
-                </div>
+                  </div>
               </div>
-                  <button class="btn btn-primary col-xs-5 " ng-click="clearSelection()">Back</button>
-                  <div class="col-xs-2"></div>
-                  <button class="btn btn-primary col-xs-5 " ng-click="buttonPressed()">Submit</button>
+
+              </div>
+                </div>
+              <div class="well" ng-show="selection" style="border: 2px solid #3E3F3A">
+                <h3>Add Notes?</h3>
+                <div class="form-group">
+                  <label for="comment">Notes:</label>
+                  <textarea class="form-control" rows="5" id="comment" ng-model="newgoal.notes"></textarea>
+                </div>
+
+
+              </div>
+            </div>
+
+
+
+                  <button class="btn btn-primary col-xs-5 " ng-click="buttonPressed()" ng-show="newgoal.title && selection">Submit</button>
             </form>
+          </div>
         </div>
       </div>
     </div>
 
-  </div>
 </div>
 </div>

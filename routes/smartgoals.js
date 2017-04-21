@@ -199,17 +199,10 @@ router.route('/complete')
                         });
                         //END OF IF NOT A REPEAT
                     } else {
-                        var thisWeek = 0;
+                      var myGoals=[goal];
+                        updateRepeats(myGoals);
 
-                        goal.completed_at.forEach(function(eachDate) {
-                            if (moment(eachDate).week() == currentWeek) {
-                                thisWeek++;
-                            }
-                        });
-
-                        goal.times_this_week = thisWeek;
-
-                        if (goal.repeat_times == thisWeek || goal.repeat_times < thisWeek) {
+                        if (goal.repeat_times == goal.times_this_week || goal.repeat_times < goal.times_this_week) {
                             goal.is_complete = true;
                             pointsBuffer += Math.floor((Math.random() * (5 - 2)) + 2);
                             //console.log("after the calcs pointsBuffer is " + pointsBuffer);
@@ -221,6 +214,7 @@ router.route('/complete')
                                 goal.points_history.addToSet({date : date, points : pointsBuffer});
                                 goal.save(function(err) {
                                     if (err) {
+                                      console.log("nope");
                                         res.status(500).send(err.message);
                                     } else {
                                         res.status(200).json(response);
@@ -327,7 +321,7 @@ router.route('/').post(function(req, res) {
         goal.user_id = res.locals.user_id;
         goal.save(function(err) {
             if (err) {
-                //console.log("ERR LINE 323 saving goal");
+                console.log("ERR LINE 323 saving goal");
                 res.status(500).send(err.message);
                 //console.log(err.message);
             } else {
@@ -398,6 +392,7 @@ router.route('/view')
 updateRepeats = function(goals) {
     goals.forEach(function(goal) {
         var thisWeek = 0;
+        var today= 0;
         if (goal.goal_type == "REPEAT") {
             goal.is_complete = false;
 
@@ -410,10 +405,15 @@ updateRepeats = function(goals) {
                 //console.log(eachDate);
                 if (moment(eachDate).week() == currentWeek) {
                     thisWeek++;
+                    if(moment(eachDate).day() == date.day())
+                    {
+                      today++;
+                    }
                     //console.log("foundone");
                 }
             });
             goal.times_this_week = thisWeek;
+            goal.times_today = today;
             if (goal.repeat_times == thisWeek || goal.repeat_times < thisWeek) {
                 goal.is_complete = true;
             } else {
@@ -495,7 +495,12 @@ updatePriorities = function(goals) {
             var dayOfWeek = date.day();
             var daysLeft = (7 - dayOfWeek);
             var freeDays = daysLeft - completesRemaining;
+            if (goal.times_today>0)
+            {
+              freeDays-=1;
+            }
             goal.urgency_level = freeDays * 1.5;
+
             if (goal.urgency_level < 0) {
                 goal.urgency_level = -1;
             }

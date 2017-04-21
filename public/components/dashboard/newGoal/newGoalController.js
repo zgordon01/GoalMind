@@ -11,6 +11,7 @@ angular.module('app').controller('NewGoalController', ['$scope', '$state', 'goal
   $scope.newgoal.due_date;
   $scope.newgoal.repeat_times;
   $scope.priorityNumber=1;
+  $scope.repeatNumber;
   $scope.priorityNumToStr = function(num)
   {
     if(num==5)
@@ -119,6 +120,7 @@ angular.module('app').controller('NewGoalController', ['$scope', '$state', 'goal
       }
       else if ($scope.isRepeat())
       {
+        $scope.newgoal.repeat_times = $scope.repeatNumber;
         $scope.newgoal.goal_type = "REPEAT"
       }
 

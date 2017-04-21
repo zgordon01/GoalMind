@@ -73,9 +73,12 @@ angular.module('app').controller('GoalListController', ['$scope', 'goalService',
       }
       else {
         console.log("Received user's goals.");
-        response.forEach(function (goal) {
+        $scope.goalList.forEach(function (goal) {
           goal.duedate = moment(goal.due_date).format('ddd MM/DD');
           goal.created = moment(goal.date_created).format('ddd MM/DD/YY');
+        
+
+
         });
       }
   });

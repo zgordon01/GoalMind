@@ -105,16 +105,19 @@
 
         </a>
           <!-- Labels attached to goals -->
-          <label ng-if="goal.urgency_level<0" class="label label-danger">Overdue</label>
-          <label ng-if="goal.urgency_level==0" class="label label-primary">Due Today</label>
+          <label ng-if="goal.urgency_level<0 && goal.goal_type=='DUEDATE'" class="label label-danger">Overdue</label>
+              <label ng-if="goal.urgency_level<0 && goal.goal_type=='REPEAT'" class="label label-danger">Behind Schedule</label>
+                <label ng-if="goal.urgency_level>0 && goal.goal_type=='REPEAT'" class="label label-success">Ahead Of Schedule: {{goal.urgency_level/1.5}} Free Day(s)</label>
+                <label ng-if="goal.urgency_level==0 && goal.goal_type=='REPEAT'" class="label label-primary">On Schedule</label>
+
+          <label ng-if="goal.urgency_level==0 && goal.times_today==0" class="label label-primary">Due Today</label>
           <label ng-if="goal.urgency_level>0 && goal.goal_type !== 'REPEAT'" class="label label-success">Due In {{goal.urgency_level}} Days</label>
-          <label ng-if="goal.urgency_level>0 && goal.goal_type == 'REPEAT'" class="label label-success">You Have {{goal.urgency_level/1.5}} Free Days</label>
 
         <div class="panel panel-primary">
           <div class="panel-body">
             <span ng-if="goal.goal_type=='PRIORITY' "><span class="fa fa-exclamation">: {{ goal.user_priority }}</span> <br/> </span>
             <span ng-if="goal.goal_type=='DUEDATE' "><span class="fa fa-calendar-check-o">: {{goal.duedate}}</span><br /></span>
-            <span ng-if="goal.notes">Notes: {{ goal.notes }}<br /></span>
+
 
             <div ng-if="goal.goal_type=='REPEAT'"><span class="fa fa-check">: {{ goal.times_this_week }} / {{ goal.repeat_times }}</span>
               <!-- progres bar animation -->
@@ -124,11 +127,13 @@
               </div>
             </div>
             <span ng-if="goal.goal_type !== 'REPEAT'" class="fa fa-calendar-plus-o"><small>: {{goal.created}}</small></span>
+            <span ng-if="goal.notes"> <br /> Notes: {{ goal.notes }}</span>
           </div>
 
           <!-- footer -->
           <div class="panel-footer">
-            <button class="btn btn-primary" ng-click="setAsComplete(goal._id, goal.title)">Complete!</button>
+            <button class="btn btn-primary" ng-click="setAsComplete(goal._id, goal.title)" ng-disabled="goal.times_today>0">Complete!</button>
+            <span ng-show="goal.times_today>0">Completed For Today.</span>
           </div>
 
         </div> <!-- end of panel-primary -->
