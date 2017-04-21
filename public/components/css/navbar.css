@@ -345,12 +345,12 @@
   #search .panel-body .navbar-form .form-group {
     margin: 0;
   }
-  .navbar-header {
+  /*.navbar-header { */
     /* this is probably redundant */
-    position: fixed;
-    z-index: 3;
-    background-color: #3E3F3A;  /*background color for top nav bar, made darker gray color from theme */
-  }
+    /*position: fixed;
+    z-index: 3;*/
+    /*background-color: #3E3F3A; */ /*background color for top nav bar, made darker gray color from theme */
+  /*}*/
   /* Dropdown tweek */
   #dropdown .panel-body .navbar-nav {
     margin: 0;
