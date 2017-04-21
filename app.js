@@ -37,7 +37,6 @@ app.use('/jq', express.static(__dirname + '/node_modules/jquery/dist/'));
 app.use('/ang-flash', express.static(__dirname + '/node_modules/angular-flash-alert/dist/'));
 app.use('/moment', express.static(__dirname + '/node_modules/moment/'));
 app.use('/bootstrap3-dialog', express.static(__dirname + '/node_modules/bootstrap3-dialog/dist/'));
-
 app.use('/angularjs-datepicker', express.static(__dirname + '/node_modules/angularjs-datepicker'));
 
 

@@ -12,14 +12,9 @@ angular.module('app').controller('GoalListController', ['$scope', 'goalService',
   $scope.sortItems=false;
 
   */
-
-
   $scope.sortItems=false;
   $scope.myOrderBy="urgency_level";
-
   $scope.myGoalType="ALL";
-
-//  $scope.myGoalType=true;
 
   $scope.showThisGoalType = function(chosenType){
     if(chosenType=="ALL")
@@ -34,7 +29,6 @@ angular.module('app').controller('GoalListController', ['$scope', 'goalService',
     }
   };
 
-
   $scope.orderByValue = function(chosenValue){
 
       if ($scope.myOrderBy == chosenValue)
@@ -44,27 +38,11 @@ angular.module('app').controller('GoalListController', ['$scope', 'goalService',
       else {
         $scope.myOrderBy = chosenValue;
       }
-
   };
 
-  /*
-  $scope.showThisGoalType($scope.myGoalType);
-  alert($scope.myGoalType);
-  $scope.orderByValue($scope.myOrderBy);
-  alert($scope.myOrderBy);
-
-  $scope.sortItems=false;
-  $scope.myGoalType="REPEAT";
-*/
-
-
-
-
-
-
-
   $scope.noGoals=false;
-  goalService.getGoals(function(response) {
+
+  goalService.getGoals(function(response){
       $scope.goalList=response;
       if($scope.goalList=="")
       {
@@ -76,12 +54,10 @@ angular.module('app').controller('GoalListController', ['$scope', 'goalService',
         $scope.goalList.forEach(function (goal) {
           goal.duedate = moment(goal.due_date).format('ddd MM/DD');
           goal.created = moment(goal.date_created).format('ddd MM/DD/YY');
-        
-
-
         });
       }
   });
+
   $scope.refreshGoals=function()
   {
       goalService.getGoals(function(response) {
@@ -96,7 +72,6 @@ angular.module('app').controller('GoalListController', ['$scope', 'goalService',
             response.forEach(function (goal) {
               goal.duedate = moment(goal.due_date).format('ddd MM/DD/YY');
               goal.created = moment(goal.date_created).format('ddd MM/DD/YY');
-              //console.log(moment(goal.completeDates[0]).format('ddd MM/DD/YY'));
             });
           }
       });
@@ -159,12 +134,7 @@ angular.module('app').controller('GoalListController', ['$scope', 'goalService',
                               };
 
                             }});
-
-
-
-
                     });
-                //});
             }
           }
         });
