@@ -5,9 +5,6 @@ var moment= require('moment');
 var diff = 'BURN LOW MEDIUM HIGH MAX'.split(' ');
 var types = 'PRIORITY DUEDATE REPEAT'.split(' '); //can change these
 
-
-//var rep = 'DAILY WEEKLY MONTHLY'.split(' '); //can change these   <<Probably won't use this.
-
 //This section applies []
 var SmartGoalSchema = new Schema({
   //All Goals Use These - Basic Attributes//
@@ -29,16 +26,6 @@ var SmartGoalSchema = new Schema({
   times_today: 0,
   points_history: [{date: Date, points : Number}]
 
-
-  /*
-  progress_total: {type:Number, default: 0},
-  progress_current: {type:Number, default: 0},
-
-  progress_this_week: {type: Number, default: 0},
-  progress_today: {type: Number, default: 0},
-  */
-
-
 });
 
 
@@ -49,17 +36,10 @@ SmartGoalSchema.pre('save', function(next){
   {
     return next(new Error("ERROR: Must set due_date when goal_type is DUEDATE"));
   }
-  /*
-  if (this.goal_type == "PRIORITY" && !this.user_priority)
-  {
-    return next(new Error("ERROR: Must set priority when goal_type is PRIORITY"));
-  }
-  */
   else if (this.goal_type == "REPEAT" && !this.repeat_times)
   {
     return next(new Error("ERROR: Must set repeat when goal_type is REPEAT"));
   }
-
 
   next();
 

@@ -1,17 +1,5 @@
 angular.module('app').controller('GoalListController', ['$scope', 'goalService', 'jwtHelper', '$state', 'userService', '$rootScope', 'Flash', function($scope, goalService, jwtHelper, $state, userService, $rootScope, flash){
 
-/* for showing goals by goal type selected from buttons */
-  //$scope.myGoalType="ALL"; //this should default to all goals, currently just DUEDATE goals will appear at first
-//  $scope.myOrderBy="urgency_level"
-//  $scope.sortItems=false;
-
-  /*
-  $scope.myGoalType="ALL"; //this should default to all goals, currently just DUEDATE goals will appear at first
-  $scope.myOrderBy="OFF"
-  $scope.orderMyGoals=false;
-  $scope.sortItems=false;
-
-  */
   $scope.sortItems=false;
   $scope.myOrderBy="urgency_level";
   $scope.myGoalType="ALL";
