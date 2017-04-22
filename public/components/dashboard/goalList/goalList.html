@@ -20,8 +20,9 @@
     </div>
   </div>
   <!-- SORT & SHOW controls -->
+  <div ng-if="!noGoals">
     <div class="well well-sm" style="background-color:#93C54B; font-color:white;">
-      <div ng-if="!noGoals" class="row">
+      <div class="row">
 
         <div class="col-xs-6 ">
           <ul class="nav nav-pills" style="color:white; text-align:right">
@@ -55,6 +56,7 @@
 
       </div> <!-- end row -->
     </div> <!-- end well -->
+  </div> <!-- end ng-if !noGoals -->
 </div> <!-- end of first container -->
 <!-- SECOND container -->
 <div class="container-fluid bodycontainer">
