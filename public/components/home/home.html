@@ -10,7 +10,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand">GoalMind</a>
+      <a class="navbar-brand" href="#about">GoalMind</a>
     </div>
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -155,10 +155,22 @@
 
 <!-- jquery function for scrolling navbar -->
 <script type="text/javascript">
+
+/*for scrolling with the navagation bar */
 $(function(){
   $("#nav a").click(function(e){
     e.preventDefault();
     $('html,body').scrollTo(this.hash,this.hash); 
   });
 });
+
+/* when using anchor links to scroll to another section smoothly */
+$(document).on('click', 'a', function(event){
+    event.preventDefault();
+
+    $('html, body').animate({
+        scrollTop: $( $.attr(this, 'href') ).offset().top
+    }, 500);
+});
+
 </script>
