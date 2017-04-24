@@ -42,10 +42,12 @@
   font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #ebebeb;
 
+
 }
 .side-menu .navbar {
   border: none;
 }
+
 .side-menu .navbar-header {
   width: 100%;
   border-bottom: 1px solid #98978B;
@@ -59,6 +61,7 @@
   display: block;
   width: 100%;
   border-bottom: 1px solid #98978B;
+  margin-top: 10px;
 }
 .side-menu .navbar-nav li a {
   padding: 15px;
@@ -67,6 +70,7 @@
   padding-right: 10px;
 }
 .side-menu #dropdown {
+
   border: 0;
   margin-bottom: 0;
   border-radius: 0;
