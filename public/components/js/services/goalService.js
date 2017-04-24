@@ -4,11 +4,12 @@ angular.module('app').factory('goalService', ['$http', 'Flash', function(http, f
         myTest: function(para) {
             alert(para);
         },
-        getGoals: function(callback) {
+        getGoals: function(goal_type, callback) {
             http({
                 method: 'POST',
                 url: '/smartgoals/byuser',
                 data: {
+                  "goal_type": goal_type
 
                 },
                 headers: {

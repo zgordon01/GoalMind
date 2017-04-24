@@ -44,7 +44,13 @@ router.route('/')
 router.route('/byuser')
     .post(function(req, res) {
         var query = {}
+        var goal_type;
         query.user_id = res.locals.user_id;
+        if (req.body.goal_type)
+        {
+          goal_type = req.body.goal_type;
+          //console.log(query.goal_type);
+        }
 
         SmartGoal.find(query, function(err, goals) {
             if (err) {
@@ -55,6 +61,10 @@ router.route('/byuser')
                 var query = {}
                 query.user_id = res.locals.user_id;
                 query.is_complete = false;
+                if(goal_type)
+                {
+                  query.goal_type=goal_type;
+                }
 
                 SmartGoal.find(query, function(err, goals) {
                     if (err) {

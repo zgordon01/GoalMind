@@ -67,8 +67,8 @@
     </div>
     <div  class="col-sm-6 col-md-4" ng-repeat="goal in goalList | orderBy: myOrderBy " style="height:300px">
 
-        <div ng-if="sortItems" >
-          <div ng-if="goal.goal_type== myGoalType">
+        <!-- <div ng-if="sortItems" >
+        <!--  <div ng-if="goal.goal_type== myGoalType"> -->
             <a ui-sref="dashboard.viewGoal({goalId: goal._id})">
                 <h4>{{goal.title}}</h4>
 
@@ -105,16 +105,16 @@
                     <button class="btn btn-primary" ng-click="setAsComplete(goal._id, goal.title)">Complete!</button>
                 </div>
 
-            </div>
+            <!-- </div>
             <!-- end of panel-primary -->
          </div>
       </div>
         <!-- end of ng-if sortItems -->
 
-    <div ng-if="!sortItems">
+    <!-- div ng-if="!sortItems">
             <a ui-sref="dashboard.viewGoal({goalId: goal._id})"> <h4>{{goal.title}}</h4> </a>
             <!-- Labels attached to goals -->
-            <label ng-if="goal.urgency_level<0 && goal.goal_type=='DUEDATE'" class="label label-danger">Overdue</label>
+      <!--      <label ng-if="goal.urgency_level<0 && goal.goal_type=='DUEDATE'" class="label label-danger">Overdue</label>
             <label ng-if="goal.urgency_level<0 && goal.goal_type=='REPEAT'" class="label label-danger">Behind Schedule</label>
             <label ng-if="goal.urgency_level>0 && goal.goal_type=='REPEAT'" class="label label-success">Ahead Of Schedule: {{goal.urgency_level/1.5}} Free Day(s)</label>
             <label ng-if="goal.urgency_level==0 && goal.goal_type=='REPEAT'" class="label label-primary">On Schedule</label>
@@ -129,7 +129,7 @@
 
                     <div ng-if="goal.goal_type=='REPEAT'"><span class="fa fa-check">: {{ goal.times_this_week }} / {{ goal.repeat_times }}</span>
                         <!-- progres bar animation -->
-                        <div class="progress progress-striped active">
+        <!--                <div class="progress progress-striped active">
                             <div class="progress-bar progress-bar-info" ng-style="{ 'width': ( ( goal.times_this_week / goal.repeat_times ) * 100 )  + '%' }">
                             </div>
                         </div>
@@ -139,14 +139,14 @@
                 </div>
 
                 <!-- footer -->
-                <div class="panel-footer">
+        <!--        <div class="panel-footer">
                     <button class="btn btn-primary" ng-click="setAsComplete(goal._id, goal.title)" ng-disabled="goal.times_today>0">Complete!</button>
                     <span ng-show="goal.times_today>0">Completed For Today.</span>
                 </div>
 
             </div>
             <!-- end of panel-primary -->
-            <div class="clearfix hidden-sm-up"></div>
+      <!--      <div class="clearfix hidden-sm-up"></div>
         </div>
         <!-- end of ng-if !sortItems -->
 

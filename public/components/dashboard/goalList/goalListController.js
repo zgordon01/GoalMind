@@ -3,6 +3,7 @@ angular.module('app').controller('GoalListController', ['$scope', 'goalService',
   $scope.sortItems=false;
   $scope.myOrderBy="urgency_level";
   $scope.myGoalType="ALL";
+  $scope.goal_type;
 
   $scope.showThisGoalType = function(chosenType){
     if(chosenType=="ALL")
@@ -15,6 +16,7 @@ angular.module('app').controller('GoalListController', ['$scope', 'goalService',
       $scope.myGoalType=chosenType;
       $scope.sortItems=true;
     }
+    $scope.refreshGoals();
   };
 
   $scope.orderByValue = function(chosenValue){
@@ -30,7 +32,12 @@ angular.module('app').controller('GoalListController', ['$scope', 'goalService',
 
   $scope.noGoals=false;
 
-  goalService.getGoals(function(response){
+  if($scope.myGoalType!=="ALL")
+  {
+    $scope.goal_type=$scope.myGoalType;
+  }
+
+  goalService.getGoals($scope.goal_type, function(response){
       $scope.goalList=response;
       if($scope.goalList=="")
       {
@@ -48,7 +55,11 @@ angular.module('app').controller('GoalListController', ['$scope', 'goalService',
 
   $scope.refreshGoals=function()
   {
-      goalService.getGoals(function(response) {
+    if($scope.myGoalType!=="ALL")
+    {
+      $scope.goal_type=$scope.myGoalType;
+    }
+      goalService.getGoals($scope.goal_type, function(response) {
           $scope.goalList=response;
           if($scope.goalList=="")
           {
