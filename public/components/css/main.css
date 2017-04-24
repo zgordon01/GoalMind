@@ -93,6 +93,14 @@ h1, h2, h3, h4, a {
 	width:100%;
 }
 
+/* DATEPICKER CSS */
+/* highlight the current day in calendar datepicker */
+._720kb-datepicker-calendar-day._720kb-datepicker-today {
+  background: #93c54b;
+  color: white;
+}
+
+
 /*-----------HOME PAGE CSS ----*/
 
 #myCarousel {
