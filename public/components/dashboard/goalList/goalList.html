@@ -83,10 +83,10 @@
 
             <div class="panel panel-primary">
                 <div class="panel-body">
+                  <span ng-if="goal.notes">Notes: {{ goal.notes }}<br /></span>
 
                     <span ng-if="goal.goal_type=='PRIORITY' "><span class="fa fa-exclamation">: {{ goal.user_priority }}</span><br/> </span>
                     <span ng-if="goal.goal_type=='DUEDATE' "><span class="fa fa-calendar-check-o">: {{goal.duedate}}</span><br /></span>
-                    <span ng-if="goal.notes">Notes: {{ goal.notes }}<br /></span>
 
                     <div ng-if="goal.goal_type=='REPEAT'"><span class="fa fa-check">: {{ goal.times_this_week }} / {{ goal.repeat_times }}</span>
                         <div class="progress progress-striped active">
@@ -110,6 +110,6 @@
             <!-- end of panel-primary -->
          </div>
       </div>
-      
+
 <br/><br/><br/><br/>
 <!-- extra space so that the flash alert won't overlap the last goal on the list -->
