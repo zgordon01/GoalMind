@@ -453,10 +453,18 @@ updatePriorities = function(goals) {
             var date = moment();
             var daysAway = dueDate.diff(date, 'days');
             //console.log(goal.title + ": days til due: " + daysAway);
-            goal.urgency_level = daysAway + 1;
-            if (daysAway < 0) {
+            if (daysAway==0)
+            {
+              goal.urgency_level = daysAway ;
+
+            }
+
+            else if (daysAway < 0) {
                 goal.urgency_level = -1;
                 goal.over_due = true;
+            }
+            else {
+              goal.urgency_level=daysAway+1;
             }
             goal.save(function(err) {
                 if (err) {
