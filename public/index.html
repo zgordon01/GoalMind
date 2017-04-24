@@ -12,17 +12,22 @@
     <title>Goal Mind</title>
 
     <!-- Fonts Used for Home Page -->
+    <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lobster+Two" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+
+    <!-- fonts -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
     <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
-
+    
     <!-- Fontawesome link for twitter/facebook/insta icons in home page -->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
     <!-- Styles -->
     <link href="/bootstrap3-dialog/css/bootstrap-dialog.min.css" />
     <link href="/ang-flash/angular-flash.min.css" rel="stylesheet" />
+  
     <link href="./components/css/navbar.css" rel="stylesheet" />
     <link href="./components/css/bootstrap/bootstrap.min.css" rel="stylesheet" />
     <link href="./components/css/main.css" rel="stylesheet" />
@@ -46,7 +51,7 @@
 
                             <!-- Brand -->
                             <div class="brand-name-wrapper" ng-if="isAuthenticated">
-                                <a class="navbar-brand" href="#" style="font-size:24px; font-weight:400;">
+                                <a class="navbar-brand" ui-sref="dashboard.goals" style="font-size:24px; font-weight:400;">
                                     GoalMind
                                 </a>
                             </div>
@@ -55,7 +60,7 @@
 
                     <!-- Main Menu -->
                     <div class="side-menu-container" ng-show="isAuthenticated">
-                        <ul class="nav navbar-nav">
+                        <ul class="nav navbar-nav" style="margin-top: 17px">
 
                             <li>
                                 <div style="text-align:center; padding-bottom:15px;">
@@ -85,15 +90,11 @@
     </div>
     <!-- JQuery and Bootstrap JS -->
     <script type="text/javascript" src="/jq/jquery.min.js"></script>
+    <script type="text/javascript" src="./components/js/jquery.scrollTo.js"></script>
     <script type="text/javascript" src="/boots/bootstrap.min.js"></script>
 
-    <!-- Home Page -->
-    <script type="text/javascript" src="./components/js/jqBootstrapValidation.js"></script>
-    <script type="text/javascript" src="./components/js/contact_me.js"></script>
-    <script type="text/javascript" src="./components/js/easing.js"></script>
-    <script type="text/javascript" src="./components/js/navbar.js"></script>
-
     <!-- App -->
+    <script type="text/javascript" src="./components/js/navbar.js"></script>
     <script type="text/javascript" src="/bootstrap3-dialog/js/bootstrap-dialog.min.js"></script>
     <script type="text/javascript" src="/ang/angular.min.js"></script>
     <script type="text/javascript" src="/moment/moment.js"></script>
@@ -110,12 +111,9 @@
     <script type="text/javascript" src="./components/js/services/auth.service.js"></script>
     <script type="text/javascript" src="./components/home/home.controller.js"></script>
     <script type="text/javascript" src="./components/dashboard/dashboardController.js"></script>
-    <script type="text/javascript" src="./components/directives/example/testDirectiveController.js"></script>
-    <script type="text/javascript" src="./components/directives/example/testDirective.js"></script>
     <script type="text/javascript" src="./components/dashboard/goalList/goalListController.js"></script>
     <script type="text/javascript" src="./components/dashboard/newGoal/newGoalController.js"></script>
     <script type="text/javascript" src="./components/dashboard/viewGoal/viewGoalController.js"></script>
-    <script type="text/javascript" src="./components/dashboard/profile/profileController.js"></script>
     <script type="text/javascript" src="./components/dashboard/profile/profileController.js"></script>
     <script type="text/javascript" src="/angularjs-datepicker/src/js/angular-datepicker.js"></script>
 

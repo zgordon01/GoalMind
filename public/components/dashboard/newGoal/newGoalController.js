@@ -1,8 +1,6 @@
 angular.module('app').controller('NewGoalController', ['$scope', '$state', 'goalService', 'jwtHelper', '$state', function($scope, $state, goalService, jwtHelper, $state){
 
 
-
-
   $scope.whichDate;
   $scope.selection;
   $scope.newgoal={};
@@ -137,7 +135,6 @@ angular.module('app').controller('NewGoalController', ['$scope', '$state', 'goal
         alert(response.message);
       }
 
-
   })};
 
   goalService.getGoals(function(response) {
@@ -148,10 +145,5 @@ angular.module('app').controller('NewGoalController', ['$scope', '$state', 'goal
   $scope.clearSelection=function(){
     $scope.selection="";
   }
-
-
-
-
-
 
 }]);
