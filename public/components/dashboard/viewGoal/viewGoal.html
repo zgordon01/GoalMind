@@ -20,33 +20,33 @@
                 <input ng-if="edit.title" type="text" class="form-control" id="title" value="{{goal.title}}" ng-model="goal.title">
                 <!-- checkbox -->
                 <input type="checkbox" ng-model="edit.title" ng-true-value="true" ng-false-value="false" ng-click="resetValues()"> Edit?
-                <small ng-if="edit.title">Leave box checked if you want to edit this value.</small>    
-              </div> 
-            </div> 
-    
+                <small ng-if="edit.title">Leave box checked if you want to edit this value.</small>
+              </div>
+            </div>
+
 
         <!-- edit NOTES -->
           <div class="form-group">
             <div class="col-lg-10">
-              <label class="control-label" for="notes">Notes </label> 
+              <label class="control-label" for="notes">Notes </label>
                 <!-- disabled -->
                   <!-- if no notes -->
                 <input ng-if="!edit.notes && !goal.notes" type="text" class="form-control" id="notes" placeholder="(No notes added ...)" disabled="" ng-model="goal.notes">
                   <!-- if there is notes -->
-                <input ng-if="!edit.notes && goal.notes" type="text" class="form-control" id="notes" placeholder="{{goal.notes}}" disabled="" ng-model="goal.notes"> 
+                <input ng-if="!edit.notes && goal.notes" type="text" class="form-control" id="notes" placeholder="{{goal.notes}}" disabled="" ng-model="goal.notes">
                 <!-- enabled/focused when checkbox is clicked-->
                 <input ng-if="edit.notes" type="text" class="form-control" id="title" value="{{goal.notes}}" ng-model="goal.notes">
                 <!-- checkbox -->
                 <input type="checkbox" ng-model="edit.notes" ng-true-value="true" ng-false-value="false" ng-click="resetValues()"> Edit?
                 <small ng-if="edit.notes">Leave box checked if you want to edit this value.</small>
-            </div> 
-          </div> 
-          
+            </div>
+          </div>
+
 
           <!-- edit PRIORITY -->
           <div ng-if="goal.goal_type=='PRIORITY'" class="form-group">
             <div class="col-lg-12">
-              <label class="control-label" for="priority">Priority </label>  
+              <label class="control-label" for="priority">Priority </label>
               <!-- disabled -->
               <input ng-if="!edit.user_priority && goal.user_priority" type="text" class="form-control" id="priority" placeholder="{{goal.user_priority}}" disabled="" ng-model="goal.user_priority">
               <!-- enabled/focused when checkbox is clicked-->
@@ -54,33 +54,37 @@
               <!-- checkbox -->
               <input type="checkbox" ng-model="edit.user_priority" ng-true-value="true" ng-false-value="false" ng-click="resetValues()"> Edit?
                <small ng-if="edit.user_priority">Leave box checked if you want to edit this value.</small>
-            </div> 
-          </div> 
+            </div>
+          </div>
 
         <!-- edit DUEDATE -->
           <div ng-if="goal.goal_type=='DUEDATE'" class="form-group">
             <div class="col-lg-12">
-              <label class="control-label" for="duedate">Due Date </label> 
+              <label class="control-label" for="duedate">Due Date </label>
               <!--disabled-->
-              <input ng-if="!edit.due_date" type="text" class="form-control" id="duedate" 
+              <!--<input ng-if="!edit.due_date" type="text" class="form-control" id="duedate"
               placeholder="{{goal.due_date}}" disabled="" ng-model="goal.due_date">
               <!-- enabled/focused when checkbox is clicked-->
-              <input ng-if="edit.due_date" type="text" class="form-control" id="duedate" value="{{goal.due_date}}" ng-model="goal.due_date">
+              <datepicker  >
+
+                      <input   ng-model="goal.due_date" date-set="goal.due_date" class="form-control" type="text" ng-disabled="!edit.due_date"/>
+                </datepicker>
               <!--<div ng-if="!edit.due_date">{{goal.due_date}}</div>-->
               <!--checkbox-->
               <input type="checkbox" ng-model="edit.due_date" ng-true-value="true" ng-false-value="false" ng-click="resetValues()"> Edit?
               <small ng-if="edit.due_date">Leave box checked if you want to edit this value.</small>
-            </div> 
+            </div>
           </div>
 
         <!-- edit REPEAT -->
           <div ng-if="goal.goal_type=='REPEAT'" class="form-group">
             <div class="col-lg-12">
-              <label class="control-label" for="repeat">Repeat - Times Per Week </label>
+              <label class="control-label" for="repeat">Repeat - </label>
               <!--disabled-->
-              <input ng-if="!edit.repeat_times" type="text" class="form-control" id="repeat" placeholder="{{goal.repeat_times}}" disabled="" ng-model="goal.repeat_times">
               <!--enabled/focused when checkbox is clicked -->
-              <input ng-if="edit.repeat_times" type="text" class="form-control" id="repeat" value="{{goal.repeat_times}}" ng-model="goal.repeat_times">
+              <label for="points">{{goal.repeat_times}} Times Per Week</label>
+                <input type="range" name="points" id="Priority"  min="1" max="7" step="1" value="1" ng-model="goal.repeat_times"  ng-disabled="!edit.repeat_times">
+              </div>
               <!--<div ng-if="!edit.repeat_times">{{goal.repeat_times}}</div>-->
               <!-- checkbox-->
               <input type="checkbox" ng-model="edit.repeat_times" ng-true-value="true" ng-false-value="false" ng-click="resetValues()"> Edit?
@@ -92,7 +96,7 @@
         <div class="form-group">
           <div align="right" class="col-lg-10 col-lg-offset-2">
             <button ng-if="edit.title || edit.notes || edit.user_priority || edit.due_date || edit.repeat_times" class="btn btn-info" ng-click="editGoal()">Update</button>
-      
+
             <button class="btn btn-primary" ng-click="setAsComplete()">Complete</button>
             <button class="btn btn-danger" ng-click="deleteGoal()">Delete</button>
           </div>

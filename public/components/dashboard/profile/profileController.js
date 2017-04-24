@@ -52,7 +52,9 @@ angular.module('app').controller('profileController', ['$rootScope', '$scope', '
         goalService.getGoalHistory(function(response) {
             $scope.goalList = response;
             response.forEach(function(goal) {
+              goal.readableMadeDate= moment(goal.created_at).format('ddd MM/DD/YY');
                 goal.readableDate = moment(goal.completed_at[0]).format('ddd MM/DD/YY');
+                goal.duedate = moment(goal.due_date).format('ddd MM/DD');
                 console.log(moment(goal.completed_at[0]).format('ddd MM/DD/YY'));
             });
             if ($scope.goalList == "") {

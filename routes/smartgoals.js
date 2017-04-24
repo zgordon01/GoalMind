@@ -365,7 +365,10 @@ router.route('/update')
             if (req.body.due_date)
                 goal.due_date = req.body.due_date;
             if (req.body.repeat_times)
-                goal.repeat_times = req.body.repeat_times;
+            {
+              goal.repeat_times = req.body.repeat_times;
+
+            }
 
             goal.user_id = res.locals.user_id;
 
@@ -373,6 +376,9 @@ router.route('/update')
                 if (err) {
                     res.status(500).send(err.message);
                 } else {
+                  var myGoals=[goal];
+                    updateRepeats(myGoals);
+
                     res.json({
                         message: "Goal successfully updated."
                     });
