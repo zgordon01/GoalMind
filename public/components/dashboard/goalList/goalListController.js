@@ -59,6 +59,10 @@ angular.module('app').controller('GoalListController', ['$scope', 'goalService',
     {
       $scope.goal_type=$scope.myGoalType;
     }
+    else if ($scope.myGoalType=="ALL")
+    {
+      $scope.goal_type="";
+    }
       goalService.getGoals($scope.goal_type, function(response) {
           $scope.goalList=response;
           if($scope.goalList=="")
