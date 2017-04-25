@@ -63,7 +63,7 @@
                 },
                 rememberLastLogin: false,
                 theme : {
-                    //pick color
+                    logo: 'components/img/GM_logo@2x.png'
                 }
             }
         });
