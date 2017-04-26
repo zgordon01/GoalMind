@@ -8,7 +8,9 @@
      	  <h4 ng-if="authProfile.email && authProfile.email_verified" class="text-center"><strong><i class="fa fa-fw fa-envelope-o fa-2x"></i>Email:</strong> {{authProfile.email}}</h5>
       	<hr><!--Horizontal line-->
         <h4 class="text-center"><strong>Points until level {{userProfile.level + 1}}: {{userProfile.pointsToNext}}</strong></h5>
-        <button class="btn btn-danger" ng-click="resetUserObject()">RESET PROGRESS</button>
+        <div style="text-align:center;">
+            <button class="btn btn-danger" style="margin:auto;" ng-click="resetUserObject()">RESET PROGRESS</button>
+        </div>
         <hr />
 
         <h3 class="text-center"><strong>Complete / Inactive Goals</strong></h3>
